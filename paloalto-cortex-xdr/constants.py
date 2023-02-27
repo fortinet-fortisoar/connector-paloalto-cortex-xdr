@@ -90,7 +90,13 @@ category_mapping = {
 }
 
 payload = {
-            "request_data": {
-            }
+    "request_data": {
+        "search_from": 0,
+        "search_to": 100,
+        "sort": {
+            "field": "creation_time",
+            "keyword": "desc"
         }
+    }
+}
 
