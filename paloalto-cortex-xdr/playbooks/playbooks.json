@@ -1,0 +1,2347 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "@type": "WorkflowCollection",
+      "name": "Sample - PaloAlto Cortex XDR - 1.0.0",
+      "description": "Sample playbooks for \"PaloAlto Cortex XDR\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete.",
+      "visible": true,
+      "image": null,
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Incident Details",
+          "aliasName": null,
+          "description": "Get extra data fields of a specific incident including alerts and key artifacts.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/2addebb7-d588-4b8b-bed5-550124155aa7",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "10e2744d-da28-4bce-bb96-43efcfa64db0",
+                "title": "PaloAlto Cortex XDR: Get Incident Details",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "2addebb7-d588-4b8b-bed5-550124155aa7"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Incident Details",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "incident_id": "141",
+                  "alerts_limit": 1000
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_incident_details",
+                "operationTitle": "Get Incident Details",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "1afc493a-9757-45cd-99f4-912e4ab79052"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "c5001ca3-af78-4968-920e-115c85de555a",
+              "name": "Alerts -> Get Incident Details",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/1afc493a-9757-45cd-99f4-912e4ab79052",
+              "sourceStep": "/api/3/workflow_steps/2addebb7-d588-4b8b-bed5-550124155aa7"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232720,
+          "uuid": "09b047dc-f1a2-44b7-969e-934c41569892",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Restore File",
+          "aliasName": null,
+          "description": "Restore a quarantined file on a requested endpoints.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/911fcc64-dfed-448e-bd28-c5af0754d4e3",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "80a6e177-403e-4272-b431-302bf315d86c",
+                "title": "PaloAlto Cortex XDR: Restore File",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "911fcc64-dfed-448e-bd28-c5af0754d4e3"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Restore File",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "file_hash": "8D85F04BF08904324A304D2CC2375B393E58BBBC78C9C5903B8B23C5095F6D75",
+                  "endpoint_id": ""
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "restore_file",
+                "operationTitle": "Restore File",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "3c4738d6-3dfd-4998-a93f-05eef33757de"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "5a32e343-49fb-466b-b9ca-86de3c1a654f",
+              "name": "Alerts -> Restore File",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/3c4738d6-3dfd-4998-a93f-05eef33757de",
+              "sourceStep": "/api/3/workflow_steps/911fcc64-dfed-448e-bd28-c5af0754d4e3"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232791,
+          "uuid": "5b57bacb-92a1-4970-8f65-c732f408be3d",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Cancel Scan Endpoints",
+          "aliasName": null,
+          "description": "Run a scan on selected endpoints.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/da8437cb-dd27-4343-83ba-45a4270c1289",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "0cb8fbe1-f8bc-40a2-915e-ec25da08b67d",
+                "title": "PaloAlto Cortex XDR: Cancel Scan Endpoints",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "da8437cb-dd27-4343-83ba-45a4270c1289"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Cancel Scan Endpoints",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "alias": "",
+                  "ip_list": "",
+                  "isolate": "Isolated",
+                  "hostname": "",
+                  "operator": "In",
+                  "platform": "Windows",
+                  "dist_name": "WinInstaller",
+                  "group_name": "PAPItest",
+                  "endpoint_id_list": "51888e4ce9214c63b39d054bd073b93a"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "cancel_scan_endpoints",
+                "operationTitle": "Cancel Scan Endpoints",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "fb7fb98e-acdd-49e1-bd9e-aded696e8352"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "a71a8589-ae1f-4413-8bdd-4a9b359b59d3",
+              "name": "Alerts -> Cancel Scan Endpoints",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/fb7fb98e-acdd-49e1-bd9e-aded696e8352",
+              "sourceStep": "/api/3/workflow_steps/da8437cb-dd27-4343-83ba-45a4270c1289"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232567,
+          "uuid": "92cb66c5-8638-43c3-a004-fdec7c407e0b",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Create Distributions",
+          "aliasName": null,
+          "description": "Create an installation package.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/3f91bfe0-06ee-42fd-90ac-0d904cfcd354",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "182f650b-d27e-4b48-9cd5-015b7579b5da",
+                "title": "PaloAlto Cortex XDR: Create Distributions",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "3f91bfe0-06ee-42fd-90ac-0d904cfcd354"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Distributions",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "name": "Demo",
+                  "platform": "Linux",
+                  "description": "Test",
+                  "package_type": "Standalone",
+                  "agent_version": "5.0.7.16157"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "create_distributions",
+                "operationTitle": "Create Distributions",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "5c64863a-af8f-4540-b20d-43eb0765dc8f"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "74810a0a-ff9e-496c-ab5c-98d5be749eeb",
+              "name": "Alerts -> Create Distributions",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/5c64863a-af8f-4540-b20d-43eb0765dc8f",
+              "sourceStep": "/api/3/workflow_steps/3f91bfe0-06ee-42fd-90ac-0d904cfcd354"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232578,
+          "uuid": "5fc441ce-1914-420e-abc9-04641ddf3d73",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Delete Endpoints",
+          "aliasName": null,
+          "description": "Delete selected endpoints in the Cortex XDR app. You can delete up to 100 endpoints.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/0698517b-9f6b-42ca-a7d3-ed85743ddb18",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "3b8d49a4-7989-42ef-9385-f6d643771576",
+                "title": "PaloAlto Cortex XDR: Delete Endpoints",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "0698517b-9f6b-42ca-a7d3-ed85743ddb18"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Delete Endpoints",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "alias": "",
+                  "ip_list": "",
+                  "isolate": "Isolated",
+                  "hostname": "",
+                  "operator": "In",
+                  "platform": "Windows",
+                  "dist_name": "WinInstaller",
+                  "group_name": "PAPItest",
+                  "endpoint_id_list": "51888e2ce9214c63b39d054bd073b93a"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "delete_endpoints",
+                "operationTitle": "Delete Endpoints",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "d7790f99-eb10-4d6d-aac8-3d165610f3fb"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "8c206816-f40d-49c6-afde-f7ec335cc4a4",
+              "name": "Alerts -> Delete Endpoints",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/d7790f99-eb10-4d6d-aac8-3d165610f3fb",
+              "sourceStep": "/api/3/workflow_steps/0698517b-9f6b-42ca-a7d3-ed85743ddb18"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232592,
+          "uuid": "464259d6-459b-4ddd-bdd0-c047b6c432a0",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get All Endpoints",
+          "aliasName": null,
+          "description": "Gets a list of your endpoints.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/7d777365-df5d-43e9-b1ca-8a5d47051f9a",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "90a7f80a-2780-4f4b-91b9-f4923dc5f2b7",
+                "title": "PaloAlto Cortex XDR: Get All Endpoints",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "7d777365-df5d-43e9-b1ca-8a5d47051f9a"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get All Endpoints",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_all_endpoints",
+                "operationTitle": "Get All Endpoints",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "28fa5dc1-f88e-4c7a-b31b-a18ddb67c889"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "b18294a2-a0f2-458f-8467-c41a650afef2",
+              "name": "Alerts -> Get All Endpoints",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/28fa5dc1-f88e-4c7a-b31b-a18ddb67c889",
+              "sourceStep": "/api/3/workflow_steps/7d777365-df5d-43e9-b1ca-8a5d47051f9a"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232616,
+          "uuid": "b9f69ff5-7751-4bd4-9527-b109d92a6cea",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Audit Agent Report",
+          "aliasName": null,
+          "description": "Get agent event reports.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/3d2b9d22-9961-4460-95c4-3fc8da71fa1f",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "7a0b58ae-ffe6-42e0-8b4a-f9b3166e58c5",
+                "title": "PaloAlto Cortex XDR: Get Audit Agent Report",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "3d2b9d22-9961-4460-95c4-3fc8da71fa1f"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Audit Agent Report",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "sort": "",
+                  "type": "Agent Status",
+                  "domain": "WORKGROUP",
+                  "result": "",
+                  "category": "Status",
+                  "operator": "In",
+                  "sub_type": "Fully Protected",
+                  "search_to": 100,
+                  "timestamp": "",
+                  "endpoint_id": "5a52bdb151444c7fa7ccd1cfb561bd3c",
+                  "search_from": "0",
+                  "xdr_version": "",
+                  "endpoint_name": "DESKTOP-4LC01UI"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_audit_agent_report",
+                "operationTitle": "Get Audit Agent Report",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "8e5e2cf2-7ef2-4d76-a5c8-4944899424ac"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "b532f84f-c9f3-4896-9ac8-13929d1e29f4",
+              "name": "Alerts -> Get Audit Agent Report",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/8e5e2cf2-7ef2-4d76-a5c8-4944899424ac",
+              "sourceStep": "/api/3/workflow_steps/3d2b9d22-9961-4460-95c4-3fc8da71fa1f"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232633,
+          "uuid": "4905a333-6f35-45ca-a5df-267c938c5640",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Audit Management Logs",
+          "aliasName": null,
+          "description": "Get audit management logs.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/f234ca07-d9c8-44e9-9250-36995457d227",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "3edb28fc-4b43-4b14-be72-f5572e7efcd6",
+                "title": "PaloAlto Cortex XDR: Get Audit Management Logs",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "f234ca07-d9c8-44e9-9250-36995457d227"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Audit Management Logs",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "sort": false,
+                  "type": "",
+                  "email": "uname@networks.com",
+                  "result": "",
+                  "operator": "In",
+                  "sub_type": "",
+                  "search_to": 100,
+                  "search_from": "0"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_audit_management_log",
+                "operationTitle": "Get Audit Management Logs",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "f0cc9e7a-71dd-447e-a736-bd9b1f73eec0"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "34b788ec-b1fe-4115-ab2e-afc51a021688",
+              "name": "Alerts -> Get Audit Management Logs",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/f0cc9e7a-71dd-447e-a736-bd9b1f73eec0",
+              "sourceStep": "/api/3/workflow_steps/f234ca07-d9c8-44e9-9250-36995457d227"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232648,
+          "uuid": "71556fe9-506e-4ff4-bdbf-d9d618d90fc4",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Device Violations",
+          "aliasName": null,
+          "description": "Gets a list of device violations filtered by selected fields.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/0a145a36-c463-4b8d-82f2-5e0e8f21b12d",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "8b04cfca-7988-4482-82df-02bc1ea932d6",
+                "title": "PaloAlto Cortex XDR: Get Device Violations",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "0a145a36-c463-4b8d-82f2-5e0e8f21b12d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Device Violations",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "sort": "",
+                  "type": "CD ROM",
+                  "serial": "",
+                  "vendor": "Check Point",
+                  "ip_list": "",
+                  "product": "",
+                  "hostname": "",
+                  "operator": "In",
+                  "username": "",
+                  "search_to": "",
+                  "vendor_id": "0x0999",
+                  "product_id": "",
+                  "search_from": "",
+                  "endpoint_id_list": "b49bd38377b847df8aea0588a512e9c6",
+                  "violation_id_list": ""
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_device_violations",
+                "operationTitle": "Get Device Violations",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "4858c242-bada-4752-a6d1-9142a86b1f3d"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "58276f7a-885b-48c7-832b-c3e07216b63a",
+              "name": "Alerts -> Get Device Violations",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/4858c242-bada-4752-a6d1-9142a86b1f3d",
+              "sourceStep": "/api/3/workflow_steps/0a145a36-c463-4b8d-82f2-5e0e8f21b12d"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232659,
+          "uuid": "5eb324e4-b07a-4cc2-81a1-6b29a3dc8009",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Distribution Status",
+          "aliasName": null,
+          "description": "Check the status of the installation package.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/9cde22d2-5fb9-4cd1-8df2-f700725f35be",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "6994a09c-034c-40d4-8e93-97a5d9fa74dd",
+                "title": "PaloAlto Cortex XDR: Get Distribution Status",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "9cde22d2-5fb9-4cd1-8df2-f700725f35be"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Distribution Status",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "distribution_id": "26748677e9f44104b14bfee0aac4eb20"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_distribution_status",
+                "operationTitle": "Get Distribution Status",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "187",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "3326194c-1f8c-4287-94a1-09d2bc54a138"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "e59667fc-a5d3-4b5a-b694-f119d0022a93",
+              "name": "Alerts -> Get Distribution Status",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/3326194c-1f8c-4287-94a1-09d2bc54a138",
+              "sourceStep": "/api/3/workflow_steps/9cde22d2-5fb9-4cd1-8df2-f700725f35be"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232672,
+          "uuid": "b50f1e1a-8025-465e-a7f9-b5c45024c8fa",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Distribution URL",
+          "aliasName": null,
+          "description": "Get the distribution URL for downloading the installation package.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/a88869ff-e5b0-4599-aa2e-2e2533c80ae2",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "8f6b7504-8e86-46c4-8f6a-d649c93c892c",
+                "title": "PaloAlto Cortex XDR: Get Distribution URL",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "a88869ff-e5b0-4599-aa2e-2e2533c80ae2"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Distribution URL",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "package_type": "x86—For Windows",
+                  "distribution_id": "849fbe9ca2e74d3eb9423bb67bb80c15"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_distribution_url",
+                "operationTitle": "Get Distribution URL",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "bea7463e-815e-4cc4-8215-b777476e8d61"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "dd034fc1-64f8-4d51-9152-533319852887",
+              "name": "Alerts -> Get Distribution URL",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/bea7463e-815e-4cc4-8215-b777476e8d61",
+              "sourceStep": "/api/3/workflow_steps/a88869ff-e5b0-4599-aa2e-2e2533c80ae2"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232688,
+          "uuid": "a6bd5fd7-8f99-40c1-b453-868db3385581",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Distribution Version",
+          "aliasName": null,
+          "description": "Get a list of all the agent versions to use for creating a distribution list.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/c8a71f22-1785-43ed-a30f-e2968de9a986",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "4cb8fd20-1c42-4e61-86a6-f0b134cd8f6e",
+                "title": "PaloAlto Cortex XDR: Get Distribution Version",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "c8a71f22-1785-43ed-a30f-e2968de9a986"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Distribution Version",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_distribution_version",
+                "operationTitle": "Get Distribution Version",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "76a92ca3-f37b-460f-9fde-ffbf780c03a7"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "576fc267-f7fc-48ba-9488-a63fd5af8edc",
+              "name": "Alerts -> Get Distribution Version",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/76a92ca3-f37b-460f-9fde-ffbf780c03a7",
+              "sourceStep": "/api/3/workflow_steps/c8a71f22-1785-43ed-a30f-e2968de9a986"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232699,
+          "uuid": "13c113db-ed07-45e7-8c80-b60942bf8f15",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Endpoints",
+          "aliasName": null,
+          "description": "Gets a list of filtered endpoints.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/e15bebf0-2f1e-4f8b-81f3-d689ad0b5437",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "ea8ff63c-22e7-49cb-881e-3450fc97923d",
+                "title": "PaloAlto Cortex XDR: Get Endpoints",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "e15bebf0-2f1e-4f8b-81f3-d689ad0b5437"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Endpoints",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "sort": "",
+                  "alias": "",
+                  "ip_list": "",
+                  "isolate": "",
+                  "hostname": "",
+                  "operator": "In",
+                  "platform": "",
+                  "dist_name": "",
+                  "search_to": 100,
+                  "group_name": "",
+                  "search_from": "0",
+                  "endpoint_id_list": "4ce98b4d8d2b45a9a1d82dc71f0d1304"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_endpoints",
+                "operationTitle": "Get Endpoints",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "fa19d07b-bcee-438a-8491-6c60d9c211c5"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "0252486c-3963-48ee-a5c0-2aa0e1026b1d",
+              "name": "Alerts -> Get Endpoints",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/fa19d07b-bcee-438a-8491-6c60d9c211c5",
+              "sourceStep": "/api/3/workflow_steps/e15bebf0-2f1e-4f8b-81f3-d689ad0b5437"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232710,
+          "uuid": "d09285c3-5a4b-4947-8843-75506a0e3e42",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Policy",
+          "aliasName": null,
+          "description": "Get the policy name for a specific endpoint.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/7011d22c-6975-4609-a556-fd97fd475514",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "9a77342c-0f90-4461-88a9-d19d8a1657c7",
+                "title": "PaloAlto Cortex XDR: Get Policy",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "7011d22c-6975-4609-a556-fd97fd475514"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Policy",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "endpoint_id": "51588e4ce9214c63b39d054bd073b93a"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_policy",
+                "operationTitle": "Get Policy",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "a37d051a-f115-40d6-b65a-a7adf4c65e67"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "81372519-4089-40a6-b9ca-885568c1b7ed",
+              "name": "Alerts -> Get Policy",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/a37d051a-f115-40d6-b65a-a7adf4c65e67",
+              "sourceStep": "/api/3/workflow_steps/7011d22c-6975-4609-a556-fd97fd475514"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232728,
+          "uuid": "f09f231e-bbd9-43b7-b87b-da9ca8e9de21",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Insert Parsed Alerts",
+          "aliasName": null,
+          "description": "Upload alerts from external alert sources in Cortex XDR format. Cortex XDR displays alerts that are parsed successfully in related incidents and views.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/35634264-75c7-4a5d-a936-24ff62df6c50",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "052fb03f-1baa-456e-826c-eb668d5eef8c",
+                "title": "PaloAlto Cortex XDR: Insert Parsed Alerts",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "35634264-75c7-4a5d-a936-24ff62df6c50"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Insert Parsed Alerts",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "vendor": "Check Point",
+                  "product": "VPN & Firewall-1",
+                  "local_ip": "192.168.1.254",
+                  "severity": "Medium",
+                  "remote_ip": "0.0.0.0",
+                  "alert_name": "Alert Name Example",
+                  "local_port": 35398,
+                  "remote_port": 10,
+                  "event_timestamp": "2020-03-31T18:30:00.000Z",
+                  "alert_description": "Alert Description"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "insert_parsed_alerts",
+                "operationTitle": "Insert Parsed Alerts",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "2b78c847-af88-427f-a87e-e905bc54be29"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "dfe116b5-1f47-4b6d-9240-ad3710a32c98",
+              "name": "Alerts -> Insert Parsed Alerts",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/2b78c847-af88-427f-a87e-e905bc54be29",
+              "sourceStep": "/api/3/workflow_steps/35634264-75c7-4a5d-a936-24ff62df6c50"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232756,
+          "uuid": "a2e0f425-10d1-4008-bbbe-2650cdc022cb",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Isolate Endpoints",
+          "aliasName": null,
+          "description": "Isolate one or more endpoints in a single request.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/1eda9009-d2a1-49a6-8f4e-185f7efc6297",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "be9f6fd0-3997-40ad-905d-835362d2ec8b",
+                "title": "PaloAlto Cortex XDR: Isolate Endpoints",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "1eda9009-d2a1-49a6-8f4e-185f7efc6297"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Isolate Endpoints",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "endpoint_id": "4ce98b4d8d2b45a9a1d82dc71f0d130c",
+                  "isolate_endpoint": "Isolate One Endpoint"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "isolate_endpoints",
+                "operationTitle": "Isolate Endpoints",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "c8a3c36f-c5bf-43ce-a5bf-6f1077f902ce"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "8d2bd549-4056-483c-8ff5-ae4b32989ebe",
+              "name": "Alerts -> Isolate Endpoints",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/c8a3c36f-c5bf-43ce-a5bf-6f1077f902ce",
+              "sourceStep": "/api/3/workflow_steps/1eda9009-d2a1-49a6-8f4e-185f7efc6297"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232766,
+          "uuid": "1050aa50-e38f-44ec-ab55-72dbd46b89ea",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Quarantine Files",
+          "aliasName": null,
+          "description": "Quarantine file on selected endpoints.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/e24ef9eb-6d8f-481b-8a68-1ba0d3be1280",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "ee414032-8f97-41de-b92c-3e5231cddd74",
+                "title": "PaloAlto Cortex XDR: Quarantine Files",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "e24ef9eb-6d8f-481b-8a68-1ba0d3be1280"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Quarantine Files",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "alias": "",
+                  "ip_list": "",
+                  "isolate": "",
+                  "hostname": "",
+                  "operator": "In",
+                  "platform": "",
+                  "dist_name": "",
+                  "file_hash": "8D85F04BF08904324A204D2CC2375B393E59BBBC78C9C5903B8B23C5095F6D75",
+                  "file_path": "C:\\\\Users\\\\XDR\\\\Desktop\\\\test_x64.msi",
+                  "group_name": "",
+                  "endpoint_id_list": "51888e4ce8214c63b39d054bd073b93a"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "quarantine_files",
+                "operationTitle": "Quarantine Files",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "7a6b4f10-72fb-4e33-b42e-98054c2660ee"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "8b48fdf5-33d5-4666-af7e-ea67e99efa9b",
+              "name": "Alerts -> Quarantine Files",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/7a6b4f10-72fb-4e33-b42e-98054c2660ee",
+              "sourceStep": "/api/3/workflow_steps/e24ef9eb-6d8f-481b-8a68-1ba0d3be1280"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232777,
+          "uuid": "a20d2f75-b6db-49c1-8839-56891a48dda7",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Scan Endpoints",
+          "aliasName": null,
+          "description": "Run a scan on selected endpoints.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/d16f7047-c183-4d39-b356-4c09aad44701",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "7c216ed0-7cfd-4e32-9572-674d358f5623",
+                "title": "PaloAlto Cortex XDR: Scan Endpoints",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "d16f7047-c183-4d39-b356-4c09aad44701"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Scan Endpoints",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "alias": "",
+                  "ip_list": "",
+                  "isolate": "Isolated",
+                  "hostname": "",
+                  "operator": "In",
+                  "platform": "Windows",
+                  "dist_name": "WinInstaller",
+                  "group_name": "PAPItest",
+                  "endpoint_id_list": "51888e3ce9214c63b39d054bd073b93a"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "scan_endpoints",
+                "operationTitle": "Scan Endpoints",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "0a334456-61f7-4817-a4f0-c6f7a371710d"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "c2bddff7-efcb-4b0f-ab69-eb4ebdcd9760",
+              "name": "Alerts -> Scan Endpoints",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/0a334456-61f7-4817-a4f0-c6f7a371710d",
+              "sourceStep": "/api/3/workflow_steps/d16f7047-c183-4d39-b356-4c09aad44701"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232816,
+          "uuid": "ba960133-b9c1-4abf-a81a-121a98bda4a6",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Unisolate Endpoints",
+          "aliasName": null,
+          "description": "Unisolate one or more endpoints in a single request.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/1723f9ff-ad81-4385-9b6a-a77726d2fc65",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "d3aa3e2d-9b4d-44a1-8381-19e028a0ee7b",
+                "title": "PaloAlto Cortex XDR: Unisolate Endpoints",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "1723f9ff-ad81-4385-9b6a-a77726d2fc65"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Unisolate Endpoints",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "endpoint_id": "4ce98b4d8d2b45a9a1d82dc71f0d130c",
+                  "unisolate_endpoint": "Unisolate One Endpoint"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "unisolate_endpoints",
+                "operationTitle": "Unisolate Endpoints",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "3ebfcc83-4dff-419f-b157-d8acf2280eb8"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "3f4cd1d8-6ca4-426d-896c-a5aac38b8090",
+              "name": "Alerts -> Unisolate Endpoints",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/3ebfcc83-4dff-419f-b157-d8acf2280eb8",
+              "sourceStep": "/api/3/workflow_steps/1723f9ff-ad81-4385-9b6a-a77726d2fc65"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232828,
+          "uuid": "027eb9a1-d967-4a2f-8b7a-489216ee542a",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Update Incident",
+          "aliasName": null,
+          "description": "Update incident fields like severity, status etc. corresponding to a specific incident on Palo Alto Traps.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/7651c3f0-247a-4487-8c2f-bf445648d81a",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "21ce00b9-2966-4981-b9f4-a46047346df5",
+                "title": "PaloAlto Cortex XDR: Update Incident",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "7651c3f0-247a-4487-8c2f-bf445648d81a"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Incident",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "status": "Resolved Other",
+                  "incident_id": "1000",
+                  "manual_severity": "Medium",
+                  "resolve_comment": "This incident is resolved",
+                  "assigned_user_mail": "test@test.com",
+                  "assigned_user_pretty_name": "Demo"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "update_incident",
+                "operationTitle": "Update Incident",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "42d7a521-6c49-4726-8705-099c3d849c49"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "55e463a8-b29c-4a92-9ecc-af2b28bf843d",
+              "name": "Alerts -> Update Incident",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/42d7a521-6c49-4726-8705-099c3d849c49",
+              "sourceStep": "/api/3/workflow_steps/7651c3f0-247a-4487-8c2f-bf445648d81a"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232835,
+          "uuid": "f4e372c1-995a-4bda-ab9d-b03d15c16f0f",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Whitelist Files",
+          "aliasName": null,
+          "description": "Whitelist requested files which have not already been blacklisted or whitelisted.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/e3f923e6-32e6-47e9-91ba-6c6d1bc97cd7",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "39b8d3da-0f64-473e-87ad-5f5f0575cea9",
+                "title": "PaloAlto Cortex XDR: Whitelist Files",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "e3f923e6-32e6-47e9-91ba-6c6d1bc97cd7"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Whitelist Files",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "comment": "Test",
+                  "hash_list": "032196FB1AC01311B4AA1A7D0FD5EB5F420CA9B215AFE24234DFCF69E5D553F0"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "whitelist_files",
+                "operationTitle": "Whitelist Files",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "39006ab3-c51f-4ffd-aa01-98f3e4c8f0b9"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "f4a1c046-a101-4a34-9666-f7356215b211",
+              "name": "Alerts -> Whitelist Files",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/39006ab3-c51f-4ffd-aa01-98f3e4c8f0b9",
+              "sourceStep": "/api/3/workflow_steps/e3f923e6-32e6-47e9-91ba-6c6d1bc97cd7"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232843,
+          "uuid": "7e41051c-752c-40e5-86dc-d4491f907043",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Blacklist Files",
+          "aliasName": null,
+          "description": "Blacklist requested files which have not already been blacklisted or whitelisted.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/84e3d23e-4684-4188-9d94-b3298b0ab9f6",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "b88cd189-fb14-4aac-a91e-9ae38c452069",
+                "title": "PaloAlto Cortex XDR: Blacklist Files",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "84e3d23e-4684-4188-9d94-b3298b0ab9f6"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Blacklist Files",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "comment": "",
+                  "hash_list": "032196FB1AC01311B4AA1A7D0FD5EB5F420CA9B215AFE54234DFCF69E5D553F0"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "blacklist_files",
+                "operationTitle": "Blacklist Files",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "56b83922-677f-42c9-a862-55f7f15fe50c"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "2e918efe-c31e-4899-98f8-091c356414d1",
+              "name": "Alerts -> Blacklist Files",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/56b83922-677f-42c9-a862-55f7f15fe50c",
+              "sourceStep": "/api/3/workflow_steps/84e3d23e-4684-4188-9d94-b3298b0ab9f6"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232554,
+          "uuid": "dffc0a07-ab8a-4869-8f01-a5b802c89114",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Fetch Incidents",
+          "aliasName": null,
+          "description": "Fetch incidents from Palo Alto Traps based on the input parameters specified.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/f4a9ac45-12ef-4ad9-a73a-0dad1a52e312",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "3f64676a-c26e-4bbb-9d99-253270d37ba2",
+                "title": "PaloAlto Cortex XDR: Fetch Incidents",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "f4a9ac45-12ef-4ad9-a73a-0dad1a52e312"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Fetch Incidents",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "sort": "",
+                  "starred": "",
+                  "operator": "In",
+                  "search_to": 100,
+                  "description": "Memory Corruption Exploit",
+                  "search_from": "0",
+                  "alert_sources": "XDR Agent",
+                  "incident_id_list": "492"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "fetch_incidents",
+                "operationTitle": "Fetch Incidents",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "3ab362af-2d1e-41cb-b480-9d96e7c526ad"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "cc706dd3-72ee-4f03-af8f-1f1bc375276f",
+              "name": "Alerts -> Fetch Incidents",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/3ab362af-2d1e-41cb-b480-9d96e7c526ad",
+              "sourceStep": "/api/3/workflow_steps/f4a9ac45-12ef-4ad9-a73a-0dad1a52e312"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232605,
+          "uuid": "37837a3d-35fb-44c6-8856-6247d455dc45",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Quarantine Status",
+          "aliasName": null,
+          "description": "Retrieve the quarantine status for a selected file.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/afbfcbf2-0ef7-45f2-ba87-475bdb4db3d5",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "212e3fab-8596-4bf0-8290-806f325bbb30",
+                "title": "PaloAlto Cortex XDR: Get Quarantine Status",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "afbfcbf2-0ef7-45f2-ba87-475bdb4db3d5"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Quarantine Status",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "file_hash": "8D8508904334A304D2CC2375B393E59BBBC78C9C5903B8B23C5095F6D75",
+                  "file_path": "C:\\\\Users\\\\XDR\\\\Desktop\\\\test_x64.msi",
+                  "endpoint_id": "51888e4ce9214c63b39d054bd073b93a"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_quarantine_status",
+                "operationTitle": "Get Quarantine Status",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "fff23220-9d88-4d64-980e-cae5afa81eb9"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "5f116024-e7dc-4b3f-a330-3b868a81f07f",
+              "name": "Alerts -> Get Quarantine Status",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/fff23220-9d88-4d64-980e-cae5afa81eb9",
+              "sourceStep": "/api/3/workflow_steps/afbfcbf2-0ef7-45f2-ba87-475bdb4db3d5"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232736,
+          "uuid": "3c265118-6ee6-45bf-a793-2ade499310b5",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Insert CEF Alerts",
+          "aliasName": null,
+          "description": "Upload alerts in CEF format from external alert sources. After you map CEF alert fields to Cortex XDR fields, Cortex XDR displays the alerts in related incidents and views.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/a98ff21c-525f-4cba-b29a-f80d0e72cc3e",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "75df9fe7-3659-47b0-a204-77a0b6eb097b",
+                "title": "PaloAlto Cortex XDR: Insert CEF Alerts",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "a98ff21c-525f-4cba-b29a-f80d0e72cc3e"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Insert CEF Alerts",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "alerts": "CEF:0|Check Point|VPN-1 & FireWall-1|Check Point|Log|Log|Unknown|             act=AcceptdeviceDirection=0 rt=1569477501000 spt=63088 dpt=5985             cs2Label=Rule Namelayer_name=FW_Device_blackened             Securitylayer_uuid=07693fc7-1a5c-4f31-8afe-77ae96c71b8c match_id=8899             parent_rule=0rule_action=Accept             rule_uid=ae987933-82c0-470f-ab1c-1ad552c82369conn_direction=Internal ifname=bond1.12             logid=0loguid={0x5d8c537d,0xbb,0x29321fac,0xc0000014}             origin=1.1.1.1originsicname=CN=DWdeviceBlackend,O=Blackend sequencenum=899             version=5dst=1.1.1.1 product=VPN-1 & FireWall-1 proto=6 src=1.1.1.1"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "insert_cef_alerts",
+                "operationTitle": "Insert CEF Alerts",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "d92858db-b352-419a-babc-f314fc58c29b"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "f0037287-88d8-46a0-835f-8aca38b7e111",
+              "name": "Alerts -> Insert CEF Alerts",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/d92858db-b352-419a-babc-f314fc58c29b",
+              "sourceStep": "/api/3/workflow_steps/a98ff21c-525f-4cba-b29a-f80d0e72cc3e"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232746,
+          "uuid": "a81fcead-4314-4672-a802-d70ce12debf9",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Retrieve File",
+          "aliasName": null,
+          "description": "Retrieve files from selected endpoints. You can retrieve up to 20 files, from no more than 100 endpoints.",
+          "collection": "/api/3/workflow_collections/990cdb2a-8cb7-483b-9d70-5182911ba181",
+          "tag": "#PaloAlto Cortex XDR",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/de85aee4-80f6-4681-a3f7-ba8762a35652",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "33eae665-f097-4aef-b80b-8f9083cfb996",
+                "title": "PaloAlto Cortex XDR: Retrieve File",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "de85aee4-80f6-4681-a3f7-ba8762a35652"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Retrieve File",
+              "description": null,
+              "arguments": {
+                "name": "PaloAlto Cortex XDR",
+                "config": "8df68151-6971-4bf0-aa32-c0f4eb310cf2",
+                "params": {
+                  "alias": "",
+                  "files": "Windows",
+                  "ip_list": "",
+                  "isolate": "",
+                  "hostname": "",
+                  "operator": "In",
+                  "platform": "",
+                  "dist_name": "",
+                  "file_path": "C:\\\\Users\\\\XDR\\\\Desktop\\\\test_test.txt",
+                  "group_name": "",
+                  "endpoint_id_list": "953688735d4943f691378af9b9ee3593"
+                },
+                "version": "1.0.0",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "retrieve_file",
+                "operationTitle": "Retrieve File",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "6506dad4-45de-468f-aa01-01eabeadb2ae"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "c4df3eff-95a9-4e89-b941-834595b07b7c",
+              "name": "Alerts -> Retrieve File",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/6506dad4-45de-468f-aa01-01eabeadb2ae",
+              "sourceStep": "/api/3/workflow_steps/de85aee4-80f6-4681-a3f7-ba8762a35652"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1587232807,
+          "uuid": "4df1a965-9f66-473e-ad13-f16abc3d754f",
+          "recordTags": [
+            "PaloAlto Cortex XDR"
+          ],
+          "isPrivate": false,
+          "owners": []
+        }
+      ],
+      "uuid": "990cdb2a-8cb7-483b-9d70-5182911ba181",
+      "recordTags": []
+    }
+  ],
+  "exported_tags": [
+    "PaloAlto Cortex XDR"
+  ]
+}
