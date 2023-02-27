@@ -7,8 +7,11 @@
 import requests
 import time
 import datetime
+import arrow
+import copy
 from connectors.core.connector import get_logger, ConnectorError
 from .constants import *
+from requests_toolbelt.utils import dump
 
 logger = get_logger('paloalto-coretx-xdr')
 
@@ -37,6 +40,8 @@ class CortexXdr():
             response = requests.request(method=method, url=url, params=params, data=data, json=json,
                                         headers=headers,
                                         verify=self.verify_ssl)
+            logger.error('\nreq data:\n{0}\n'.format(dump.dump_all(response).decode('utf-8')))
+            
             if response.ok:
                 result = response.json()
                 if result.get('error'):
@@ -84,6 +89,32 @@ def build_timestamp(key, value, result):
     str_time = time.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")
     epoch_time = int(datetime.datetime.fromtimestamp(time.mktime(str_time)).strftime('%s')) * 1000
     result['{key}'.format(key=key)] = epoch_time
+    
+def to_utimestamp(time_string):
+    if len(time_string) > 0:
+        return arrow.get(time_string).int_timestamp * 1000
+    else:
+        return arrow.now().int_timestamp * 1000
+
+def build_query_payload(params):
+    filters_list = []
+    _payload = copy.deepcopy(payload)
+    for k, v in params.items():
+        if v is not None:
+            if v and 'filter' in k:
+                terms = k.split('.')
+                if '_time' in k:
+                    v = to_utimestamp(v)
+                elif 'incident_id_list' in k:
+                    v = [str(x) for x in v]
+                filters_list.append({'field': terms[2], 'operator': terms[1],'value':v})
+            if isinstance(v, int) and 'cursor' in k:
+                _payload['request_data'].update({k.split('.')[1]:v})
+            if v and 'sort' in k:
+                _payload['request_data']['sort'].update({k.split('.')[1]:v})
+    if len(filters_list) > 0:
+        _payload['request_data'].update({'filters':filters_list})
+    return _payload
 
 
 def build_filter_payload(result, keys, filters_list):
@@ -92,7 +123,7 @@ def build_filter_payload(result, keys, filters_list):
         if k in keys:
             filters_dict['operator'] = operator_mapping.get(result.get('operator'))
             filters_dict['field'] = k
-            filters_dict['value'] = v
+            filters_dict['value'] = to_utimestamp(v) if 'time' in k else v
             filters_list.append(filters_dict)
             filters_dict = dict()
 
@@ -112,38 +143,11 @@ def check_health(config):
 def fetch_incidents(config, params):
     try:
         obj = CortexXdr(config)
-        if not (params.get('incident_id_list') or params.get('alert_sources') or params.get(
-                'description') or params.get('modification_time') or params.get('creation_time')):
-            raise ConnectorError(
-                'At least one of the [Incident ID List, Alert Sources, Description, Modification Time, Creation Time] is required.')
         endpoint = '/incidents/get_incidents/'
-        result = build_payload(params)
-        filters_list = []
-        keys = ["incident_id_list", "alert_sources", "description", "modification_time", "creation_time"]
-        payload = {
-            "request_data": {
-            }
-        }
-        if result:
-            if result.get('incident_id_list'):
-                handle_list_parameter('incident_id_list', str(params.get('incident_id_list')), result)
-            if result.get('alert_sources'):
-                handle_list_parameter('alert_sources', params.get('alert_sources'), result)
-            if result.get('sort'):
-                sortby = [{
-                    "field": sort_field.get(result.get('field')),
-                    "keyword": sort_order.get(result.get('keyword'))
-                }]
-                result['sort'] = sortby
-                result.pop('field')
-                result.pop('keyword')
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-            payload.get('request_data').update({"search_from": result.get('search_from')})
-            payload.get('request_data').update({"search_to": result.get('search_to')})
-            payload.get('request_data').update({"sort": result.get('sort')})
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        return response
+        query_payload = build_query_payload(params)
+        return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
+
+
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
