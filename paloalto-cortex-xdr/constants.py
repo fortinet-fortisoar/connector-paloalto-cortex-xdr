@@ -1,9 +1,9 @@
 """ Copyright start
-  Copyright (C) 2008 - 2020 Fortinet Inc.
+  Copyright (C) 2008 - 2023 Fortinet Inc.
   All rights reserved.
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
-  
+
 messages_codes = {
     400: 'Invalid input',
     401: 'Unauthorized: Invalid credentials',
@@ -41,6 +41,7 @@ severity_mapping = {
     "High": "high",
     "Medium": "medium",
     "Low": "low",
+    "Critical": "critical",
     "Informational": "informational",
     "Unknown": "unknown"
 }
@@ -48,12 +49,26 @@ severity_mapping = {
 status_mapping = {
     "New": "new",
     "Under Investigation": "under_investigation",
-    "Resolved Threat Handled": "resolved_threat_handled",
     "Resolved Known Issue": "resolved_known_issue",
     "Resolved Duplicate": "resolved_duplicate",
+    "Resolved True Positive": "resolved_true_positive",
     "Resolved False Positive": "resolved_false_positive",
-    "Resolved Other": "resolved_other"
+    "Resolved Security Testing": "resolved_security_testing",
+    "Resolved Other": "resolved_other",
+    "Connected": "connected",
+    "Disconnected": "disconnected",
+    "Lost": "lost",
+    "Uninstalled": "uninstalled",
+    "None": "none",
+    "Pending": "pending",
+    "In Progress": "in_progress",
+    "Canceled": "canceled",
+    "Aborted": "aborted",
+    "Pending Cancellation": "pending_cancellation",
+    "Success": "success",
+    "Error": "error"
 }
+
 
 platform_mapping = {
     "Windows": "windows",
@@ -66,6 +81,7 @@ isolate_mapping = {
     "Isolated": "isolated",
     "Unisolated": "unisolated"
 }
+
 
 violation_type = {
     "CD ROM": "cd-rom",
@@ -90,7 +106,6 @@ category_mapping = {
 }
 
 payload = {
-            "request_data": {
-            }
-        }
-
+    "request_data": {
+    }
+}

@@ -1,14 +1,21 @@
 """ Copyright start
-  Copyright (C) 2008 - 2020 Fortinet Inc.
+  Copyright (C) 2008 - 2023 Fortinet Inc.
   All rights reserved.
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
-  
+import json
+
 import requests
-import time
+import time, json
 import datetime
+import arrow
+import copy
+import os
+from django.conf import settings
+from connectors.cyops_utilities.builtins import upload_file_to_cyops
 from connectors.core.connector import get_logger, ConnectorError
 from .constants import *
+
 
 logger = get_logger('paloalto-coretx-xdr')
 
@@ -30,14 +37,18 @@ class CortexXdr():
             url = '{0}{1}'.format(self.server_url, endpoint)
         else:
             url = '{0}'.format(self.server_url)
-
+        if flag:
+            url = endpoint
         logger.info('Request URL {}'.format(url))
-        headers = {"x-xdr-auth-id": str(self.api_key_id), "Authorization": self.api_key, "Content-Type": "application/json"}
+        headers = {"x-xdr-auth-id": str(self.api_key_id), "Authorization": self.api_key,
+                   "Content-Type": "application/json"}
         try:
             response = requests.request(method=method, url=url, params=params, data=data, json=json,
                                         headers=headers,
                                         verify=self.verify_ssl)
             if response.ok:
+                if response.headers.get('Content-Disposition'):
+                    return response
                 result = response.json()
                 if result.get('error'):
                     raise ConnectorError('{}'.format(result.get('error').get('message')))
@@ -92,7 +103,7 @@ def build_filter_payload(result, keys, filters_list):
         if k in keys:
             filters_dict['operator'] = operator_mapping.get(result.get('operator'))
             filters_dict['field'] = k
-            filters_dict['value'] = v
+            filters_dict['value'] = to_utimestamp(v) if 'time' in k else v
             filters_list.append(filters_dict)
             filters_dict = dict()
 
@@ -109,53 +120,55 @@ def check_health(config):
         raise ConnectorError("{0}".format(err))
 
 
+def to_utimestamp(time_string):
+    if len(time_string) > 0:
+        return arrow.get(time_string).int_timestamp * 1000
+    else:
+        return arrow.now().int_timestamp * 1000
+
+
+def build_query_payload(params):
+    filters_list = []
+    _payload = copy.deepcopy(payload)
+    for k, v in params.items():
+        if v is not None:
+            if v and 'filter' in k:
+                terms = k.split('.')
+                if '_time' in k or '_seen' in k or 'timestamp' in k:
+                    v = to_utimestamp(v)
+                elif 'incident_id_list' in k or 'endpoint_id_list' in k:
+                    v = [str(x) for x in v]
+                elif 'status' in k:
+                    v = status_mapping.get(v)
+                filters_list.append({'field': terms[2], 'operator': terms[1], 'value': v})
+            if isinstance(v, int) and 'cursor' in k:
+                _payload['request_data'].update({k.split('.')[1]: v})
+            if v and 'sort' in k:
+                _payload['request_data']['sort'].update({k.split('.')[1]: v})
+
+    if len(filters_list) > 0:
+        _payload['request_data'].update({'filters': filters_list})
+    return _payload
+
+
 def fetch_incidents(config, params):
     try:
         obj = CortexXdr(config)
-        if not (params.get('incident_id_list') or params.get('alert_sources') or params.get(
-                'description') or params.get('modification_time') or params.get('creation_time')):
-            raise ConnectorError(
-                'At least one of the [Incident ID List, Alert Sources, Description, Modification Time, Creation Time] is required.')
         endpoint = '/incidents/get_incidents/'
-        result = build_payload(params)
-        filters_list = []
-        keys = ["incident_id_list", "alert_sources", "description", "modification_time", "creation_time"]
-        payload = {
-            "request_data": {
-            }
-        }
-        if result:
-            if result.get('incident_id_list'):
-                handle_list_parameter('incident_id_list', str(params.get('incident_id_list')), result)
-            if result.get('alert_sources'):
-                handle_list_parameter('alert_sources', params.get('alert_sources'), result)
-            if result.get('sort'):
-                sortby = [{
-                    "field": sort_field.get(result.get('field')),
-                    "keyword": sort_order.get(result.get('keyword'))
-                }]
-                result['sort'] = sortby
-                result.pop('field')
-                result.pop('keyword')
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-            payload.get('request_data').update({"search_from": result.get('search_from')})
-            payload.get('request_data').update({"search_to": result.get('search_to')})
-            payload.get('request_data').update({"sort": result.get('sort')})
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        return response
+        query_payload = build_query_payload(params)
+        return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
 
 
-def get_incident_details(config, params):
+def get_incident_details(config, params): 
     try:
         obj = CortexXdr(config)
         endpoint = '/incidents/get_incident_extra_data/'
         payload = {
             "request_data": {
-                "incident_id": params.get('incident_id')
+                "incident_id": str(params.get('incident_id'))
             }
         }
         if params.get('alerts_limit'):
@@ -167,7 +180,7 @@ def get_incident_details(config, params):
         raise ConnectorError(Err)
 
 
-def update_incident(config, params):
+def update_incident(config, params): 
     try:
         obj = CortexXdr(config)
         if not (params.get('assigned_user_mail') or params.get('assigned_user_pretty_name') or params.get(
@@ -185,10 +198,8 @@ def update_incident(config, params):
         if result:
             if result.get('manual_severity'):
                 result['manual_severity'] = severity_mapping.get(result.get('manual_severity'))
-                # result.pop('manual_severity')
             if result.get('status'):
                 result['status'] = status_mapping.get(result.get('status'))
-                # result.pop('status')
             payload.get('request_data').get('update_data').update(result)
         response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
         return response
@@ -208,7 +219,9 @@ def insert_cef_alerts(config, params):
         if not isinstance(params.get('alerts'), list):
             alerts = [x.strip() for x in params.get('alerts').split(',')]
             payload.get('request_data').update({"alerts": alerts})
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
+        else:
+            payload.get('request_data').update({"alerts": params.get('alerts')})
+        response = obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload))
         return response
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
@@ -232,7 +245,7 @@ def insert_parsed_alerts(config, params):
         if result.get('severity'):
             result['severity'] = severity_mapping.get(result.get('severity'))
         payload.get('request_data').get('alerts').append(result)
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
+        response = obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload))
         return response
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
@@ -244,9 +257,7 @@ def isolate_endpoints(config, params):
         obj = CortexXdr(config)
         endpoint = '/endpoints/isolate/'
         result = build_payload(params)
-        filters_list = []
-        keys = ["endpoint_id_list", "dist_name", "group_name", "alias", "hostname", "ip_list", "platform", "isolate",
-                "first_seen", "last_seen"]
+
         payload = {
             "request_data": {}
         }
@@ -256,20 +267,11 @@ def isolate_endpoints(config, params):
         elif result.get('isolate_endpoint') == 'Isolate More Than One Endpoint':
             if result.get('endpoint_id_list'):
                 handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
-            if result.get('ip_list'):
-                handle_list_parameter('ip_list', params.get('ip_list'), result)
-            if result.get('platform'):
-                result['platform'] = platform_mapping.get(result.get('platform'))
-            if result.get('isolate'):
-                result['isolate'] = isolate_mapping.get(result.get('isolate'))
-            if result.get('first_seen'):
-                build_timestamp('first_seen', result.get('first_seen'), result)
-            if result.get('last_seen'):
-                build_timestamp('last_seen', result.get('last_seen'), result)
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-            response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-            return response
+                query_payload = build_query_payload(params)
+                return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
+        if result.get('incident_id'):
+            payload.get('request_data').update({"incident_id": result.get('incident_id')})
+            return obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -280,9 +282,7 @@ def unisolate_endpoints(config, params):
         obj = CortexXdr(config)
         endpoint = '/endpoints/unisolate/'
         result = build_payload(params)
-        filters_list = []
-        keys = ["endpoint_id_list", "dist_name", "group_name", "alias", "hostname", "ip_list", "platform", "isolate",
-                "first_seen", "last_seen"]
+
         payload = {
             "request_data": {
             }
@@ -293,20 +293,11 @@ def unisolate_endpoints(config, params):
         elif result.get('unisolate_endpoint') == 'Unisolate More Than One Endpoint':
             if result.get('endpoint_id_list'):
                 handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
-            if result.get('ip_list'):
-                handle_list_parameter('ip_list', params.get('ip_list'), result)
-            if result.get('platform'):
-                result['platform'] = platform_mapping.get(result.get('platform'))
-            if result.get('isolate'):
-                result['isolate'] = isolate_mapping.get(result.get('isolate'))
-            if result.get('first_seen'):
-                build_timestamp('first_seen', result.get('first_seen'), result)
-            if result.get('last_seen'):
-                build_timestamp('first_seen', result.get('first_seen'), result)
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-            response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-            return response
+                query_payload = build_query_payload(params)
+                return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
+        if result.get('incident_id'):
+            payload.get('request_data').update({"incident_id": result.get('incident_id')})
+            return obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -327,50 +318,8 @@ def get_endpoints(config, params):
     try:
         obj = CortexXdr(config)
         endpoint = '/endpoints/get_endpoint/'
-        result = build_payload(params)
-        filters_list = []
-        keys = ["endpoint_id_list", "dist_name", "group_name", "alias", "hostname", "ip_list", "platform", "isolate",
-                "first_seen", "last_seen"]
-        payload = {
-            "request_data": {
-            }
-        }
-        if result:
-            if result.get('endpoint_id_list'):
-                handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
-            if result.get('dist_name'):
-                handle_list_parameter('dist_name', params.get('dist_name'), result)
-            if result.get('group_name'):
-                handle_list_parameter('group_name', params.get('group_name'), result)
-            if result.get('alias'):
-                handle_list_parameter('alias', params.get('alias'), result)
-            if result.get('hostname'):
-                handle_list_parameter('hostname', params.get('hostname'), result)
-            if result.get('ip_list'):
-                handle_list_parameter('ip_list', params.get('ip_list'), result)
-            if result.get('platform'):
-                result['platform'] = platform_mapping.get(result.get('platform'))
-            if result.get('isolate'):
-                result['isolate'] = isolate_mapping.get(result.get('isolate'))
-            if result.get('first_seen'):
-                build_timestamp('first_seen', result.get('first_seen'), result)
-            if result.get('last_seen'):
-                build_timestamp('last_seen', result.get('last_seen'), result)
-            if result.get('sort'):
-                sortby = [{
-                    "field": sort_field.get(result.get('field')),
-                    "keyword": sort_order.get(result.get('keyword'))
-                }]
-                result['sort'] = sortby
-                result.pop('field')
-                result.pop('keyword')
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-            payload.get('request_data').update({"search_from": result.get('search_from')})
-            payload.get('request_data').update({"search_to": result.get('search_to')})
-            payload.get('request_data').update({"sort": result.get('sort')})
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        return response
+        query_payload = build_query_payload(params)
+        return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -380,39 +329,10 @@ def scan_endpoints(config, params):
     try:
         obj = CortexXdr(config)
         endpoint = '/endpoints/scan/'
-        result = build_payload(params)
-        filters_list = []
-        keys = ["endpoint_id_list", "dist_name", "group_name", "alias", "hostname", "ip_list", "platform", "isolate",
-                "first_seen", "last_seen"]
-        payload = {
-            "request_data": {
-            }
-        }
-        if result:
-            if result.get('endpoint_id_list'):
-                handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
-            if result.get('dist_name'):
-                handle_list_parameter('dist_name', params.get('dist_name'), result)
-            if result.get('group_name'):
-                handle_list_parameter('group_name', params.get('group_name'), result)
-            if result.get('alias'):
-                handle_list_parameter('alias', params.get('alias'), result)
-            if result.get('hostname'):
-                handle_list_parameter('hostname', params.get('hostname'), result)
-            if result.get('ip_list'):
-                handle_list_parameter('ip_list', params.get('ip_list'), result)
-            if result.get('platform'):
-                result['platform'] = platform_mapping.get(result.get('platform'))
-            if result.get('isolate'):
-                result['isolate'] = isolate_mapping.get(result.get('isolate'))
-            if result.get('first_seen'):
-                build_timestamp('first_seen', result.get('first_seen'), result)
-            if result.get('last_seen'):
-                build_timestamp('last_seen', result.get('last_seen'), result)
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        return response
+        query_payload = build_query_payload(params)
+        if params.get('incident_id'):
+            query_payload.get('request_data').update({"incident_id": params.get('incident_id')})
+        return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -422,39 +342,10 @@ def cancel_scan_endpoints(config, params):
     try:
         obj = CortexXdr(config)
         endpoint = '/endpoints/abort_scan/'
-        result = build_payload(params)
-        filters_list = []
-        keys = ["endpoint_id_list", "dist_name", "group_name", "alias", "hostname", "ip_list", "platform", "isolate",
-                "first_seen", "last_seen"]
-        payload = {
-            "request_data": {
-            }
-        }
-        if result:
-            if result.get('endpoint_id_list'):
-                handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
-            if result.get('dist_name'):
-                handle_list_parameter('dist_name', params.get('dist_name'), result)
-            if result.get('group_name'):
-                handle_list_parameter('group_name', params.get('group_name'), result)
-            if result.get('alias'):
-                handle_list_parameter('alias', params.get('alias'), result)
-            if result.get('hostname'):
-                handle_list_parameter('hostname', params.get('hostname'), result)
-            if result.get('ip_list'):
-                handle_list_parameter('ip_list', params.get('ip_list'), result)
-            if result.get('platform'):
-                result['platform'] = platform_mapping.get(result.get('platform'))
-            if result.get('isolate'):
-                result['isolate'] = isolate_mapping.get(result.get('isolate'))
-            if result.get('first_seen'):
-                build_timestamp('first_seen', result.get('first_seen'), result)
-            if result.get('last_seen'):
-                build_timestamp('last_seen', result.get('last_seen'), result)
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        return response
+        query_payload = build_query_payload(params)
+        if params.get('incident_id'):
+            query_payload.get('request_data').update({"incident_id": params.get('incident_id')})
+        return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -465,38 +356,9 @@ def delete_endpoints(config, params):
         obj = CortexXdr(config)
         endpoint = '/endpoints/delete/'
         result = build_payload(params)
-        filters_list = []
-        keys = ["endpoint_id_list", "dist_name", "group_name", "alias", "hostname", "ip_list", "platform", "isolate",
-                "first_seen", "last_seen"]
-        payload = {
-            "request_data": {
-            }
-        }
-        if result:
-            if result.get('endpoint_id_list'):
-                handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
-            if result.get('dist_name'):
-                handle_list_parameter('dist_name', params.get('dist_name'), result)
-            if result.get('group_name'):
-                handle_list_parameter('group_name', params.get('group_name'), result)
-            if result.get('alias'):
-                handle_list_parameter('alias', params.get('alias'), result)
-            if result.get('hostname'):
-                handle_list_parameter('hostname', params.get('hostname'), result)
-            if result.get('ip_list'):
-                handle_list_parameter('ip_list', params.get('ip_list'), result)
-            if result.get('platform'):
-                result['platform'] = platform_mapping.get(result.get('platform'))
-            if result.get('isolate'):
-                result['isolate'] = isolate_mapping.get(result.get('isolate'))
-            if result.get('first_seen'):
-                build_timestamp('first_seen', result.get('first_seen'), result)
-            if result.get('last_seen'):
-                build_timestamp('last_seen', result.get('last_seen'), result)
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        return response
+        handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
+        query_payload = build_query_payload(params)
+        return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -528,54 +390,9 @@ def get_device_violations(config, params):
             raise ConnectorError(
                 'At least one of the [Endpoint ID List, Vendor, Vendor ID, Product, Product ID, Serial, Hostname, Username, Type, IP List, Violation ID List, timestamp] is required.')
         endpoint = '/device_control/get_violations/'
-        result = build_payload(params)
-        filters_list = []
-        keys = ["endpoint_id_list", "vendor", "vendor_id", "product", "product_id", "serial", "hostname", "username",
-                "type", "ip_list", "violation_id_list", "timestamp"]
-        payload = {
-            "request_data": {
-            }
-        }
-        if result:
-            if result.get('endpoint_id_list'):
-                handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
-            if result.get('vendor'):
-                handle_list_parameter('vendor', params.get('vendor'), result)
-            if result.get('vendor_id'):
-                handle_list_parameter('vendor_id', params.get('vendor_id'), result)
-            if result.get('product'):
-                handle_list_parameter('product', params.get('product'), result)
-            if result.get('product_id'):
-                handle_list_parameter('product_id', params.get('product_id'), result)
-            if result.get('serial'):
-                handle_list_parameter('serial', params.get('serial'), result)
-            if result.get('hostname'):
-                handle_list_parameter('hostname', params.get('hostname'), result)
-            if result.get('username'):
-                handle_list_parameter('username', params.get('username'), result)
-            if result.get('type'):
-                result['type'] = violation_type.get(result.get('type'))
-            if result.get('ip_list'):
-                handle_list_parameter('ip_list', params.get('ip_list'), result)
-            if result.get('violation_id_list'):
-                handle_list_parameter('violation_id_list', params.get('violation_id_list'), result)
-            if result.get('timestamp'):
-                build_timestamp('timestamp', result.get('timestamp'), result)
-            if result.get('sort'):
-                sortby = [{
-                    "field": sort_field.get(result.get('field')),
-                    "keyword": sort_order.get(result.get('keyword'))
-                }]
-                result['sort'] = sortby
-                result.pop('field')
-                result.pop('keyword')
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-            payload.get('request_data').update({"search_from": result.get('search_from')})
-            payload.get('request_data').update({"search_to": result.get('search_to')})
-            payload.get('request_data').update({"sort": result.get('sort')})
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        return response
+
+        query_payload = build_query_payload(params)
+        return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -655,39 +472,8 @@ def get_audit_management_log(config, params):
     try:
         obj = CortexXdr(config)
         endpoint = '/audits/management_logs/'
-        result = build_payload(params)
-        filters_list = []
-        keys = ["email", "type", "sub_type", "result", "timestamp"]
-        payload = {
-            "request_data": {
-            }
-        }
-        if result:
-            if result.get('email'):
-                handle_list_parameter('email', params.get('email'), result)
-            if result.get('type'):
-                handle_list_parameter('type', params.get('type'), result)
-            if result.get('sub_type'):
-                handle_list_parameter('sub_type', params.get('sub_type'), result)
-            if result.get('result'):
-                handle_list_parameter('result', params.get('result'), result)
-            if result.get('timestamp'):
-                build_timestamp('timestamp', result.get('timestamp'), result)
-            if result.get('sort'):
-                sortby = [{
-                    "field": "timestamp",
-                    "keyword": sort_order.get(result.get('keyword'))
-                }]
-                result['sort'] = sortby
-                result.pop('field')
-                result.pop('keyword')
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-            payload.get('request_data').update({"search_from": result.get('search_from')})
-            payload.get('request_data').update({"search_to": result.get('search_to')})
-            payload.get('request_data').update({"sort": result.get('sort')})
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        return response
+        query_payload = build_query_payload(params)
+        return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -697,48 +483,8 @@ def get_audit_agent_report(config, params):
     try:
         obj = CortexXdr(config)
         endpoint = '/audits/agents_reports/'
-        result = build_payload(params)
-        filters_list = []
-        keys = ["endpoint_id", "endpoint_name", "type", "sub_type", "result", "domain", "xdr_version", "category",
-                "timestamp"]
-        payload = {
-            "request_data": {
-            }
-        }
-        if result:
-            if result.get('endpoint_id'):
-                handle_list_parameter('endpoint_id', params.get('endpoint_id'), result)
-            if result.get('endpoint_name'):
-                handle_list_parameter('endpoint_name', params.get('endpoint_name'), result)
-            if result.get('type'):
-                handle_list_parameter('type', params.get('type'), result)
-            if result.get('sub_type'):
-                handle_list_parameter('sub_type', params.get('sub_type'), result)
-            if result.get('result'):
-                handle_list_parameter('result', params.get('result'), result)
-            if result.get('domain'):
-                handle_list_parameter('domain', params.get('domain'), result)
-            if result.get('xdr_version'):
-                handle_list_parameter('xdr_version', params.get('xdr_version'), result)
-            if result.get('category'):
-                result['category'] = category_mapping.get(result.get('category'))
-            if result.get('timestamp'):
-                build_timestamp('timestamp', result.get('timestamp'), result)
-            if result.get('sort'):
-                sortby = [{
-                    "field": sort_field.get(result.get('field')),
-                    "keyword": sort_order.get(result.get('keyword'))
-                }]
-                result['sort'] = sortby
-                result.pop('field')
-                result.pop('keyword')
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-            payload.get('request_data').update({"search_from": result.get('search_from')})
-            payload.get('request_data').update({"search_to": result.get('search_to')})
-            payload.get('request_data').update({"sort": result.get('sort')})
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        return response
+        query_payload = build_query_payload(params)
+        return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -747,7 +493,7 @@ def get_audit_agent_report(config, params):
 def blacklist_files(config, params):
     try:
         obj = CortexXdr(config)
-        endpoint = '/hash_exceptions/blacklist/'
+        endpoint = '/hash_exceptions/blocklist/'
         payload = {
             "request_data": {
             }
@@ -757,6 +503,8 @@ def blacklist_files(config, params):
             payload.get('request_data').update({"hash_list": alerts})
         if params.get('comment'):
             payload.get('request_data').update({"comment": params.get('comment')})
+        if params.get('incident_id'):
+            payload.get('request_data').update({"incident_id": params.get('incident_id')})
         response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
         return response
     except Exception as Err:
@@ -767,7 +515,7 @@ def blacklist_files(config, params):
 def whitelist_files(config, params):
     try:
         obj = CortexXdr(config)
-        endpoint = '/hash_exceptions/whitelist/'
+        endpoint = '/hash_exceptions/allowlist/'
         payload = {
             "request_data": {
             }
@@ -777,6 +525,8 @@ def whitelist_files(config, params):
             payload.get('request_data').update({"hash_list": alerts})
         if params.get('comment'):
             payload.get('request_data').update({"comment": params.get('comment')})
+        if params.get('incident_id'):
+            payload.get('request_data').update({"incident_id": params.get('incident_id')})
         response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
         return response
     except Exception as Err:
@@ -788,41 +538,10 @@ def quarantine_files(config, params):
     try:
         obj = CortexXdr(config)
         endpoint = '/endpoints/quarantine/'
-        result = build_payload(params)
-        filters_list = []
-        keys = ["endpoint_id_list", "dist_name", "group_name", "alias", "hostname", "ip_list", "platform", "isolate",
-                "first_seen", "last_seen"]
-        payload = {
-            "request_data": {
-            }
-        }
-        if result:
-            if result.get('endpoint_id_list'):
-                handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
-            if result.get('dist_name'):
-                handle_list_parameter('dist_name', params.get('dist_name'), result)
-            if result.get('group_name'):
-                handle_list_parameter('group_name', params.get('group_name'), result)
-            if result.get('alias'):
-                handle_list_parameter('alias', params.get('alias'), result)
-            if result.get('hostname'):
-                handle_list_parameter('hostname', params.get('hostname'), result)
-            if result.get('ip_list'):
-                handle_list_parameter('ip_list', params.get('ip_list'), result)
-            if result.get('platform'):
-                result['platform'] = platform_mapping.get(result.get('platform'))
-            if result.get('isolate'):
-                result['isolate'] = isolate_mapping.get(result.get('isolate'))
-            if result.get('first_seen'):
-                build_timestamp('first_seen', result.get('first_seen'), result)
-            if result.get('last_seen'):
-                build_timestamp('last_seen', result.get('last_seen'), result)
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-            payload.get('request_data').update({"file_path": result.get('file_path')})
-            payload.get('request_data').update({"file_hash": result.get('file_hash')})
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        return response
+        query_payload = build_query_payload(params)
+        query_payload.get('request_data').update({"file_path": params.get('file_path')})
+        query_payload.get('request_data').update({"file_hash": params.get('file_hash')})
+        return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -859,6 +578,8 @@ def restore_file(config, params):
         }
         if params.get('endpoint_id'):
             payload.get('request_data').update({"endpoint_id": params.get('endpoint_id')})
+        if params.get('incident_id'):
+            payload.get('request_data').update({"incident_id": params.get('incident_id')})
         response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
         return response
     except Exception as Err:
@@ -870,51 +591,44 @@ def retrieve_file(config, params):
     try:
         obj = CortexXdr(config)
         endpoint = '/endpoints/file_retrieval/'
-        result = build_payload(params)
-        filters_list = []
-        keys = ["endpoint_id_list", "dist_name", "group_name", "alias", "hostname", "ip_list", "platform", "isolate",
-                "first_seen", "last_seen"]
+        query_payload = build_query_payload(params)
+        files = {"files": {platform_mapping.get(params.get('files')): [params.get('file_path')]}}
+        query_payload['request_data'].update(files)
+        action_id_response = obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(query_payload))
+        params_dict = {"group_action_id": action_id_response.get('reply').get('action_id')}
+        import time
+        time.sleep(20)
+
+        download_link_response = retrieve_file_details(config, params_dict)
+        file_link = download_link_response.get('reply').get('data')
+        file_data = obj.make_api_call(method='POST', endpoint=list(file_link.values())[0], flag=True)
+        attachment = file_data.headers.get('Content-Disposition')
+        attachment = attachment.split(';')
+        file_name = attachment[1].split('=')[1]
+        path = os.path.join(settings.TMP_FILE_ROOT, file_name)
+        logger.error("Path: {0}".format(path))
+        with open(path, 'wb') as fp:
+            fp.write(file_data.content)
+        attach_response = upload_file_to_cyops(file_path=file_name, filename=file_name,
+                                               name=file_name, create_attachment=True)
+        return attach_response
+
+
+    except Exception as Err:
+        logger.error('Exception occurred: {}'.format(Err))
+        raise ConnectorError(Err)
+
+def retrieve_file_details(config, params):
+    try:
+        obj = CortexXdr(config)
+        endpoint = '/actions/file_retrieval_details/'
+
         payload = {
             "request_data": {
+                "group_action_id": params.get('group_action_id')
             }
         }
-        if result:
-            if result.get('endpoint_id_list'):
-                handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
-            if result.get('dist_name'):
-                handle_list_parameter('dist_name', params.get('dist_name'), result)
-            if result.get('group_name'):
-                handle_list_parameter('group_name', params.get('group_name'), result)
-            if result.get('alias'):
-                handle_list_parameter('alias', params.get('alias'), result)
-            if result.get('hostname'):
-                handle_list_parameter('hostname', params.get('hostname'), result)
-            if result.get('ip_list'):
-                handle_list_parameter('ip_list', params.get('ip_list'), result)
-            if result.get('platform'):
-                result['platform'] = platform_mapping.get(result.get('platform'))
-            if result.get('isolate'):
-                result['isolate'] = isolate_mapping.get(result.get('isolate'))
-            if result.get('first_seen'):
-                build_timestamp('first_seen', result.get('first_seen'), result)
-            if result.get('last_seen'):
-                build_timestamp('last_seen', result.get('last_seen'), result)
-            build_filter_payload(result, keys, filters_list)
-            payload.get('request_data').update({"filters": filters_list})
-            if not isinstance(result.get('file_path'), list):
-                file_paths = [x.strip() for x in params.get('file_path').split(',')]
-                files = {"file": {
-                    platform_mapping.get(result.get('files')): file_paths
-                }
-                }
-            else:
-                files = {"file": {
-                    platform_mapping.get(result.get('files')): result.get('file_path')
-                }
-                }
-            payload.get('request_data').update(files)
-        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        return response
+        return obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload))
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -946,5 +660,6 @@ operations = {
     'quarantine_files': quarantine_files,
     'get_quarantine_status': get_quarantine_status,
     'restore_file': restore_file,
-    'retrieve_file': retrieve_file
+    'retrieve_file': retrieve_file,
+    'retrieve_file_details': retrieve_file_details
 }

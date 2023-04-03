@@ -2,14 +2,14 @@
   "name": "paloalto-cortex-xdr",
   "label": "Palo Alto Cortex XDR",
   "description": "Cortex XDR applies machine learning at cloud scale to rich network, endpoint, and cloud data, so you can quickly find and stop targeted attacks, insider abuse, and compromised endpoints.",
-  "publisher": "Community",
+  "publisher": "Fortinet",
   "cs_approved": false,
   "cs_compatible": true,
-  "version": "1.0.0",
-  "category": "Investigation",
+  "version": "1.1.0",
+  "category": "Endpoint Security",
   "icon_small_name": "PaloAlto_Cortex_XDR_small.png",
   "icon_large_name": "PaloAlto_Cortex_XDR_large.png",
-  "help_online": "https://help.cybersponse.com/support/solutions/articles/17000101465-paloalto-cortex-xdr-v1-0-0",
+  "help_online": "",
   "configuration": {
     "fields": [
       {
@@ -85,12 +85,9 @@
               "manual_description": "",
               "xdr_url": "",
               "starred": "",
-              "hosts": [
-              ],
-              "users": [
-              ],
-              "incident_sources": [
-              ]
+              "hosts": [],
+              "users": [],
+              "incident_sources": []
             }
           ]
         }
@@ -98,119 +95,107 @@
       "enabled": true,
       "parameters": [
         {
-          "title": "Operator",
-          "required": true,
+          "title": "Incident ID List",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.incident_id_list",
+          "value": "",
+          "placeholder": "[\"9834\",\"1234\"]",
+          "tooltip": "List of incident IDs. Each item in the list must be an incident ID.",
+          "description": "List of incident IDs. Each item in the list must be an incident ID."
+        },
+        {
+          "title": "Created After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.creation_time",
+          "value": "",
+          "tooltip": " Incidents created after this time",
+          "description": "Incidents created after this time"
+        },
+        {
+          "title": "Created Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.creation_time",
+          "value": "",
+          "tooltip": " Incidents created before this time",
+          "description": "Incidents created before this time"
+        },
+        {
+          "title": "Modified After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.modification_time",
+          "value": "",
+          "tooltip": " Incidents modified after this time",
+          "description": "Incidents modified after this time"
+        },
+        {
+          "title": "Modified Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.modification_time",
+          "value": "",
+          "tooltip": " Incidents modified before this time",
+          "description": "Incidents modified before this time"
+        },
+        {
+          "title": "Alert Sources",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.alert_sources",
+          "value": "",
+          "placeholder": "[\"XDR Agent\"]",
+          "tooltip": "List of sources which detected the alert. Even if you have one source it has to be a list of one element",
+          "description": "List of sources which detected the alert."
+        },
+        {
+          "title": "Status",
+          "required": false,
           "editable": true,
           "visible": true,
           "type": "select",
           "options": [
-            "In",
-            "Contains",
-            "Greater Than Equal To",
-            "Less Than Equal To"
+            "New",
+            "Under Investigation",
+            "Resolved Threat Handled",
+            "Resolved Known Issue",
+            "Resolved Duplicate",
+            "Resolved True Positive",
+            "Resolved False Positive",
+            "Resolved Security Testing",
+            "Resolved Auto",
+            "Resolved Other"
           ],
-          "onchange": {
-            "In": [
-              {
-                "title": "Incident ID List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "incident_id_list",
-                "value": "",
-                "tooltip": "List of incident IDs. Each item in the list must be an incident ID.",
-                "description": "List of incident IDs. Each item in the list must be an incident ID."
-              },
-              {
-                "title": "Alert Sources",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "alert_sources",
-                "value": "",
-                "tooltip": "Source which detected the alert.",
-                "description": "Source which detected the alert."
-              },
-              {
-                "title": "Description",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "description",
-                "value": "",
-                "tooltip": "Description of the incident that you want to fetch from Palo Alto Cortex XDR.",
-                "description": "Description of the incident that you want to fetch from Palo Alto Cortex XDR."
-              }
-            ],
-            "Contains": [
-              {
-                "title": "Description",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "description",
-                "value": "",
-                "tooltip": "Description of the incident that you want to fetch from Palo Alto Cortex XDR.",
-                "description": "Description of the incident that you want to fetch from Palo Alto Cortex XDR."
-              }
-            ],
-            "Greater Than Equal To": [
-              {
-                "title": "Modification Time",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "modification_time",
-                "value": "",
-                "tooltip": "Time the incident has been modified.",
-                "description": "Time the incident has been modified."
-              },
-              {
-                "title": "Creation Time",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "creation_time",
-                "value": "",
-                "tooltip": " Incident's creation time.",
-                "description": " Incident's creation time."
-              }
-            ],
-            "Less Than Equal To": [
-              {
-                "title": "Modification Time",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "modification_time",
-                "value": "",
-                "tooltip": "Time the incident has been modified.",
-                "description": "Time the incident has been modified."
-              },
-              {
-                "title": "Creation Time",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "creation_time",
-                "value": "",
-                "tooltip": " Incident's creation time.",
-                "description": " Incident's creation time."
-              }
-            ]
-          },
-          "name": "operator",
+          "name": "filter.eq.status",
           "value": "",
-          "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-          "description": "String that identifies the comparison operator you want to use to filter incidents to be retrieved from Palo Alto Cortex XDR. You can choose from the following: In, Contains, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Incident ID List: List of incident IDs based on which you want to retrieve incidents from Palo Alto Cortex XDR. Each item in the list must be an incident ID. Alert Sources: Source which detected the alert whose associated incidents you want to retrieve from Palo Alto Cortex XDR. Description: Description of the incident that you want to retrieve from Palo Alto Cortex XDR. If you choose the 'Contains' operator, then you can specify the following parameters: Description: Description of the incident that you want to retrieve from Palo Alto Cortex XDR. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: Modification Time: Time the incident has been modified. This operator will retrieve all incidents that match the time specified or the time later than the time specified from Palo Alto Cortex XDR. Creation Time: Time that the incident has been created. This operator will retrieve all incidents that match the time specified or the time later than the time specified from Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: Modification Time: Time the incident has been modified. This operator will retrieve all incidents that match the time specified or the time earlier than the time specified from Palo Alto Cortex XDR. Creation Time: Time that the incident has been created. This operator will retrieve all incidents that match the time specified or the time earlier than the time specified from Palo Alto Cortex XDR."
+          "tooltip": "List of sources which detected the alert. Even if you have one source it has to be a list of one element",
+          "description": "List of sources which detected the alert."
+        },
+        {
+          "title": "Description",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.contains.description",
+          "value": "",
+          "placeholder": "wevtutil.exe",
+          "tooltip": "Search by keyword in the description of the incident",
+          "description": "Search by keyword in the description of the incident"
         },
         {
           "title": "Search From",
@@ -218,7 +203,7 @@
           "editable": true,
           "visible": true,
           "type": "integer",
-          "name": "search_from",
+          "name": "cursor.search_from",
           "value": 0,
           "tooltip": "Integer representing the starting offset within the query result set from which you want incidents returned.",
           "description": "Integer representing the starting offset within the query result set from which you want this operation to return incidents from Palo Alto Cortex XDR."
@@ -228,56 +213,41 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "type": "text",
-          "name": "integer",
+          "type": "integer",
+          "name": "cursor.search_to",
           "value": 100,
           "tooltip": "Integer representing the end offset within the result set after which you do not want incidents returned.",
           "description": "Integer representing the end offset within the result set after which you do not want this operation to return incidents from Palo Alto Cortex XDR."
         },
         {
-          "title": "Sort",
+          "title": "Sort by Field",
           "required": false,
           "editable": true,
           "visible": true,
-          "type": "checkbox",
-          "onchange": {
-            "true": [
-              {
-                "title": "Sort by Field",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Modification Time",
-                  "Creation Time"
-                ],
-                "name": "field",
-                "value": "",
-                "tooltip": "The field by which you want to sort the incidents.",
-                "description": "The field by which you want to sort the incidents."
-              },
-              {
-                "title": "Sort by Order",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Ascending",
-                  "Descending"
-                ],
-                "name": "keyword",
-                "value": "",
-                "tooltip": "The order by which you want to sort the incidents.",
-                "description": "The order by which you want to sort the incidents."
-              }
-            ]
-          },
-          "name": "sort",
-          "value": false,
-          "tooltip": "Select if you want to filter incidents by field and order.",
-          "description": "Select this option if you want to sort the retrieved incidents by field and order the results. If you select this option, then you can specify the following parameters: Sort by Field: Choose the field by which you want to sort the incidents. You can choose between Modification Time or Creation Time. Sort by Order: Choose the order in which you want to sort the result. You can choose between Ascending or Descending."
+          "type": "select",
+          "options": [
+            "creation_time",
+            "modification_time"
+          ],
+          "name": "sort.field",
+          "value": "creation_time",
+          "tooltip": "The field by which you want to sort the incidents.",
+          "description": "The field by which you want to sort the incidents."
+        },
+        {
+          "title": "Sort by Order",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "asc",
+            "desc"
+          ],
+          "name": "sort.keyword",
+          "value": "desc",
+          "tooltip": "The order by which you want to sort the incidents.",
+          "description": "The order by which you want to sort the incidents."
         }
       ]
     },
@@ -448,7 +418,7 @@
           "description": "(Optional) Full name of the incident assignee that you want to update in the specified incident in Palo Alto Cortex XDR."
         },
         {
-          "title": "Severity",
+          "title": "Manual Severity",
           "required": false,
           "editable": true,
           "visible": true,
@@ -456,7 +426,9 @@
           "options": [
             "High",
             "Medium",
-            "Low"
+            "Low",
+            "Critical",
+            "Informational"
           ],
           "name": "manual_severity",
           "value": "",
@@ -472,7 +444,8 @@
           "options": [
             "New",
             "Under Investigation",
-            "Resolved Threat Handled",
+            "Resolved True Positive",
+            "Resolved Security Testing",
             "Resolved Known Issue",
             "Resolved Duplicate",
             "Resolved False Positive",
@@ -482,6 +455,43 @@
           "value": "",
           "tooltip": "The status of the incident.",
           "description": "(Optional) Full name of the incident assignee that you want to update in the specified incident in Palo Alto Cortex XDR. You can choose from the following options: New, Under Investigation, Resolved Threat Handled, Resolved Know Issue, Resolved Duplicate, Resolved False Positive, or Resolved Other."
+        },
+        {
+          "title": "Comment",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "checkbox",
+          "name": "comment",
+          "onchange": {
+            "true": [
+              {
+                "title": "Comment Action",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "comment_action",
+                "value": "",
+                "tooltip": "Comment action i.e. add.",
+                "description": "Comment action i.e. add required to update incident."
+              },
+              {
+                "title": "Value",
+                "required": false,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "value",
+                "value": "",
+                "tooltip": "Value for comment explaining the incident change.",
+                "description": "Value for comment that explains the updates made to the specified incident."
+              }
+            ]
+          },
+          "value": "",
+          "tooltip": "Comment explaining the incident change.",
+          "description": "Comment that explains the updates made to the specified incident."
         },
         {
           "title": "Resolve Comment",
@@ -532,6 +542,17 @@
       "enabled": true,
       "parameters": [
         {
+          "title": "Alert Name",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "alert_name",
+          "value": "",
+          "tooltip": "String defining the alert name.",
+          "description": "String defining the name of the alert that you want to upload to Palo Alto Cortex XDR."
+        },
+        {
           "title": "Product",
           "required": true,
           "editable": true,
@@ -553,17 +574,6 @@
           "value": "",
           "tooltip": "String value that defines the vendor. For example, Check Point.",
           "description": "String value that defines the vendor. For example, Check Point."
-        },
-        {
-          "title": "Local IP",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "local_ip",
-          "value": "",
-          "tooltip": "String value for the source IP address.",
-          "description": "String value for the source IP address."
         },
         {
           "title": "Local Port",
@@ -599,8 +609,19 @@
           "description": "Integer value for the destination port."
         },
         {
+          "title": "Local IP",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "local_ip",
+          "value": "",
+          "tooltip": "String value for the source IP address.",
+          "description": "String value for the source IP address."
+        },
+        {
           "title": "Event Timestamp",
-          "required": true,
+          "required": false,
           "editable": true,
           "visible": true,
           "type": "datetime",
@@ -608,17 +629,6 @@
           "value": "",
           "tooltip": "Time the alert occurred.",
           "description": "Time the alert occurred."
-        },
-        {
-          "title": "Alert Name",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "alert_name",
-          "value": "",
-          "tooltip": "String defining the alert name.",
-          "description": "String defining the name of the alert that you want to upload to Palo Alto Cortex XDR."
         },
         {
           "title": "Severity",
@@ -648,6 +658,17 @@
           "value": "",
           "tooltip": "String defining the alert description.",
           "description": "(Optional) String defining the description of the alert that you want to upload to Palo Alto Cortex XDR."
+        },
+        {
+          "title": "Action Status",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "action_status",
+          "value": "",
+          "tooltip": "String defining the alert action status. e.g. Reported",
+          "description": "(Optional) String defining the action status of the alert that you want to upload to Palo Alto Cortex XDR. e.g. Reported"
         }
       ]
     },
@@ -690,170 +711,15 @@
             ],
             "Isolate More Than One Endpoint": [
               {
-                "title": "Operator",
+                "title": "Endpoint ID List",
                 "required": true,
                 "editable": true,
                 "visible": true,
-                "type": "select",
-                "options": [
-                  "In",
-                  "Greater Than Equal To",
-                  "Less Than Equal To"
-                ],
-                "onchange": {
-                  "In": [
-                    {
-                      "title": "Endpoint ID List",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "endpoint_id_list",
-                      "value": "",
-                      "tooltip": "List of endpoint IDs.",
-                      "description": "List of endpoint IDs."
-                    },
-                    {
-                      "title": "Distribution Name",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "dist_name",
-                      "value": "",
-                      "tooltip": "Name of the distribution list.",
-                      "description": "Name of the distribution list."
-                    },
-                    {
-                      "title": "Group Mame",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "group_name",
-                      "value": "",
-                      "tooltip": "Name of endpoint group.",
-                      "description": "Name of endpoint group."
-                    },
-                    {
-                      "title": "Alias",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "alias",
-                      "value": "",
-                      "tooltip": "Endpoint alias name.",
-                      "description": "Endpoint alias name."
-                    },
-                    {
-                      "title": "Hostname",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "hostname",
-                      "value": "",
-                      "tooltip": "Name of host.",
-                      "description": "Name of host."
-                    },
-                    {
-                      "title": "IP List",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "ip_list",
-                      "value": "",
-                      "tooltip": "List of ip addresses.",
-                      "description": "List of ip addresses."
-                    },
-                    {
-                      "title": "Platform",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "select",
-                      "options": [
-                        "Windows",
-                        "Linux",
-                        "Macos",
-                        "Android"
-                      ],
-                      "name": "platform",
-                      "value": "",
-                      "tooltip": "Type of operating system.",
-                      "description": "Type of operating system."
-                    },
-                    {
-                      "title": "Isolate",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "select",
-                      "options": [
-                        "Isolated",
-                        "Unisolated"
-                      ],
-                      "name": "isolate",
-                      "value": "",
-                      "tooltip": "If an endpoint has been isolated.",
-                      "description": "If an endpoint has been isolated."
-                    }
-                  ],
-                  "Greater Than Equal To": [
-                    {
-                      "title": "First Seen",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "datetime",
-                      "name": "first_seen",
-                      "value": "",
-                      "tooltip": "When an endpoint was first seen.",
-                      "description": "When an endpoint was first seen."
-                    },
-                    {
-                      "title": "Last Seen",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "datetime",
-                      "name": "last_seen",
-                      "value": "",
-                      "tooltip": "When an endpoint was last seen.",
-                      "description": "When an endpoint was last seen."
-                    }
-                  ],
-                  "Less Than Equal To": [
-                    {
-                      "title": "First Seen",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "datetime",
-                      "name": "first_seen",
-                      "value": "",
-                      "tooltip": "When an endpoint was first seen.",
-                      "description": "When an endpoint was first seen."
-                    },
-                    {
-                      "title": "Last Seen",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "datetime",
-                      "name": "last_seen",
-                      "value": "",
-                      "tooltip": "When an endpoint was last seen.",
-                      "description": "When an endpoint was last seen."
-                    }
-                  ]
-                },
-                "name": "operator",
+                "type": "text",
+                "name": "endpoint_id_list",
                 "value": "",
-                "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-                "description": "String that identifies the comparison operator you want to use for this filter."
+                "tooltip": "List of endpoint IDs.",
+                "description": "List of endpoint IDs."
               }
             ]
           },
@@ -861,6 +727,17 @@
           "value": "",
           "tooltip": "Isolate one endpoint or more than one endpoint.",
           "description": "Choose whether you want to isolate a single endpoint or more than one endpoint on Palo Alto Cortex XDR. You can choose between Isolate One Endpoint or Isolate More Than One Endpoint. If you choose the 'Isolate One Endpoint' option, then you can specify the following parameters: Endpoint ID: ID of the endpoint that you want to isolate on Palo Alto Cortex XDR. If you choose the 'Isolate More Than One Endpoint' option, then you can specify the following parameters: Operator: String that identifies the comparison operator you want to use to filter endpoint to be isolated on Palo Alto Cortex XDR. You can choose from the following: In, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Endpoint ID List: List of endpoint IDs to isolate on Palo Alto Cortex XDR. Distribution Name: Name of the distribution list containing the endpoints to isolate on Palo Alto Cortex XDR. Group Name: Name of the group containing the endpoints to isolate on Palo Alto Cortex XDR. Alias: Alias of the endpoints to isolate on Palo Alto Cortex XDR. Hostname: Name of the host of the endpoints to isolate on Palo Alto Cortex XDR. IP list: List of IP addresses containing the endpoints to isolate on Palo Alto Cortex XDR. Platform: Type of operating system that contains the endpoints to isolate on Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android. Isolate: Select Isolated if the endpoints are isolated. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will isolate all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. Last Seen: Time when the endpoint was last seen. This operator will isolate all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will isolate all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR. Last Seen: Time that the incident was last seen. This operator will isolate all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
+        },
+        {
+          "title": "Incident ID",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "incident_id",
+          "value": "",
+          "tooltip": "Incident ID.",
+          "description": "The incident ID. When included in the request, the Isolate Endpoints action will appear in the Cortex XDR Incident ViewTimeline tab."
         }
       ]
     },
@@ -903,170 +780,15 @@
             ],
             "Unisolate More Than One Endpoint": [
               {
-                "title": "Operator",
-                "required": true,
+                "title": "Endpoint ID List",
+                "required": false,
                 "editable": true,
                 "visible": true,
-                "type": "select",
-                "options": [
-                  "In",
-                  "Greater Than Equal To",
-                  "Less Than Equal To"
-                ],
-                "onchange": {
-                  "In": [
-                    {
-                      "title": "Endpoint ID List",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "endpoint_id_list",
-                      "value": "",
-                      "tooltip": "List of endpoint IDs.",
-                      "description": "List of endpoint IDs."
-                    },
-                    {
-                      "title": "Distribution Name",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "dist_name",
-                      "value": "",
-                      "tooltip": "Name of the distribution list.",
-                      "description": "Name of the distribution list."
-                    },
-                    {
-                      "title": "Group Mame",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "group_name",
-                      "value": "",
-                      "tooltip": "Name of endpoint group.",
-                      "description": "Name of endpoint group."
-                    },
-                    {
-                      "title": "Alias",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "alias",
-                      "value": "",
-                      "tooltip": "Endpoint alias name.",
-                      "description": "Endpoint alias name."
-                    },
-                    {
-                      "title": "Hostname",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "hostname",
-                      "value": "",
-                      "tooltip": "Name of host.",
-                      "description": "Name of host."
-                    },
-                    {
-                      "title": "IP List",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "text",
-                      "name": "ip_list",
-                      "value": "",
-                      "tooltip": "List of ip addresses.",
-                      "description": "List of ip addresses."
-                    },
-                    {
-                      "title": "Platform",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "select",
-                      "options": [
-                        "Windows",
-                        "Linux",
-                        "Macos",
-                        "Android"
-                      ],
-                      "name": "platform",
-                      "value": "",
-                      "tooltip": "Type of operating system.",
-                      "description": "Type of operating system."
-                    },
-                    {
-                      "title": "Isolate",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "select",
-                      "options": [
-                        "Isolated",
-                        "Unisolated"
-                      ],
-                      "name": "isolate",
-                      "value": "",
-                      "tooltip": "If an endpoint has been isolated.",
-                      "description": "If an endpoint has been isolated."
-                    }
-                  ],
-                  "Greater Than Equal To": [
-                    {
-                      "title": "First Seen",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "datetime",
-                      "name": "first_seen",
-                      "value": "",
-                      "tooltip": "When an endpoint was first seen.",
-                      "description": "When an endpoint was first seen."
-                    },
-                    {
-                      "title": "Last Seen",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "datetime",
-                      "name": "last_seen",
-                      "value": "",
-                      "tooltip": "When an endpoint was last seen.",
-                      "description": "When an endpoint was last seen."
-                    }
-                  ],
-                  "Less Than Equal To": [
-                    {
-                      "title": "First Seen",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "datetime",
-                      "name": "first_seen",
-                      "value": "",
-                      "tooltip": "When an endpoint was first seen.",
-                      "description": "When an endpoint was first seen."
-                    },
-                    {
-                      "title": "Last Seen",
-                      "required": false,
-                      "editable": true,
-                      "visible": true,
-                      "type": "datetime",
-                      "name": "last_seen",
-                      "value": "",
-                      "tooltip": "When an endpoint was last seen.",
-                      "description": "When an endpoint was last seen."
-                    }
-                  ]
-                },
-                "name": "operator",
+                "type": "text",
+                "name": "endpoint_id_list",
                 "value": "",
-                "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-                "description": "String that identifies the comparison operator you want to use for this filter."
+                "tooltip": "List of endpoint IDs.",
+                "description": "List of endpoint IDs."
               }
             ]
           },
@@ -1074,6 +796,17 @@
           "value": "",
           "tooltip": "Unisolate one endpoint or more than one endpoint.",
           "description": "Choose whether you want to unisolate a single endpoint or more than one endpoint on Palo Alto Cortex XDR. You can choose between unisolate One Endpoint or unisolate More Than One Endpoint. If you choose the 'Unisolate One Endpoint' option, then you can specify the following parameters: Endpoint ID: ID of the endpoint that you want to unisolate on Palo Alto Cortex XDR. If you choose the 'Unisolate More Than One Endpoint' option, then you can specify the following parameters: Operator: String that identifies the comparison operator you want to use to filter endpoint to be unisolated on Palo Alto Cortex XDR. You can choose from the following: In, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Endpoint ID List: List of endpoint IDs to unisolate on Palo Alto Cortex XDR. Distribution Name: Name of the distribution list containing the endpoints to unisolate on Palo Alto Cortex XDR. Group Name: Name of the group containing the endpoints to unisolate on Palo Alto Cortex XDR. Alias: Alias of the endpoints to unisolate on Palo Alto Cortex XDR. Hostname: Name of the host of the endpoints to unisolate on Palo Alto Cortex XDR. IP list: List of IP addresses containing the endpoints to unisolate on Palo Alto Cortex XDR. Platform: Type of operating system that contains the endpoints to unisolate on Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android. Isolate: Select Unisolated if the endpoints are unisolated. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will unisolate all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. Last Seen: Time when the endpoint was last seen. This operator will unisolate all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will unisolate all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR. Last Seen: Time that the incident was last seen. This operator will unisolate all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
+        },
+        {
+          "title": "Incident ID",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "incident_id",
+          "value": "",
+          "tooltip": "Incident ID.",
+          "description": "The incident ID. Incident ID. When included in the request, the Unisolate Endpoints action will appear in the Cortex XDR Incident View Timeline tab."
         }
       ]
     },
@@ -1136,170 +869,195 @@
       "enabled": true,
       "parameters": [
         {
-          "title": "Operator",
-          "required": true,
+          "title": "Endpoint ID List",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.endpoint_id_list",
+          "value": "",
+          "tooltip": "List of endpoint IDs.",
+          "description": "List of endpoint IDs."
+        },
+        {
+          "title": "Distribution Name",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.dist_name",
+          "value": "",
+          "tooltip": "Distribution / Installation Package name.",
+          "description": "Distribution / Installation Package name."
+        },
+        {
+          "title": "Group Name",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.group_name",
+          "value": "",
+          "tooltip": "Group name the agent belongs to.",
+          "description": "Group name the agent belongs to."
+        },
+        {
+          "title": "Alias",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.alias",
+          "value": "",
+          "tooltip": "Endpoint alias name.",
+          "description": "Endpoint alias name."
+        },
+        {
+          "title": "Hostname",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.hostname",
+          "value": "",
+          "tooltip": "Name of host.",
+          "description": "Name of host."
+        },
+        {
+          "title": "Username",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.username",
+          "value": "",
+          "tooltip": "Name of the user.",
+          "description": "Name of the user."
+        },
+        {
+          "title": "Endpoint Status",
+          "required": false,
           "editable": true,
           "visible": true,
           "type": "select",
           "options": [
-            "In",
-            "Greater Than Equal To",
-            "Less Than Equal To"
+            "Connected",
+            "Disconnected",
+            "Lost",
+            "Uninstalled"
           ],
-          "onchange": {
-            "In": [
-              {
-                "title": "Endpoint ID List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id_list",
-                "value": "",
-                "tooltip": "List of endpoint IDs.",
-                "description": "List of endpoint IDs."
-              },
-              {
-                "title": "Distribution Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "dist_name",
-                "value": "",
-                "tooltip": "Distribution / Installation Package name.",
-                "description": "Distribution / Installation Package name."
-              },
-              {
-                "title": "Group Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "group_name",
-                "value": "",
-                "tooltip": "Group name the agent belongs to.",
-                "description": "Group name the agent belongs to."
-              },
-              {
-                "title": "Alias",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "alias",
-                "value": "",
-                "tooltip": "Endpoint alias name.",
-                "description": "Endpoint alias name."
-              },
-              {
-                "title": "Hostname",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "hostname",
-                "value": "",
-                "tooltip": "Name of host.",
-                "description": "Name of host."
-              },
-              {
-                "title": "IP List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "ip_list",
-                "value": "",
-                "tooltip": "List of ip addresses.",
-                "description": "List of ip addresses."
-              },
-              {
-                "title": "Platform",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Windows",
-                  "Linux",
-                  "Macos",
-                  "Android"
-                ],
-                "name": "platform",
-                "value": "",
-                "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
-                "description": "Type of operating system. e.g. windows, linux, macos, android"
-              },
-              {
-                "title": "Isolate",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Isolated",
-                  "Unisolated"
-                ],
-                "name": "isolate",
-                "value": "",
-                "tooltip": "If an endpoint has been isolated.",
-                "description": "If an endpoint has been isolated."
-              }
-            ],
-            "Greater Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When the agent was first seen.",
-                "description": "When the agent was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When the agent was last seen.",
-                "description": "When the agent was last seen."
-              }
-            ],
-            "Less Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When the agent was first seen.",
-                "description": "When the agent was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When the agent was last seen.",
-                "description": "When the agent was last seen."
-              }
-            ]
-          },
-          "name": "operator",
+          "name": "filter.in.endpoint_status",
           "value": "",
-          "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-          "description": "String that identifies the comparison operator you want to use to filter endpoints to be retrieved from Palo Alto Cortex XDR. You can choose from the following: In, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Endpoint ID List: List of endpoint IDs based on which you want to retrieve endpoints from Palo Alto Cortex XDR. Distribution Name: Name of the distribution list or installation package name containing the endpoints to be retrieved from Palo Alto Cortex XDR. Group Name: Name of the group containing the endpoints to be retrieved from Palo Alto Cortex XDR. Alias: Alias of the endpoints to be retrieved from Palo Alto Cortex XDR. Hostname: Name of the host of the endpoints to be retrieved from Palo Alto Cortex XDR. IP list: List of IP addresses containing the endpoints to be retrieved from Palo Alto Cortex XDR. Platform: Type of operating system that contains the endpoints to be retrieved from Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android. Isolate: Select Isolated if the endpoints have been isolated and Unisolated if the endpoints have been unisolated. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will retrieve all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. Last Seen: Time when the endpoint was last seen. This operator will retrieve all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will retrieve all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR. Last Seen: Time that the incident was last seen. This operator will retrieve all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
+          "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
+          "description": "Type of operating system. e.g. windows, linux, macos, android"
+        },
+        {
+          "title": "IP List",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.ip_list",
+          "value": "",
+          "tooltip": "List of ip addresses.",
+          "description": "List of ip addresses."
+        },
+        {
+          "title": "Platform",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Windows",
+            "Linux",
+            "Macos",
+            "Android"
+          ],
+          "name": "filter.in.platform",
+          "value": "",
+          "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
+          "description": "Type of operating system. e.g. windows, linux, macos, android"
+        },
+        {
+          "title": "Isolate",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Isolated",
+            "Unisolated"
+          ],
+          "name": "filter.in.isolate",
+          "value": "",
+          "tooltip": "If an endpoint has been isolated.",
+          "description": "If an endpoint has been isolated."
+        },
+        {
+          "title": "Scan Status",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "None",
+            "Pending",
+            "In Progress",
+            "Canceled",
+            "Aborted",
+            "Pending Cancellation",
+            "Success",
+            "Error"
+          ],
+          "name": "filter.in.scan_status",
+          "value": "",
+          "tooltip": "If an endpoint has been isolated.",
+          "description": "If an endpoint has been isolated."
+        },
+        {
+          "title": "First Seen After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.first_seen",
+          "value": "",
+          "tooltip": "When the agent was first seen.",
+          "description": "When the agent was first seen."
+        },
+        {
+          "title": "First Seen Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.first_seen",
+          "value": "",
+          "tooltip": "When the agent was first seen.",
+          "description": "When the agent was first seen."
+        },
+        {
+          "title": "Last Seen After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.last_seen",
+          "value": "",
+          "tooltip": "When the agent was last seen.",
+          "description": "When the agent was last seen."
+        },
+        {
+          "title": "Last Seen Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.last_seen",
+          "value": "",
+          "tooltip": "When the agent was last seen.",
+          "description": "When the agent was last seen."
         },
         {
           "title": "Search From",
@@ -1307,7 +1065,7 @@
           "editable": true,
           "visible": true,
           "type": "integer",
-          "name": "search_from",
+          "name": "cursor.search_from",
           "value": 0,
           "tooltip": "Integer representing the starting offset within the query result set from which you want endpoints returned.",
           "description": "Integer representing the starting offset within the query result set from which you want this operation to return incidents from Palo Alto Cortex XDR."
@@ -1318,55 +1076,40 @@
           "editable": true,
           "visible": true,
           "type": "integer",
-          "name": "search_to",
+          "name": "cursor.search_to",
           "value": 100,
           "tooltip": "Integer representing the end offset within the result set after which you do not want endpoints returned.",
           "description": "Integer representing the end offset within the result set after which you do not want this operation to return incidents from Palo Alto Cortex XDR."
         },
         {
-          "title": "Sort",
+          "title": "Sort by Field",
           "required": false,
           "editable": true,
           "visible": true,
-          "type": "checkbox",
-          "onchange": {
-            "true": [
-              {
-                "title": "Sort by Field",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "First Seen",
-                  "Last Seen"
-                ],
-                "name": "field",
-                "value": "",
-                "tooltip": "The field by which you want to sort the endpoints.",
-                "description": "The field by which you want to sort the endpoints."
-              },
-              {
-                "title": "Sort by Order",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Ascending",
-                  "Descending"
-                ],
-                "name": "keyword",
-                "value": "",
-                "tooltip": "The order by which you want to sort the endpoints.",
-                "description": "The order by which you want to sort the endpoints."
-              }
-            ]
-          },
-          "name": "sort",
-          "value": false,
-          "tooltip": "Select if you want to filter endpoints by field and order.",
-          "description": "Select this option if you want to sort the retrieved endpoints by field and order the results. If you select this option, then you can specify the following parameters: Sort by Field: Choose the field by which you want to sort the endpoints. You can choose between First Seen or Last Seen. Sort by Order: Choose the order in which you want to sort the result. You can choose between Ascending or Descending."
+          "type": "select",
+          "options": [
+            "first_seen",
+            "last_seen"
+          ],
+          "name": "sort.field",
+          "value": "first_seen",
+          "tooltip": "The field by which you want to sort the endpoints.",
+          "description": "The field by which you want to sort the endpoints."
+        },
+        {
+          "title": "Sort by Order",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "asc",
+            "desc"
+          ],
+          "name": "sort.keyword",
+          "value": "",
+          "tooltip": "The order by which you want to sort the endpoints.",
+          "description": "The order by which you want to sort the endpoints."
         }
       ]
     },
@@ -1384,170 +1127,189 @@
       "enabled": true,
       "parameters": [
         {
-          "title": "Operator",
-          "required": true,
+          "title": "Endpoint ID List",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.endpoint_id_list",
+          "value": "",
+          "tooltip": "List of endpoint IDs.",
+          "description": "List of endpoint IDs."
+        },
+        {
+          "title": "Distribution Name",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.dist_name",
+          "value": "",
+          "tooltip": "Name of the distribution list.",
+          "description": "Name of the distribution list."
+        },
+        {
+          "title": "Group Name",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.group_name",
+          "value": "",
+          "tooltip": "Name of endpoint group.",
+          "description": "Name of endpoint group."
+        },
+        {
+          "title": "Alias",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.alias",
+          "value": "",
+          "tooltip": "Endpoint alias name.",
+          "description": "Endpoint alias name."
+        },
+        {
+          "title": "Hostname",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.hostname",
+          "value": "",
+          "tooltip": "Name of host.",
+          "description": "Name of host."
+        },
+        {
+          "title": "Username",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.username",
+          "value": "",
+          "tooltip": "Name of the user.",
+          "description": "Name of the user."
+        },
+        {
+          "title": "IP List",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.ip_list",
+          "value": "",
+          "tooltip": "List of ip addresses.",
+          "description": "List of ip addresses."
+        },
+        {
+          "title": "Platform",
+          "required": false,
           "editable": true,
           "visible": true,
           "type": "select",
           "options": [
-            "In",
-            "Greater Than Equal To",
-            "Less Than Equal To"
+            "Windows",
+            "Linux",
+            "Macos",
+            "Android"
           ],
-          "onchange": {
-            "In": [
-              {
-                "title": "Endpoint ID List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id_list",
-                "value": "",
-                "tooltip": "List of endpoint IDs.",
-                "description": "List of endpoint IDs."
-              },
-              {
-                "title": "Distribution Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "dist_name",
-                "value": "",
-                "tooltip": "Name of the distribution list.",
-                "description": "Name of the distribution list."
-              },
-              {
-                "title": "Group Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "group_name",
-                "value": "",
-                "tooltip": "Name of endpoint group.",
-                "description": "Name of endpoint group."
-              },
-              {
-                "title": "Alias",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "alias",
-                "value": "",
-                "tooltip": "Endpoint alias name.",
-                "description": "Endpoint alias name."
-              },
-              {
-                "title": "Hostname",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "hostname",
-                "value": "",
-                "tooltip": "Name of host.",
-                "description": "Name of host."
-              },
-              {
-                "title": "IP List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "ip_list",
-                "value": "",
-                "tooltip": "List of ip addresses.",
-                "description": "List of ip addresses."
-              },
-              {
-                "title": "Platform",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Windows",
-                  "Linux",
-                  "Macos",
-                  "Android"
-                ],
-                "name": "platform",
-                "value": "",
-                "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
-                "description": "Type of operating system. e.g. windows, linux, macos, android"
-              },
-              {
-                "title": "Isolate",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Isolated",
-                  "Unisolated"
-                ],
-                "name": "isolate",
-                "value": "",
-                "tooltip": "If an endpoint has been isolated.",
-                "description": "If an endpoint has been isolated."
-              }
-            ],
-            "Greater Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When an endpoint was first seen.",
-                "description": "When an endpoint was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When an endpoint was last seen.",
-                "description": "When an endpoint was last seen."
-              }
-            ],
-            "Less Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When an endpoint was first seen.",
-                "description": "When an endpoint was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When an endpoint was last seen.",
-                "description": "When an endpoint was last seen."
-              }
-            ]
-          },
-          "name": "operator",
+          "name": "filter.in.platform",
           "value": "",
-          "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-          "description": "String that identifies the comparison operator you want to use to filter endpoints to be scanned on Palo Alto Cortex XDR. You can choose from the following: In, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Endpoint ID List: List of endpoint IDs that you want to scan on Palo Alto Cortex XDR. Distribution Name: Name of the distribution list containing the endpoints that you want to scan on Palo Alto Cortex XDR. Group Name: Name of the group containing the endpoints that you want to scan on Palo Alto Cortex XDR. Alias: Alias of the endpoints to be scanned on Palo Alto Cortex XDR. Hostname: Name of the host of the endpoints to be scanned on Palo Alto Cortex XDR. IP list: List of IP addresses containing the endpoints to be scanned on Palo Alto Cortex XDR. Platform: Type of operating system that contains the endpoints to be scanned on Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android. Isolate: Select Isolated if the endpoints have been isolated and Unisolated if the endpoints have been unisolated. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will scan all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. Last Seen: Time when the endpoint was last seen. This operator will scan all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will scan all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR. Last Seen: Time that the incident was last seen. This operator will scan all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
+          "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
+          "description": "Type of operating system. e.g. windows, linux, macos, android"
+        },
+        {
+          "title": "Isolate",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Isolated",
+            "Unisolated"
+          ],
+          "name": "filter.in.isolate",
+          "value": "",
+          "tooltip": "If an endpoint has been isolated.",
+          "description": "If an endpoint has been isolated."
+        },
+        {
+          "title": "Scan Status",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "None",
+            "Pending",
+            "In Progress",
+            "Canceled",
+            "Aborted",
+            "Pending Cancellation",
+            "Success",
+            "Error"
+          ],
+          "name": "filter.in.scan_status",
+          "value": "",
+          "tooltip": "If an endpoint has been isolated.",
+          "description": "If an endpoint has been isolated."
+        },
+        {
+          "title": "First Seen After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.first_seen",
+          "value": "",
+          "tooltip": "When an endpoint was first seen.",
+          "description": "When an endpoint was first seen."
+        },
+        {
+          "title": "First Seen Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.first_seen",
+          "value": "",
+          "tooltip": "When an endpoint was first seen.",
+          "description": "When an endpoint was first seen."
+        },
+        {
+          "title": "Last Seen After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.last_seen",
+          "value": "",
+          "tooltip": "When an endpoint was last seen.",
+          "description": "When an endpoint was last seen."
+        },
+        {
+          "title": "Last Seen After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.last_seen",
+          "value": "",
+          "tooltip": "When an endpoint was last seen.",
+          "description": "When an endpoint was last seen."
+        },
+        {
+          "title": "Incident ID",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "incident_id",
+          "value": "",
+          "tooltip": "Incident ID.",
+          "description": "The Incident ID. When included in the request, the Scan Endpoints action will appear in the Cortex XDR Incident View Timeline tab."
         }
       ]
     },
@@ -1563,170 +1325,189 @@
       "enabled": true,
       "parameters": [
         {
-          "title": "Operator",
-          "required": true,
+          "title": "Endpoint ID List",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.endpoint_id_list",
+          "value": "",
+          "tooltip": "List of endpoint IDs.",
+          "description": "List of endpoint IDs."
+        },
+        {
+          "title": "Distribution Name",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.dist_name",
+          "value": "",
+          "tooltip": "Name of the distribution list.",
+          "description": "Name of the distribution list."
+        },
+        {
+          "title": "Group Name",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.group_name",
+          "value": "",
+          "tooltip": "Name of endpoint group.",
+          "description": "Name of endpoint group."
+        },
+        {
+          "title": "Alias",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.alias",
+          "value": "",
+          "tooltip": "Endpoint alias name.",
+          "description": "Endpoint alias name."
+        },
+        {
+          "title": "Hostname",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.hostname",
+          "value": "",
+          "tooltip": "Name of host.",
+          "description": "Name of host."
+        },
+        {
+          "title": "Username",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.username",
+          "value": "",
+          "tooltip": "Name of the user.",
+          "description": "Name of the user."
+        },
+        {
+          "title": "IP List",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.ip_list",
+          "value": "",
+          "tooltip": "List of ip addresses.",
+          "description": "List of ip addresses."
+        },
+        {
+          "title": "Platform",
+          "required": false,
           "editable": true,
           "visible": true,
           "type": "select",
           "options": [
-            "In",
-            "Greater Than Equal To",
-            "Less Than Equal To"
+            "Windows",
+            "Linux",
+            "Macos",
+            "Android"
           ],
-          "onchange": {
-            "In": [
-              {
-                "title": "Endpoint ID List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id_list",
-                "value": "",
-                "tooltip": "List of endpoint IDs.",
-                "description": "List of endpoint IDs."
-              },
-              {
-                "title": "Distribution Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "dist_name",
-                "value": "",
-                "tooltip": "Name of the distribution list.",
-                "description": "Name of the distribution list."
-              },
-              {
-                "title": "Group Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "group_name",
-                "value": "",
-                "tooltip": "Name of endpoint group.",
-                "description": "Name of endpoint group."
-              },
-              {
-                "title": "Alias",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "alias",
-                "value": "",
-                "tooltip": "Endpoint alias name.",
-                "description": "Endpoint alias name."
-              },
-              {
-                "title": "Hostname",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "hostname",
-                "value": "",
-                "tooltip": "Name of host.",
-                "description": "Name of host."
-              },
-              {
-                "title": "IP List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "ip_list",
-                "value": "",
-                "tooltip": "List of ip addresses.",
-                "description": "List of ip addresses."
-              },
-              {
-                "title": "Platform",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Windows",
-                  "Linux",
-                  "Macos",
-                  "Android"
-                ],
-                "name": "platform",
-                "value": "",
-                "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
-                "description": "Type of operating system. e.g. windows, linux, macos, android"
-              },
-              {
-                "title": "Isolate",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Isolated",
-                  "Unisolated"
-                ],
-                "name": "isolate",
-                "value": "",
-                "tooltip": "If an endpoint has been isolated.",
-                "description": "If an endpoint has been isolated."
-              }
-            ],
-            "Greater Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When an endpoint was first seen.",
-                "description": "When an endpoint was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When an endpoint was last seen.",
-                "description": "When an endpoint was last seen."
-              }
-            ],
-            "Less Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When an endpoint was first seen.",
-                "description": "When an endpoint was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When an endpoint was last seen.",
-                "description": "When an endpoint was last seen."
-              }
-            ]
-          },
-          "name": "operator",
+          "name": "filter.in.platform",
           "value": "",
-          "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-          "description": "String that identifies the comparison operator you want to use to filter endpoints whose scans are to be canceled on Palo Alto Cortex XDR. You can choose from the following: In, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Endpoint ID List: List of endpoint IDs whose scans you want to cancel on Palo Alto Cortex XDR. Distribution Name: Name of the distribution list containing the endpoints whose scans you want to cancel on Palo Alto Cortex XDR. Group Name: Name of the group containing the endpoints whose scans you want to cancel on Palo Alto Cortex XDR. Alias: Alias of the endpoints whose scans you want to cancel Palo Alto Cortex XDR. Hostname: Name of the host of the endpoints whose scans you want to cancel Palo Alto Cortex XDR. IP list: List of IP addresses containing the endpoints whose scans you want to cancel on Palo Alto Cortex XDR. Platform: Type of operating system that contains the endpoints whose scans you want to cancel on Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android. Isolate: Select Isolated if the endpoints have been isolated and Unisolated if the endpoints have been unisolated. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will cancel the scans on all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. Last Seen: Time when the endpoint was last seen. This operator will cancel the scans on all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will cancel the scans on all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR. Last Seen: Time that the incident was last seen. This operator will cancel the scans on all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
+          "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
+          "description": "Type of operating system. e.g. windows, linux, macos, android"
+        },
+        {
+          "title": "Isolate",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Isolated",
+            "Unisolated"
+          ],
+          "name": "filter.in.isolate",
+          "value": "",
+          "tooltip": "If an endpoint has been isolated.",
+          "description": "If an endpoint has been isolated."
+        },
+        {
+          "title": "Scan Status",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "None",
+            "Pending",
+            "In Progress",
+            "Canceled",
+            "Aborted",
+            "Pending Cancellation",
+            "Success",
+            "Error"
+          ],
+          "name": "filter.in.scan_status",
+          "value": "",
+          "tooltip": "If an endpoint has been isolated.",
+          "description": "If an endpoint has been isolated."
+        },
+        {
+          "title": "First Seen After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.first_seen",
+          "value": "",
+          "tooltip": "When an endpoint was first seen.",
+          "description": "When an endpoint was first seen."
+        },
+        {
+          "title": "First Seen Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.first_seen",
+          "value": "",
+          "tooltip": "When an endpoint was first seen.",
+          "description": "When an endpoint was first seen."
+        },
+        {
+          "title": "Last Seen After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.last_seen",
+          "value": "",
+          "tooltip": "When an endpoint was last seen.",
+          "description": "When an endpoint was last seen."
+        },
+        {
+          "title": "Last Seen After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.last_seen",
+          "value": "",
+          "tooltip": "When an endpoint was last seen.",
+          "description": "When an endpoint was last seen."
+        },
+        {
+          "title": "Incident ID",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "incident_id",
+          "value": "",
+          "tooltip": "Incident ID.",
+          "description": "The Incident ID. When included in the request, the Scan Endpoints action will appear in the Cortex XDR Incident View Timeline tab."
         }
       ]
     },
@@ -1742,170 +1523,15 @@
       "enabled": true,
       "parameters": [
         {
-          "title": "Operator",
+          "title": "Endpoint ID List",
           "required": true,
           "editable": true,
           "visible": true,
-          "type": "select",
-          "options": [
-            "In",
-            "Greater Than Equal To",
-            "Less Than Equal To"
-          ],
-          "onchange": {
-            "In": [
-              {
-                "title": "Endpoint ID List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id_list",
-                "value": "",
-                "tooltip": "List of endpoint IDs.",
-                "description": "List of endpoint IDs."
-              },
-              {
-                "title": "Distribution Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "dist_name",
-                "value": "",
-                "tooltip": "Name of the distribution list.",
-                "description": "Name of the distribution list."
-              },
-              {
-                "title": "Group Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "group_name",
-                "value": "",
-                "tooltip": "Name of endpoint group.",
-                "description": "Name of endpoint group."
-              },
-              {
-                "title": "Alias",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "alias",
-                "value": "",
-                "tooltip": "Endpoint alias name.",
-                "description": "Endpoint alias name."
-              },
-              {
-                "title": "Hostname",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "hostname",
-                "value": "",
-                "tooltip": "Name of host.",
-                "description": "Name of host."
-              },
-              {
-                "title": "IP List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "ip_list",
-                "value": "",
-                "tooltip": "List of ip addresses.",
-                "description": "List of ip addresses."
-              },
-              {
-                "title": "Platform",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Windows",
-                  "Linux",
-                  "Macos",
-                  "Android"
-                ],
-                "name": "platform",
-                "value": "",
-                "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
-                "description": "Type of operating system. e.g. windows, linux, macos, android"
-              },
-              {
-                "title": "Isolate",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Isolated",
-                  "Unisolated"
-                ],
-                "name": "isolate",
-                "value": "",
-                "tooltip": "If an endpoint has been isolated.",
-                "description": "If an endpoint has been isolated."
-              }
-            ],
-            "Greater Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When an endpoint was first seen.",
-                "description": "When an endpoint was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When an endpoint was last seen.",
-                "description": "When an endpoint was last seen."
-              }
-            ],
-            "Less Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When an endpoint was first seen.",
-                "description": "When an endpoint was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When an endpoint was last seen.",
-                "description": "When an endpoint was last seen."
-              }
-            ]
-          },
-          "name": "operator",
+          "type": "text",
+          "name": "endpoint_id_list",
           "value": "",
-          "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-          "description": "String that identifies the comparison operator you want to use to filter endpoints to be deleted from the Palo Alto Cortex XDR app. You can choose from the following: In, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Endpoint ID List: List of endpoint IDs that you want to delete from the Palo Alto Cortex XDR app. Distribution Name: Name of the distribution list containing the endpoints that you want to delete from the Palo Alto Cortex XDR app. Group Name: Name of the group containing the endpoints that you want to delete from the Palo Alto Cortex XDR app. Alias: Alias of the endpoints to be deleted from the Palo Alto Cortex XDR app. Hostname: Name of the host of the endpoints to be deleted from the Palo Alto Cortex XDR app. IP list: List of IP addresses containing the endpoints to be deleted from the Palo Alto Cortex XDR app. Platform: Type of operating system that contains the endpoints to be deleted from the Palo Alto Cortex XDR app. You can choose between Windows, Linux, Macos, or Android. Isolate: Select Isolated if the endpoints have been isolated and Unisolated if the endpoints have been unisolated. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will delete all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. Last Seen: Time when the endpoint was last seen. This operator will delete all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will delete all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR. Last Seen: Time that the incident was last seen. This operator will delete all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
+          "tooltip": "List of endpoint IDs.",
+          "description": "List of endpoint IDs."
         }
       ]
     },
@@ -1966,177 +1592,153 @@
       "enabled": true,
       "parameters": [
         {
-          "title": "Operator",
-          "required": true,
+          "title": "Endpoint ID List",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.endpoint_id_list",
+          "value": "",
+          "tooltip": "List of endpoint IDs.",
+          "description": "List of endpoint IDs."
+        },
+        {
+          "title": "Vendor",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.vendor",
+          "value": "",
+          "tooltip": "String value that defines the vendor. e.g. Check Point",
+          "description": "String value that defines the vendor. e.g. Check Point"
+        },
+        {
+          "title": "Vendor ID",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.vendor_id",
+          "value": "",
+          "tooltip": "Vendor ID. e.g. 0x0999",
+          "description": "Vendor ID. e.g. 0x0999"
+        },
+        {
+          "title": "Product",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.product",
+          "value": "",
+          "tooltip": "String value that defines the product. e.g. VPN & Firewall-1",
+          "description": "String value that defines the product. e.g. VPN & Firewall-1"
+        },
+        {
+          "title": "Product ID",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.product_id",
+          "value": "",
+          "tooltip": "String value that defines the product ID. e.g. 0x10036",
+          "description": "String value that defines the product ID. e.g. 0x10036"
+        },
+        {
+          "title": "Serial",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.serial",
+          "value": "",
+          "tooltip": "String value that defines the serial number. e.g. 8888889",
+          "description": "String value that defines the serial number. e.g. 8888889"
+        },
+        {
+          "title": "Hostname",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.hostname",
+          "value": "",
+          "tooltip": "Name of host.",
+          "description": "Name of host."
+        },
+        {
+          "title": "Username",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.username",
+          "value": "",
+          "tooltip": "Name of user.",
+          "description": "Name of user."
+        },
+        {
+          "title": "Type",
+          "required": false,
           "editable": true,
           "visible": true,
           "type": "select",
           "options": [
-            "In",
-            "Greater Than Equal To",
-            "Less Than Equal To"
+            "CD ROM",
+            "Disk Drive",
+            "Floppy Disk",
+            "Portable Device"
           ],
-          "onchange": {
-            "In": [
-              {
-                "title": "Endpoint ID List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id_list",
-                "value": "",
-                "tooltip": "List of endpoint IDs.",
-                "description": "List of endpoint IDs."
-              },
-              {
-                "title": "Vendor",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "vendor",
-                "value": "",
-                "tooltip": "String value that defines the vendor. e.g. Check Point",
-                "description": "String value that defines the vendor. e.g. Check Point"
-              },
-              {
-                "title": "Vendor ID",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "vendor_id",
-                "value": "",
-                "tooltip": "Vendor ID. e.g. 0x0999",
-                "description": "Vendor ID. e.g. 0x0999"
-              },
-              {
-                "title": "Product",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "product",
-                "value": "",
-                "tooltip": "String value that defines the product. e.g. VPN & Firewall-1",
-                "description": "String value that defines the product. e.g. VPN & Firewall-1"
-              },
-              {
-                "title": "Product ID",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "product_id",
-                "value": "",
-                "tooltip": "String value that defines the product ID. e.g. 0x10036",
-                "description": "String value that defines the product ID. e.g. 0x10036"
-              },
-              {
-                "title": "Serial",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "serial",
-                "value": "",
-                "tooltip": "String value that defines the serial number. e.g. 8888889",
-                "description": "String value that defines the serial number. e.g. 8888889"
-              },
-              {
-                "title": "Hostname",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "hostname",
-                "value": "",
-                "tooltip": "Name of host.",
-                "description": "Name of host."
-              },
-              {
-                "title": "Username",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "username",
-                "value": "",
-                "tooltip": "Name of user.",
-                "description": "Name of user."
-              },
-              {
-                "title": "Type",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "CD ROM",
-                  "Disk Drive",
-                  "Floppy Disk",
-                  "Portable Device"
-                ],
-                "name": "type",
-                "value": "",
-                "tooltip": "Type of violation. e.g. cd-rom, disk drive, floppy disk or portable device",
-                "description": "Type of violation. e.g. cd-rom, disk drive, floppy disk or portable device"
-              },
-              {
-                "title": "IP List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "ip_list",
-                "value": "",
-                "tooltip": "List of ip addresses.",
-                "description": "List of ip addresses."
-              },
-              {
-                "title": "Violation ID List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "integer",
-                "name": "violation_id_list",
-                "value": "",
-                "tooltip": "List of violation IDs.",
-                "description": "List of violation IDs."
-              }
-            ],
-            "Greater Than Equal To": [
-              {
-                "title": "Timestamp",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "timestamp",
-                "value": "",
-                "tooltip": "Timestamp of the violation.",
-                "description": "Timestamp of the violation."
-              }
-            ],
-            "Less Than Equal To": [
-              {
-                "title": "Timestamp",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "timestamp",
-                "value": "",
-                "tooltip": "Timestamp of the violation.",
-                "description": "Timestamp of the violation."
-              }
-            ]
-          },
-          "name": "operator",
+          "name": "filter.in.type",
           "value": "",
-          "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-          "description": "String that identifies the comparison operator you want to use to filter device violations to be retrieved from Palo Alto Cortex XDR. You can choose from the following: In, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Endpoint ID List: List of endpoint IDs based on which you want to retrieve violations from Palo Alto Cortex XDR. Vendor: String value that defines the vendor whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, Check Point. Vendor ID: String value that defines the vendor ID whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, 0x0999. Product: String value that defines the product whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, VPN & Firewall-1. Product ID: String value that defines the product ID whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, 0x10036. Serial: String value that defines the serial number whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, 8888889. Hostname: Name of the host whose associated violations are to be retrieved from Palo Alto Cortex XDR. Username: Name of the user whose associated violations are to be retrieved from Palo Alto Cortex XDR. Type: Type of violations that are to be retrieved from Palo Alto Cortex XDR. You can choose between CS ROM, Disk Drive, Floppy Disk, or Portable Device. IP list: List of IP addresses whose associated violations are to be retrieved from Palo Alto Cortex XDR. Violations ID List: List of violations IDs based on which you want to retrieve violations from Palo Alto Cortex XDR. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: Timestamp: Datetime till when you want to retrieve violations from Palo Alto Cortex XDR. This operator will retrieve all violations that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: Timestamp: Datetime from when you want to retrieve violations from Palo Alto Cortex XDR. This operator will retrieve all violations that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
+          "tooltip": "Type of violation. e.g. cd-rom, disk drive, floppy disk or portable device",
+          "description": "Type of violation. e.g. cd-rom, disk drive, floppy disk or portable device"
+        },
+        {
+          "title": "IP List",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.ip_list",
+          "value": "",
+          "tooltip": "List of ip addresses.",
+          "description": "List of ip addresses."
+        },
+        {
+          "title": "Violation ID List",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "filter.in.violation_id_list",
+          "value": "",
+          "tooltip": "List of violation IDs.",
+          "description": "List of violation IDs."
+        },
+        {
+          "title": "Timestamp After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.timestamp",
+          "value": "",
+          "tooltip": "Timestamp of the violation.",
+          "description": "Timestamp of the violation."
+        },
+        {
+          "title": "Timestamp Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.timestamp",
+          "value": "",
+          "tooltip": "Timestamp of the violation.",
+          "description": "Timestamp of the violation."
         },
         {
           "title": "Search From",
@@ -2144,7 +1746,7 @@
           "editable": true,
           "visible": true,
           "type": "integer",
-          "name": "search_from",
+          "name": "cursor.search_from",
           "value": 0,
           "tooltip": "Integer representing the starting offset within the query result set from which you want violations returned.",
           "description": "Integer representing the starting offset within the query result set from which you want violations returned."
@@ -2155,55 +1757,50 @@
           "editable": true,
           "visible": true,
           "type": "integer",
-          "name": "search_to",
+          "name": "cursor.search_to",
           "value": 0,
           "tooltip": "Integer representing the end offset within the result set after which you do not want incidents returned.",
           "description": "Integer representing the end offset within the result set after which you do not want incidents returned."
         },
         {
-          "title": "Sort",
+          "title": "Sort by Field",
           "required": false,
           "editable": true,
           "visible": true,
-          "type": "checkbox",
-          "onchange": {
-            "true": [
-              {
-                "title": "Sort by Field",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "First Seen",
-                  "Last Seen"
-                ],
-                "name": "field",
-                "value": "",
-                "tooltip": "The field by which you want to sort the violations.",
-                "description": "The field by which you want to sort the violations."
-              },
-              {
-                "title": "Sort by Order",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Ascending",
-                  "Descending"
-                ],
-                "name": "keyword",
-                "value": "",
-                "tooltip": "The order by which you want to sort the violations.",
-                "description": "The order by which you want to sort the violations."
-              }
-            ]
-          },
-          "name": "sort",
-          "value": false,
-          "tooltip": "Select if you want to filter violations by field and order.",
-          "description": "Select this option if you want to sort the retrieved violations by field and order the results. If you select this option, then you can specify the following parameters: Sort by Field: Choose the field by which you want to sort the violations. You can choose between First Seen or Last Seen. Sort by Order: Choose the order in which you want to sort the result. You can choose between Ascending or Descending."
+          "type": "select",
+          "options": [
+            "endpoint_id_list",
+            "type",
+            "timestamp",
+            "ip_list",
+            "vendor",
+            "vendor_id",
+            "product",
+            "product_id",
+            "serial",
+            "hostname",
+            "violation_id_list",
+            "username"
+          ],
+          "name": "sort.field",
+          "value": "",
+          "tooltip": "The field by which you want to sort the violations.",
+          "description": "The field by which you want to sort the violations."
+        },
+        {
+          "title": "Sort by Order",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "asc",
+            "desc"
+          ],
+          "name": "sort.keyword",
+          "value": "desc",
+          "tooltip": "The order by which you want to sort the violations.",
+          "description": "The order by which you want to sort the violations."
         }
       ]
     },
@@ -2457,94 +2054,70 @@
       "enabled": true,
       "parameters": [
         {
-          "title": "Operator",
-          "required": true,
+          "title": "Email",
+          "required": false,
           "editable": true,
           "visible": true,
-          "type": "select",
-          "options": [
-            "In",
-            "Greater Than Equal To",
-            "Less Than Equal To"
-          ],
-          "onchange": {
-            "In": [
-              {
-                "title": "Email",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "email",
-                "value": "",
-                "tooltip": "User’s email address.",
-                "description": "User’s email address."
-              },
-              {
-                "title": "Type",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "type",
-                "value": "",
-                "tooltip": "Type of audit log.",
-                "description": "Type of audit log."
-              },
-              {
-                "title": "Sub Type",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "sub_type",
-                "value": "",
-                "tooltip": "Subtype of audit log.",
-                "description": "Subtype of audit log."
-              },
-              {
-                "title": "Result",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "result",
-                "value": "",
-                "tooltip": "Result type. e.g. SUCCESS",
-                "description": "Result type. e.g. SUCCESS"
-              }
-            ],
-            "Greater Than Equal To": [
-              {
-                "title": "Timestamp",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "timestamp",
-                "value": "",
-                "tooltip": "Log timestamp.",
-                "description": "Log timestamp."
-              }
-            ],
-            "Less Than Equal To": [
-              {
-                "title": "Timestamp",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "timestamp",
-                "value": "",
-                "tooltip": "Log timestamp.",
-                "description": "Log timestamp."
-              }
-            ]
-          },
-          "name": "operator",
+          "type": "text",
+          "name": "filter.in.email",
           "value": "",
-          "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-          "description": "String that identifies the comparison operator you want to use to filter audit management logs to be retrieved from Palo Alto Cortex XDR. You can choose from the following: In, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Email: Email address of the user whose audit management logs you want to retrieve from Palo Alto Cortex XDR. Type: Type of the audit management logs you want to retrieve from Palo Alto Cortex XDR. Sub Type: Subtype of the audit management logs you want to retrieve from Palo Alto Cortex XDR. Result: Filter audit log management logs you want to retrieve from Palo Alto Cortex XDR based on the result of the audit log. For example, SUCCESS. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: Timestamp: Datetime of the log till when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit management logs whose timestamp matches the time specified or the time later than the time specified on Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: Timestamp: Datetime of the log from when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit management logs whose timestamp matches the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
+          "tooltip": "User’s email address.",
+          "description": "User’s email address."
+        },
+        {
+          "title": "Type",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.type",
+          "value": "",
+          "tooltip": "Type of audit log.",
+          "description": "Type of audit log."
+        },
+        {
+          "title": "Sub Type",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.sub_type",
+          "value": "",
+          "tooltip": "Subtype of audit log.",
+          "description": "Subtype of audit log."
+        },
+        {
+          "title": "Result",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.result",
+          "value": "",
+          "tooltip": "Result type. e.g. SUCCESS",
+          "description": "Result type. e.g. SUCCESS"
+        },
+        {
+          "title": "Timestamp After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.timestamp",
+          "value": "",
+          "tooltip": "Log timestamp.",
+          "description": "Log timestamp."
+        },
+        {
+          "title": "Timestamp Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.timestamp",
+          "value": "",
+          "tooltip": "Log timestamp.",
+          "description": "Log timestamp."
         },
         {
           "title": "Search From",
@@ -2552,7 +2125,7 @@
           "editable": true,
           "visible": true,
           "type": "integer",
-          "name": "search_from",
+          "name": "cursor.search_from",
           "value": 0,
           "tooltip": "An integer representing the starting offset within the query result set from which you want management logs returned.",
           "description": "An integer representing the starting offset within the query result set from which you want management logs returned."
@@ -2563,51 +2136,41 @@
           "editable": true,
           "visible": true,
           "type": "integer",
-          "name": "search_to",
+          "name": "cursor.search_to",
           "value": 100,
           "tooltip": "An integer representing the end offset within the result set after which you do not want management logs returned.",
           "description": "An integer representing the end offset within the result set after which you do not want management logs returned."
         },
         {
-          "title": "Sort",
+          "title": "Sort by Field",
           "required": false,
           "editable": true,
           "visible": true,
-          "type": "checkbox",
-          "onchange": {
-            "true": [
-              {
-                "title": "Sort by Field",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "field",
-                "value": "timestamp",
-                "tooltip": "The field by which you want to sort the management logs.",
-                "description": "The field by which you want to sort the management logs."
-              },
-              {
-                "title": "Sort by Order",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Ascending",
-                  "Descending"
-                ],
-                "name": "keyword",
-                "value": "",
-                "tooltip": "The order by which you want to sort the management logs.",
-                "description": "The order by which you want to sort the management logs."
-              }
-            ]
-          },
-          "name": "sort",
-          "value": false,
-          "tooltip": "Select if you want to filter management logs by field and order.",
-          "description": "Select this option if you want to sort the retrieved management logs by field and order the results. If you select this option, then you can specify the following parameters: Sort by Field: Choose the field by which you want to sort the management logs. For example, timestamp. Sort by Order: Choose the order in which you want to sort the result. You can choose between Ascending or Descending."
+          "type": "select",
+          "options": [
+            "type",
+            "sub-type",
+            "result"
+          ],
+          "name": "sort.field",
+          "value": "type",
+          "tooltip": "The field by which you want to sort the management logs.",
+          "description": "The field by which you want to sort the management logs."
+        },
+        {
+          "title": "Sort by Order",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "asc",
+            "desc"
+          ],
+          "name": "sort.keyword",
+          "value": "desc",
+          "tooltip": "The order by which you want to sort the management logs.",
+          "description": "The order by which you want to sort the management logs."
         }
       ]
     },
@@ -2641,154 +2204,119 @@
       "enabled": true,
       "parameters": [
         {
-          "title": "Operator",
+          "title": "Endpoint ID",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.endpoint_id",
+          "value": "",
+          "tooltip": "Represents the endpoint ID.",
+          "description": "Represents the endpoint ID."
+        },
+        {
+          "title": "Endpoint Name",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.endpoint_name",
+          "value": "",
+          "tooltip": "Represents the endpoint name.",
+          "description": "Represents the endpoint name."
+        },
+        {
+          "title": "Type",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.type",
+          "value": "",
+          "tooltip": "Type of report. e.g. Agent Status",
+          "description": "Type of report. e.g. Agent Status"
+        },
+        {
+          "title": "Sub Type",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.sub_type",
+          "value": "",
+          "tooltip": "Subtype of report. e.g. Fully Protected",
+          "description": "Subtype of report. e.g. Fully Protected"
+        },
+        {
+          "title": "Result",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.result",
+          "value": "",
+          "tooltip": "Result type. e.g. SUCCESS",
+          "description": "Result type. e.g. SUCCESS"
+        },
+        {
+          "title": "Domain",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.domain",
+          "value": "",
+          "tooltip": "Domain of the agent. e.g. WORKGROUP",
+          "description": "Domain of the agent. e.g. WORKGROUP"
+        },
+        {
+          "title": "xdr_version",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.xdr_version",
+          "value": "",
+          "tooltip": "XDR version.",
+          "description": "XDR version."
+        },
+        {
+          "title": "Category",
           "required": false,
           "editable": true,
           "visible": true,
           "type": "select",
           "options": [
-            "In",
-            "Greater Than Equal To",
-            "Less Than Equal To"
+            "Status",
+            "Audit",
+            "Monitoring"
           ],
-          "onchange": {
-            "In": [
-              {
-                "title": "Endpoint ID",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id",
-                "value": "",
-                "tooltip": "Represents the endpoint ID.",
-                "description": "Represents the endpoint ID."
-              },
-              {
-                "title": "Endpoint Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_name",
-                "value": "",
-                "tooltip": "Represents the endpoint name.",
-                "description": "Represents the endpoint name."
-              },
-              {
-                "title": "Type",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "type",
-                "value": "",
-                "tooltip": "Type of report. e.g. Agent Status",
-                "description": "Type of report. e.g. Agent Status"
-              },
-              {
-                "title": "Sub Type",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "sub_type",
-                "value": "",
-                "tooltip": "Subtype of report. e.g. Fully Protected",
-                "description": "Subtype of report. e.g. Fully Protected"
-              },
-              {
-                "title": "Result",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "result",
-                "value": "",
-                "tooltip": "Result type. e.g. SUCCESS",
-                "description": "Result type. e.g. SUCCESS"
-              },
-              {
-                "title": "Domain",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "domain",
-                "value": "",
-                "tooltip": "Domain of the agent. e.g. WORKGROUP",
-                "description": "Domain of the agent. e.g. WORKGROUP"
-              },
-              {
-                "title": "xdr_version",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "xdr_version",
-                "value": "",
-                "tooltip": "XDR version.",
-                "description": "XDR version."
-              },
-              {
-                "title": "Timestamp",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "timestamp",
-                "value": "",
-                "tooltip": "Report timestamp.",
-                "description": "Report timestamp."
-              },
-              {
-                "title": "Category",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Status",
-                  "Audit",
-                  "Monitoring"
-                ],
-                "name": "category",
-                "value": "",
-                "tooltip": "Type of event category.",
-                "description": "Type of event category."
-              }
-            ],
-            "Greater Than Equal To": [
-              {
-                "title": "Timestamp",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "timestamp",
-                "value": "",
-                "tooltip": "Report timestamp.",
-                "description": "Report timestamp."
-              }
-            ],
-            "Less Than Equal To": [
-              {
-                "title": "Timestamp",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "timestamp",
-                "value": "",
-                "tooltip": "Report timestamp.",
-                "description": "Report timestamp."
-              }
-            ]
-          },
-          "name": "operator",
+          "name": "filter.in.category",
           "value": "",
-          "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-          "description": "String that identifies the comparison operator you want to use to filter audit agent reports to be retrieved from Palo Alto Cortex XDR. You can choose from the following: In, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Endpoint ID: String representing the ID of the endpoint whose associated audit agent reports you want to retrieve from Palo Alto Cortex XDR. Endpoint Name: String representing the name of the endpoint whose associated audit agent reports you want to retrieve from Palo Alto Cortex XDR. Type: Type of the audit agent reports you want to retrieve from Palo Alto Cortex XDR. For example, Agent Status. Sub Type: Subtype of the audit agent reports you want to retrieve from Palo Alto Cortex XDR. For example, Fully Protected. Result: Filter audit agent reports you want to retrieve from Palo Alto Cortex XDR based on the result of the agent report. For example, SUCCESS. Domain: Domain of the agent whose audit agent reports you want to retrieve from Palo Alto Cortex XDR. For example, WORKGROUP. xdr_version: XDR version for which you want to retrieve audit agent reports from Palo Alto Cortex XDR. Category: Type of event category whose audit agent reports you want to retrieve from Palo Alto Cortex XDR. You can choose from the following options: Status, Audit, or Monitoring. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: Timestamp: Datetime of the report till when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit agent reports whose timestamp matches the time specified or the time later than the time specified on Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: Timestamp: Datetime of the report from when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit agent reports whose timestamp matches the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
+          "tooltip": "Type of event category.",
+          "description": "Type of event category."
+        },
+        {
+          "title": "Timestamp After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.timestamp",
+          "value": "",
+          "tooltip": "Report timestamp.",
+          "description": "Report timestamp."
+        },
+        {
+          "title": "Timestamp Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.timestamp",
+          "value": "",
+          "tooltip": "Report timestamp.",
+          "description": "Report timestamp."
         },
         {
           "title": "Search From",
@@ -2796,7 +2324,7 @@
           "editable": true,
           "visible": true,
           "type": "integer",
-          "name": "search_from",
+          "name": "cursor.search_from",
           "value": 0,
           "tooltip": "An integer representing the starting offset within the query result set from which you want agent reports returned.",
           "description": "Integer representing the starting offset within the query result set from which you want this operation to return incidents from Palo Alto Cortex XDR."
@@ -2807,58 +2335,43 @@
           "editable": true,
           "visible": true,
           "type": "integer",
-          "name": "search_to",
+          "name": "cursor.search_to",
           "value": 100,
           "tooltip": "An integer representing the end offset within the result set after which you do not want agent reports returned.",
           "description": "Integer representing the end offset within the result set after which you do not want this operation to return incidents from Palo Alto Cortex XDR."
         },
         {
-          "title": "Sort",
+          "title": "Sort by Field",
           "required": false,
           "editable": true,
           "visible": true,
-          "type": "checkbox",
-          "onchange": {
-            "true": [
-              {
-                "title": "Sort by Field",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Type",
-                  "Category",
-                  "Trapsversion",
-                  "Timestamp",
-                  "Domain"
-                ],
-                "name": "field",
-                "value": "",
-                "tooltip": "The field by which you want to sort the agent reports.",
-                "description": "The field by which you want to sort the agent reports."
-              },
-              {
-                "title": "Sort by Order",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Ascending",
-                  "Descending"
-                ],
-                "name": "keyword",
-                "value": "",
-                "tooltip": "The order by which you want to sort the agent reports.",
-                "description": "The order by which you want to sort the agent reports."
-              }
-            ]
-          },
-          "name": "sort",
-          "value": false,
-          "tooltip": "Select if you want to filter agent reports by field and order.",
-          "description": "Select this option if you want to sort the retrieved audit agent reports by field and order the results. If you select this option, then you can specify the following parameters: Sort by Field: Choose the field by which you want to sort the audit agent reports. You can choose from the following options: Type, Category, Trapsversion, Timestamp, or Domaintimestamp. Sort by Order: Choose the order in which you want to sort the result. You can choose between Ascending or Descending."
+          "type": "select",
+          "options": [
+            "type",
+            "category",
+            "trapsversion",
+            "timestamp",
+            "domain"
+          ],
+          "name": "sort.field",
+          "value": "type",
+          "tooltip": "The field by which you want to sort the agent reports.",
+          "description": "The field by which you want to sort the agent reports."
+        },
+        {
+          "title": "Sort by Order",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "asc",
+            "desc"
+          ],
+          "name": "sort.keyword",
+          "value": "desc",
+          "tooltip": "The order by which you want to sort the agent reports.",
+          "description": "The order by which you want to sort the agent reports."
         }
       ]
     },
@@ -2894,6 +2407,17 @@
           "value": "",
           "tooltip": "String that represents additional information regarding the action.",
           "description": "String containing descriptive information about this action."
+        },
+        {
+          "title": "Incident ID",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "incident_id",
+          "value": "",
+          "tooltip": "The incident ID related to the hash.",
+          "description": "The incident ID related to the hash. When included in the request, the Block List action appears in the Cortex XDR Incident View Timeline tab."
         }
       ]
     },
@@ -2929,6 +2453,17 @@
           "value": "",
           "tooltip": "String that represents additional information regarding the action.",
           "description": "String containing descriptive information about this action."
+        },
+        {
+          "title": "Incident ID",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "incident_id",
+          "value": "",
+          "tooltip": "The incident ID related to the hash.",
+          "description": "The incident ID related to the hash. When included in the request, the Allow List action will appear in the Cortex XDR Incident View Timeline tab."
         }
       ]
     },
@@ -2946,170 +2481,15 @@
       "enabled": true,
       "parameters": [
         {
-          "title": "Operator",
+          "title": "Endpoint ID List",
           "required": true,
           "editable": true,
           "visible": true,
-          "type": "select",
-          "options": [
-            "In",
-            "Greater Than Equal To",
-            "Less Than Equal To"
-          ],
-          "onchange": {
-            "In": [
-              {
-                "title": "Endpoint ID List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id_list",
-                "value": "",
-                "tooltip": "List of endpoint IDs.",
-                "description": "List of endpoint IDs."
-              },
-              {
-                "title": "Distribution Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "dist_name",
-                "value": "",
-                "tooltip": "Name of the distribution list.",
-                "description": "Name of the distribution list."
-              },
-              {
-                "title": "Group Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "group_name",
-                "value": "",
-                "tooltip": "Name of endpoint group.",
-                "description": "Name of endpoint group."
-              },
-              {
-                "title": "Alias",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "alias",
-                "value": "",
-                "tooltip": "Endpoint alias name.",
-                "description": "Endpoint alias name."
-              },
-              {
-                "title": "Hostname",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "hostname",
-                "value": "",
-                "tooltip": "Name of host.",
-                "description": "Name of host."
-              },
-              {
-                "title": "IP List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "ip_list",
-                "value": "",
-                "tooltip": "List of IP addresses.",
-                "description": "List of IP addresses."
-              },
-              {
-                "title": "Platform",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Windows",
-                  "Linux",
-                  "Macos",
-                  "Android"
-                ],
-                "name": "platform",
-                "value": "",
-                "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
-                "description": "Type of operating system. e.g. windows, linux, macos, android"
-              },
-              {
-                "title": "Isolate",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Isolated",
-                  "Unisolated"
-                ],
-                "name": "isolate",
-                "value": "",
-                "tooltip": "If an endpoint has been isolated.",
-                "description": "If an endpoint has been isolated."
-              }
-            ],
-            "Greater Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When an endpoint was first seen.",
-                "description": "When an endpoint was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When an endpoint was last seen.",
-                "description": "When an endpoint was last seen."
-              }
-            ],
-            "Less Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When an endpoint was first seen.",
-                "description": "When an endpoint was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When an endpoint was last seen.",
-                "description": "When an endpoint was last seen."
-              }
-            ]
-          },
-          "name": "operator",
+          "type": "text",
+          "name": "filter.in.endpoint_id_list",
           "value": "",
-          "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-          "description": "String that identifies the comparison operator you want to use to filter endpoints on which you want to quarantine files on Palo Alto Cortex XDR. You can choose from the following: In, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Endpoint ID List: List of endpoint IDs on which you want to quarantine files on Palo Alto Cortex XDR. Distribution Name: Name of the distribution list containing the endpoints on which you want to quarantine files on Palo Alto Cortex XDR Group Name: Name of the group containing the endpoints on which you want to quarantine files on Palo Alto Cortex XDR. Alias: Alias of the endpoints on which you want to quarantine files on Palo Alto Cortex XDR. Hostname: Name of the host of the endpoints on which you want to quarantine files on Palo Alto Cortex XDR. IP list: List of IP addresses containing the endpoints on which you want to quarantine files on Palo Alto Cortex XDR. Platform: Type of operating system that contains the endpoints on which you want to quarantine files on Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android. Isolate: Select Isolated if the endpoints have been isolated and Unisolated if the endpoints have been unisolated. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will quarantine files on all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. Last Seen: Time when the endpoint was last seen. This operator will quarantine files on all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will quarantine files on all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR. Last Seen: Time that the incident was last seen. This operator will quarantine files on all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
+          "tooltip": "List of endpoint IDs.",
+          "description": "List of endpoint IDs."
         },
         {
           "title": "File Path",
@@ -3220,7 +2600,18 @@
           "name": "endpoint_id",
           "value": "",
           "tooltip": "String that represents the endpoint ID.",
-          "description": "String that represents the endpoint ID on which you want to restore the specified quarantined file."
+          "description": "String that represents the endpoint ID on which you want to restore the specified quarantined file. Note: If you do not enter a specific endpoint ID, the request will run restore on all endpoints which relate to the quarantined file you defined."
+        },
+        {
+          "title": "Incident ID",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "incident_id",
+          "value": "",
+          "tooltip": "String representing the incident ID.",
+          "description": "String representing the incident ID. When included in the request, the Restore File action will appear in the Cortex XDR Incident View Timeline tab."
         }
       ]
     },
@@ -3232,176 +2623,22 @@
       "annotation": "retrieve_file",
       "output_schema": {
         "reply": {
-          "action_id": []
+          "action_id": "",
+          "endpoints_count": ""
         }
       },
       "enabled": true,
       "parameters": [
         {
-          "title": "Operator",
+          "title": "Endpoint ID List",
           "required": true,
           "editable": true,
           "visible": true,
-          "type": "select",
-          "options": [
-            "In",
-            "Greater Than Equal To",
-            "Less Than Equal To"
-          ],
-          "onchange": {
-            "In": [
-              {
-                "title": "Endpoint ID List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id_list",
-                "value": "",
-                "tooltip": "List of endpoint IDs.",
-                "description": "List of endpoint IDs."
-              },
-              {
-                "title": "Distribution Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "dist_name",
-                "value": "",
-                "tooltip": "Name of the distribution list.",
-                "description": "Name of the distribution list."
-              },
-              {
-                "title": "Group Name",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "group_name",
-                "value": "",
-                "tooltip": "Name of endpoint group.",
-                "description": "Name of endpoint group."
-              },
-              {
-                "title": "Alias",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "alias",
-                "value": "",
-                "tooltip": "Endpoint alias name.",
-                "description": "Endpoint alias name."
-              },
-              {
-                "title": "Hostname",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "hostname",
-                "value": "",
-                "tooltip": "Name of host.",
-                "description": "Name of host."
-              },
-              {
-                "title": "IP List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "ip_list",
-                "value": "",
-                "tooltip": "List of ip addresses.",
-                "description": "List of ip addresses."
-              },
-              {
-                "title": "Platform",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Windows",
-                  "Linux",
-                  "Macos",
-                  "Android"
-                ],
-                "name": "platform",
-                "value": "",
-                "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
-                "description": "Type of operating system. e.g. windows, linux, macos, android"
-              },
-              {
-                "title": "Isolate",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "select",
-                "options": [
-                  "Isolated",
-                  "Unisolated"
-                ],
-                "name": "isolate",
-                "value": "",
-                "tooltip": "If an endpoint has been isolated.",
-                "description": "If an endpoint has been isolated."
-              }
-            ],
-            "Greater Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When an endpoint was first seen.",
-                "description": "When an endpoint was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When an endpoint was last seen.",
-                "description": "When an endpoint was last seen."
-              }
-            ],
-            "Less Than Equal To": [
-              {
-                "title": "First Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "first_seen",
-                "value": "",
-                "tooltip": "When an endpoint was first seen.",
-                "description": "When an endpoint was first seen."
-              },
-              {
-                "title": "Last Seen",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "last_seen",
-                "value": "",
-                "tooltip": "When an endpoint was last seen.",
-                "description": "When an endpoint was last seen."
-              }
-            ]
-          },
-          "name": "operator",
+          "type": "text",
+          "name": "filter.in.endpoint_id_list",
           "value": "",
-          "tooltip": "String that identifies the comparison operator you want to use for this filter.",
-          "description": "String that identifies the comparison operator you want to use to filter files that you want to retrieve from Palo Alto Cortex XDR. You can choose from the following: In, Greater Than Equal To, or Less Than Equal To. If you choose the 'In' operator, then you can specify the following parameters: Endpoint ID List: List of endpoint IDs whose associated files you want to retrieve from Palo Alto Cortex XDR. Distribution Name: Name of the distribution list containing the files you want to retrieve from Palo Alto Cortex XDR. Group Name: Name of the endpoint group containing the files you want to retrieve from Palo Alto Cortex XDR. Alias: Alias of the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR. Hostname: Name of the host of the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR. IP list: List of IP addresses containing the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR. Platform: Type of operating system that contains the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android. Isolate: Select Isolated if the endpoints have been isolated and Unisolated if the endpoints have been unisolated. If you choose the 'Greater Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will retrieve files on all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. Last Seen: Time when the endpoint was last seen. This operator will retrieve files on all endpoints that match the time specified or the time later than the time specified on Palo Alto Cortex XDR. If you choose the 'Less Than Equal To' operator, then you can specify the following parameters: First Seen: Time when the endpoint was first seen. This operator will retrieve files on all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR. Last Seen: Time that the incident was last seen. This operator will retrieve files on all endpoints that match the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
+          "tooltip": "List of endpoint IDs.",
+          "description": "List of endpoint IDs."
         },
         {
           "title": "Files",
@@ -3429,6 +2666,164 @@
           "value": "",
           "tooltip": "The file path from which you want to retrieve the file.",
           "description": "String that represents the path of the file used to retrieve files from Palo Alto Cortex XDR."
+        },
+        {
+          "title": "Distribution Name",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.dist_name",
+          "value": "",
+          "tooltip": "Name of the distribution list.",
+          "description": "Name of the distribution list."
+        },
+        {
+          "title": "Group Name",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.group_name",
+          "value": "",
+          "tooltip": "Name of endpoint group.",
+          "description": "Name of endpoint group."
+        },
+        {
+          "title": "Alias",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.alias",
+          "value": "",
+          "tooltip": "Endpoint alias name.",
+          "description": "Endpoint alias name."
+        },
+        {
+          "title": "Hostname",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.hostname",
+          "value": "",
+          "tooltip": "Name of host.",
+          "description": "Name of host."
+        },
+        {
+          "title": "IP List",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "filter.in.ip_list",
+          "value": "",
+          "tooltip": "List of ip addresses.",
+          "description": "List of ip addresses."
+        },
+        {
+          "title": "Platform",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Windows",
+            "Linux",
+            "Macos",
+            "Android"
+          ],
+          "name": "filter.in.platform",
+          "value": "",
+          "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
+          "description": "Type of operating system. e.g. windows, linux, macos, android"
+        },
+        {
+          "title": "Isolate",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Isolated",
+            "Unisolated"
+          ],
+          "name": "filter.in.isolate",
+          "value": "",
+          "tooltip": "If an endpoint has been isolated.",
+          "description": "If an endpoint has been isolated."
+        },
+        {
+          "title": "First Seen After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.first_seen",
+          "value": "",
+          "tooltip": "When an endpoint was first seen.",
+          "description": "When an endpoint was first seen."
+        },
+        {
+          "title": "Last Seen After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.gte.last_seen",
+          "value": "",
+          "tooltip": "When an endpoint was last seen.",
+          "description": "When an endpoint was last seen."
+        },
+        {
+          "title": "First Seen Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.first_seen",
+          "value": "",
+          "tooltip": "When an endpoint was first seen.",
+          "description": "When an endpoint was first seen."
+        },
+        {
+          "title": "Last Seen Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "filter.lte.last_seen",
+          "value": "",
+          "tooltip": "When an endpoint was last seen.",
+          "description": "When an endpoint was last seen."
+        }
+      ]
+    },
+    {
+      "operation": "retrieve_file_details",
+      "title": "Retrieve File Details",
+      "description": "Retrieves a file details from Palo Alto Cortex XDR based on the action ID you have specified.",
+      "category": "investigation",
+      "annotation": "retrieve_file_details",
+      "output_schema": {
+        "reply": {
+          "data": {
+          }
+        }
+      },
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Action ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "group_action_id",
+          "value": "",
+          "tooltip": "Action ID retrieved from the action Retrieve File.",
+          "description": "Action ID retrieved from the action Retrieve File."
         }
       ]
     }
