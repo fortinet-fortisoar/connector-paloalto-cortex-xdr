@@ -6,6 +6,10 @@
   "cs_approved": false,
   "cs_compatible": true,
   "version": "1.1.0",
+  "ingestion_supported": true,
+  "ingestion_modes": [
+    "scheduled"
+  ],
   "category": "Endpoint Security",
   "icon_small_name": "PaloAlto_Cortex_XDR_small.png",
   "icon_large_name": "PaloAlto_Cortex_XDR_large.png",
@@ -1290,7 +1294,7 @@
           "description": "When an endpoint was last seen."
         },
         {
-          "title": "Last Seen After",
+          "title": "Last Seen Before",
           "required": false,
           "editable": true,
           "visible": true,
@@ -1488,7 +1492,7 @@
           "description": "When an endpoint was last seen."
         },
         {
-          "title": "Last Seen After",
+          "title": "Last Seen Before",
           "required": false,
           "editable": true,
           "visible": true,
