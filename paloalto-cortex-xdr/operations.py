@@ -1,16 +1,19 @@
 """ Copyright start
-  Copyright (C) 2008 - 2023 Fortinet Inc.
-  All rights reserved.
-  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
-  Copyright end """
+Copyright (C) 2024 Fortinet Inc.
+All rights reserved.
+FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
+Copyright end """
 import json
-
 import requests
 import time, json
 import datetime
 import arrow
 import copy
 import os
+import string
+import secrets
+from datetime import datetime, timezone
+import hashlib
 from django.conf import settings
 from connectors.cyops_utilities.builtins import upload_file_to_cyops
 from connectors.core.connector import get_logger, ConnectorError
@@ -29,6 +32,7 @@ class CortexXdr():
             self.server_url = 'https://{0}'.format(self.server_url.strip('/')) + '/public_api/v1'
         self.api_key_id = config.get('api_key_id')
         self.api_key = config.get('api_key')
+        self.authentication_type = config.get('authentication_type')
         self.verify_ssl = config.get('verify_ssl')
 
     def make_api_call(self, method='GET', endpoint=None, params=None, data=None,
@@ -40,8 +44,15 @@ class CortexXdr():
         if flag:
             url = endpoint
         logger.info('Request URL {}'.format(url))
-        headers = {"x-xdr-auth-id": str(self.api_key_id), "Authorization": self.api_key,
-                   "Content-Type": "application/json"}
+        if self.authentication_type == 'Standard Key':
+           headers = {"x-xdr-auth-id": str(self.api_key_id), "Authorization": self.api_key, "Content-Type": "application/json"}
+        else:
+            nonce = "".join([secrets.choice(string.ascii_letters + string.digits) for _ in range(64)])
+            timestamp = int(datetime.now(timezone.utc).timestamp()) * 1000
+            auth_key = "%s%s%s" % (self.api_key, nonce, timestamp)
+            auth_key = auth_key.encode("utf-8")
+            api_key_hash = hashlib.sha256(auth_key).hexdigest()
+            headers = {"x-xdr-timestamp": str(timestamp), "x-xdr-nonce": nonce, "x-xdr-auth-id": str(self.api_key_id), "Authorization": api_key_hash}
         try:
             response = requests.request(method=method, url=url, params=params, data=data, json=json,
                                         headers=headers,
@@ -162,7 +173,7 @@ def fetch_incidents(config, params):
         raise ConnectorError(Err)
 
 
-def get_incident_details(config, params): 
+def get_incident_details(config, params):
     try:
         obj = CortexXdr(config)
         endpoint = '/incidents/get_incident_extra_data/'
@@ -180,7 +191,7 @@ def get_incident_details(config, params):
         raise ConnectorError(Err)
 
 
-def update_incident(config, params): 
+def update_incident(config, params):
     try:
         obj = CortexXdr(config)
         if not (params.get('assigned_user_mail') or params.get('assigned_user_pretty_name') or params.get(
@@ -634,6 +645,65 @@ def retrieve_file_details(config, params):
         raise ConnectorError(Err)
 
 
+
+
+def xql_query(config, params):
+    try:
+        obj = CortexXdr(config)
+        endpoint = '/xql/start_xql_query'
+        tenants = params.get('tenants')
+        if tenants:
+            tenants = tenants.split(',')
+        else:
+            tenants = []
+        strat = params.get('from')
+        end =  params.get('to')
+        if strat and end:
+            start_time = int(datetime.fromtimestamp(time.mktime(
+                time.strptime(strat, "%Y-%m-%dT%H:%M:%S.%fZ")
+            )).strftime('%s')) * 1000
+            end_time = int(datetime.fromtimestamp(time.mktime(
+                time.strptime(end, "%Y-%m-%dT%H:%M:%S.%fZ")
+            )).strftime('%s')) * 1000
+        else:
+            relative_time = 86400000  # 24 hours in milliseconds
+            current_time = int(time.time() * 1000)
+            start_time = current_time - relative_time
+            end_time = current_time
+
+        payload = {
+            "request_data": {
+                "query": params.get('query'),
+                "tenants": tenants,
+                "timeframe": {
+                    "from": start_time,
+                    "to": end_time
+                }
+            }
+        }
+        return obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload))
+    except Exception as Err:
+        logger.error('Exception occurred: {}'.format(Err))
+
+
+
+def get_query_result_by_query_id(config, params):
+    try:
+        obj = CortexXdr(config)
+        endpoint = '/xql/get_query_results'
+        payload = {
+            "request_data": {
+                "query_id": params.get('query_id'),
+                "pending_flag": params.get('pending_flag'),
+                "limit": params.get('limit'),
+                "format": "json"
+            }
+        }
+        return obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload))
+    except Exception as Err:
+        logger.error('Exception occurred: {}'.format(Err))
+
+
 operations = {
     'fetch_incidents': fetch_incidents,
     'get_incident_details': get_incident_details,
@@ -661,5 +731,8 @@ operations = {
     'get_quarantine_status': get_quarantine_status,
     'restore_file': restore_file,
     'retrieve_file': retrieve_file,
-    'retrieve_file_details': retrieve_file_details
+    'retrieve_file_details': retrieve_file_details,
+    'xql_query': xql_query,
+    'get_query_result_by_query_id':get_query_result_by_query_id
+
 }

@@ -1,6 +1,8 @@
 #### Descriptions:
-_Add PR descriptions here_
+Fixing bug of standard key and Advanced key authentication 
 
 #### Fix:
-_Add fix/changes here_
-
+1. Fix the issue of standard key and Advanced key 
+2. Add new functionality 
+   - XQL Query 
+   - Get query result by query ID

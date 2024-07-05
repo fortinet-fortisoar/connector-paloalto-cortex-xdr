@@ -3,7 +3,7 @@
   "data": [
     {
       "@type": "WorkflowCollection",
-      "name": "Sample - Palo Alto Cortex XDR - 1.1.0",
+      "name": "Sample - Palo Alto Cortex XDR - 1.2.0",
       "description": "Sample playbooks for \"Palo Alto Cortex XDR\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete.",
       "visible": true,
       "image": null,
@@ -3251,6 +3251,173 @@
           "importedBy": [],
           "recordTags": [
             "PaloAlto Cortex XDR"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "cfd0e2d1-5f67-421d-9e7c-e209b26d8f7c",
+          "collection": "/api/3/workflow_collections/222275db-9090-4555-90b1-f3816a694fbb",
+          "triggerLimit": null,
+          "description": "Execute xql query.",
+          "name": "XQL Query",
+          "tag": "#Palo Alto Cortex XDR",
+          "recordTags": [
+            "Paloalto",
+            "paloalto-cortex-xdr"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/b8355014-c945-4c22-9527-7950ae082382",
+          "steps": [
+            {
+              "uuid": "b8355014-c945-4c22-9527-7950ae082382",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "5a0ec863-aa60-403a-86e9-443a1355fe5b",
+                "title": "Palo Alto Cortex XDR: XQL Query",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "d75692ee-c50c-474b-8e25-fb1ffa974556",
+              "@type": "WorkflowStep",
+              "name": "XQL Query",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Palo Alto Cortex XDR",
+                "config": "''",
+                "params": {
+                  "query": "",
+                  "tenants": ""
+                },
+                "version": "1.1.1",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "xql_query",
+                "operationTitle": "XQL Query",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "ae4810e1-5bb9-46fa-8317-1b656bab69ab",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> XQL Query",
+              "sourceStep": "/api/3/workflow_steps/b8355014-c945-4c22-9527-7950ae082382",
+              "targetStep": "/api/3/workflow_steps/d75692ee-c50c-474b-8e25-fb1ffa974556"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "4defee01-ba73-47ee-8fbe-b412a3089889",
+          "collection": "/api/3/workflow_collections/222275db-9090-4555-90b1-f3816a694fbb",
+          "triggerLimit": null,
+          "description": "Retrieve unique execution ID used to retrieve the results by the Get XQL Query Results API.",
+          "name": "Get Query Results By Query ID",
+          "tag": "#Palo Alto Cortex XDR",
+          "recordTags": [
+            "Paloalto",
+            "paloalto-cortex-xdr"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/75930acd-38ae-4492-88f0-d713942db3c6",
+          "steps": [
+            {
+              "uuid": "75930acd-38ae-4492-88f0-d713942db3c6",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "8c0a5232-13a7-490f-b257-664b2503f611",
+                "title": "Palo Alto Cortex XDR: Get Query Results By Query ID",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "e17667c0-98ed-4973-896f-d2731a9e9a6f",
+              "@type": "WorkflowStep",
+              "name": "Get Query Results By Query ID",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Palo Alto Cortex XDR",
+                "config": "''",
+                "params": {
+                  "query_id": "",
+                  "pending_flag": "true",
+                  "limit": 100
+                },
+                "version": "1.1.1",
+                "connector": "paloalto-cortex-xdr",
+                "operation": "get_query_result_by_query_id",
+                "operationTitle": "Get Query Results By Query ID",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "66e67faa-fa7d-428e-8e5f-2c0ad91021c4",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Get Query Results By Query ID",
+              "sourceStep": "/api/3/workflow_steps/75930acd-38ae-4492-88f0-d713942db3c6",
+              "targetStep": "/api/3/workflow_steps/e17667c0-98ed-4973-896f-d2731a9e9a6f"
+            }
           ]
         }
       ]
