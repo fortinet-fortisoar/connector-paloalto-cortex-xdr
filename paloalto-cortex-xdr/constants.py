@@ -1,8 +1,8 @@
 """ Copyright start
-  Copyright (C) 2008 - 2023 Fortinet Inc.
-  All rights reserved.
-  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
-  Copyright end """
+Copyright (C) 2024 Fortinet Inc.
+All rights reserved.
+FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
+Copyright end """
 
 messages_codes = {
     400: 'Invalid input',
