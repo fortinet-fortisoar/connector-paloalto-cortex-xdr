@@ -18,6 +18,7 @@ Following enhancements have been made to the Palo Alto Cortex XDR Connector in v
 
 <li>Fix the issue of standard key and Advanced key of Palo Alto Cortex XDR connector.</li>
 </ul>
+
 ## Installing the connector
 <p>Use the <strong>Content Hub</strong> to install the connector. For the detailed procedure to install a connector, click <a href="https://docs.fortinet.com/document/fortisoar/0.0.0/installing-a-connector/1/installing-a-connector" target="_top">here</a>.</p><p>You can also use the <code>yum</code> command as a root user to install the connector:</p>
 <pre>yum install cyops-connector-paloalto-cortex-xdr</pre>
