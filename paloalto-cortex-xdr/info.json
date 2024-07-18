@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "label": "Palo Alto Cortex XDR",
   "description": "Cortex XDR applies machine learning at cloud scale to rich network, endpoint, and cloud data, so you can quickly find and stop targeted attacks, insider abuse, and compromised endpoints.",
-  "publisher": "SpryIQ.Co",
+  "publisher": "Fortinet",
   "contributor": "Jitesh Rathod",
   "icon_small_name": "PaloAlto_Cortex_XDR_small.png",
   "icon_large_name": "PaloAlto_Cortex_XDR_large.png",
