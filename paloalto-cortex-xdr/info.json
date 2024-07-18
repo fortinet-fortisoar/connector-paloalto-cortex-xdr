@@ -12,7 +12,7 @@
   "ingestion_modes": [
     "scheduled"
   ],
-  "help_online": "https://github.com/fortinet-fortisoar/connector-palo-alto-cortex-xdr/blob/release/1.2.0/docs/paloalto-cortex-xdr.md",
+  "help_online": "https://github.com/fortinet-fortisoar/connector-paloalto-cortex-xdr/blob/release/1.2.0/docs/paloalto-cortex-xdr.md",
   "configuration": {
     "fields": [
       {
