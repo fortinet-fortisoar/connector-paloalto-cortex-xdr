@@ -7,9 +7,18 @@ Cortex XDR applies machine learning at cloud scale to rich network, endpoint, an
 Connector Version: 1.2.0
 
 
-Authored By: SpryIQ.Co
+Authored By: Fortinet
 
 Certified: No
+## Release Notes for version 1.2.0
+Following enhancements have been made to the Palo Alto Cortex XDR Connector in version 1.2.0:
+<ul>
+<li>Added a new operation named "Get query result by query ID".</li>
+<li>Added a new operation named "XQL Query". </li>
+
+<li>Fix the issue of standard key and Advanced key of Palo Alto Cortex XDR connector.</li>
+</ul>
+
 ## Installing the connector
 <p>Use the <strong>Content Hub</strong> to install the connector. For the detailed procedure to install a connector, click <a href="https://docs.fortinet.com/document/fortisoar/0.0.0/installing-a-connector/1/installing-a-connector" target="_top">here</a>.</p><p>You can also use the <code>yum</code> command as a root user to install the connector:</p>
 <pre>yum install cyops-connector-paloalto-cortex-xdr</pre>
