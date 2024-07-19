@@ -7,7 +7,7 @@ Cortex XDR applies machine learning at cloud scale to rich network, endpoint, an
 Connector Version: 1.2.0
 
 
-Authored By: SpryIQ.Co
+Authored By: Fortinet
 
 Certified: No
 ## Release Notes for version 1.2.0
