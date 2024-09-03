@@ -12,7 +12,7 @@
   "ingestion_modes": [
     "scheduled"
   ],
-  "help_online": "https://github.com/fortinet-fortisoar/connector-paloalto-cortex-xdr/blob/release/1.2.0/docs/paloalto-cortex-xdr.md",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.2.0/palo-alto-cortex-xdr/922/palo-alto-cortex-xdr-v1-2-0",
   "configuration": {
     "fields": [
       {
@@ -36,7 +36,7 @@
         "value": "Standard Key",
         "visible": true,
         "required": true,
-        "description": "Select this authentication type as Standard Key or Advanced Key.",
+        "description": "Select the API key type being used for this integration. You can choose from the following options: Standard Key, Advanced key.",
         "tooltip": "Select this authentication type as Standard Key or Advanced Key."
       },
       {

@@ -204,7 +204,7 @@ def update_incident(config, params):
         result = build_payload(params)
         payload = {
             "request_data": {
-                "incident_id": params.get('incident_id'),
+                "incident_id": str(params.get('incident_id')),
                 "update_data": {}
             }
         }
