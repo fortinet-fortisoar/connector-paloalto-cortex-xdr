@@ -3259,7 +3259,7 @@
           "collection": "/api/3/workflow_collections/222275db-9090-4555-90b1-f3816a694fbb",
           "triggerLimit": null,
           "description": "Execute xql query.",
-          "name": "XQL Query",
+          "name": "Execute XQL Query",
           "tag": "#Palo Alto Cortex XDR",
           "recordTags": [
             "Paloalto",
@@ -3280,7 +3280,7 @@
               "status": null,
               "arguments": {
                 "route": "5a0ec863-aa60-403a-86e9-443a1355fe5b",
-                "title": "Palo Alto Cortex XDR: XQL Query",
+                "title": "Palo Alto Cortex XDR: Execute XQL Query",
                 "resources": [
                   "alerts"
                 ],
@@ -3301,7 +3301,7 @@
             {
               "uuid": "d75692ee-c50c-474b-8e25-fb1ffa974556",
               "@type": "WorkflowStep",
-              "name": "XQL Query",
+              "name": "Execute XQL Query",
               "description": null,
               "status": null,
               "arguments": {
