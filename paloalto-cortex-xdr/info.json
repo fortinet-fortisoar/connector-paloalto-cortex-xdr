@@ -1,10 +1,9 @@
 {
   "name": "paloalto-cortex-xdr",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "label": "Palo Alto Cortex XDR",
   "description": "Cortex XDR applies machine learning at cloud scale to rich network, endpoint, and cloud data, so you can quickly find and stop targeted attacks, insider abuse, and compromised endpoints.",
   "publisher": "Fortinet",
-  "contributor": "Jitesh Rathod",
   "icon_small_name": "PaloAlto_Cortex_XDR_small.png",
   "icon_large_name": "PaloAlto_Cortex_XDR_large.png",
   "category": "Endpoint Security",
@@ -12,7 +11,7 @@
   "ingestion_modes": [
     "scheduled"
   ],
-  "help_online": "https://docs.fortinet.com/document/fortisoar/1.2.0/palo-alto-cortex-xdr/922/palo-alto-cortex-xdr-v1-2-0",
+  "help_online": "",
   "configuration": {
     "fields": [
       {
@@ -1031,7 +1030,7 @@
           "name": "filter.in.scan_status",
           "value": "",
           "tooltip": "If an endpoint has been isolated.",
-          "description": "Select the scan status of endpoints to be retrieved from Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Sucess, or Error."
+          "description": "Select the scan status of endpoints to be retrieved from Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Success, or Error."
         },
         {
           "title": "First Seen After",
@@ -1272,7 +1271,7 @@
           "name": "filter.in.scan_status",
           "value": "",
           "tooltip": "If an endpoint has been isolated.",
-          "description": "Select the scan status of endpoints to be scanned on Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Sucess, or Error."
+          "description": "Select the scan status of endpoints to be scanned on Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Success, or Error."
         },
         {
           "title": "First Seen After",
@@ -1470,7 +1469,7 @@
           "name": "filter.in.scan_status",
           "value": "",
           "tooltip": "If an endpoint has been isolated.",
-          "description": "Select the scan status of endpoints whose scan you want to cancel on Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Sucess, or Error."
+          "description": "Select the scan status of endpoints whose scan you want to cancel on Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Success, or Error."
         },
         {
           "title": "First Seen After",
@@ -2938,6 +2937,336 @@
           "visible": true,
           "editable": true,
           "value": 100
+        }
+      ]
+    },
+    {
+      "operation": "update_alerts",
+      "title": "Update Alerts",
+      "description": "Updates one or more alerts based on the specified input parameters.",
+      "category": "investigation",
+      "annotation": "update_alerts",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Alert IDs",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "alert_ids",
+          "placeholder": "alert_id1, alert_id2",
+          "tooltip": "Specify the alert IDs to be updated, in CSV format.",
+          "description": "Specify the alert IDs to be updated in CSV format."
+        },
+        {
+          "title": "Severity",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "name": "severity",
+          "tooltip": "Select the severity level for the alerts to be updated.",
+          "description": "Select the severity level for the alerts to be updated. You can select from Critical, High, Medium, Low, and Informational.",
+          "options": [
+            "Critical",
+            "High",
+            "Medium",
+            "Low",
+            "Informational"
+          ]
+        },
+        {
+          "title": "Status",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "name": "status",
+          "tooltip": "Select the new status for the alerts to be updated.",
+          "description": "Select the new status for the alerts to be updated. You can select from New, Resolved Threat Handled, Under Investigation, Resolved Security Testing, Resolved Auto, Resolved Known Issue, Resolved Duplicate, Resolved Other, Resolved False Positive, and Resolved True Positive.",
+          "options": [
+            "New",
+            "Under Investigation",
+            "Resolved Auto",
+            "Resolved Duplicate",
+            "Resolved False Positive",
+            "Resolved Known Issue",
+            "Resolved Security Testing",
+            "Resolved Threat Handled",
+            "Resolved True Positive",
+            "Resolved Other"
+          ]
+        },
+        {
+          "title": "Comment",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "comment",
+          "tooltip": "Specify a descriptive comment explaining the changes being made.",
+          "description": "Specify a descriptive comment explaining the changes."
+        }
+      ]
+    },
+    {
+      "operation": "get_alerts",
+      "title": "Get Alerts",
+      "description": "Retrieves a list of alerts based on the specified input parameters.",
+      "category": "investigation",
+      "annotation": "get_alerts",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Alert IDs",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "alert_id_list",
+          "placeholder": "alert_id1, alert_id2",
+          "tooltip": "Specify the alert IDs to retrieve, in CSV format.",
+          "description": "Specify the alert IDs to retrieve in CSV format."
+        },
+        {
+          "title": "Severity",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "multiselect",
+          "name": "severity",
+          "tooltip": "Select the severity level for filtering the alerts.",
+          "description": "Select the severity level for filtering the alerts. You can select from Critical, High, Medium, and Low.",
+          "options": [
+            "Critical",
+            "High",
+            "Medium",
+            "Low"
+          ]
+        },
+        {
+          "title": "Alert Sources",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "alert_source",
+          "placeholder": "alert_id1, alert_id2",
+          "tooltip": "Specify the alert sources that detected the alert in CSV format to filter the alerts.",
+          "description": "Specify the alert sources that detected the alert in CSV format to filter the alerts."
+        },
+        {
+          "title": "Created After",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "creation_time_gte",
+          "tooltip": "Specify the creation time of the alerts in Unix timestamp format.",
+          "description": "Specify the creation time of the alerts in Unix timestamp format."
+        },
+        {
+          "title": "Created Before",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "creation_time_lte",
+          "tooltip": "Specify the creation time of the alerts in Unix timestamp format.",
+          "description": "Specify the creation time of the alerts in Unix timestamp format."
+        },
+        {
+          "title": "Sort Field",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "name": "sort_field",
+          "value": "Creation Time",
+          "tooltip": "Select the field by which to sort the alerts.",
+          "description": "Select the field by which to sort the alerts. You can sort by Creation Time or Severity. By default, it is set to Creation Time",
+          "options": [
+            "Creation Time",
+            "Severity"
+          ]
+        },
+        {
+          "title": "Sort Order",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "name": "sort_order",
+          "tooltip": "Select the sort order for the alerts.",
+          "value": "Descending",
+          "description": "Select the sort order for the alerts. You can sort in ascending or descending order. By default, it is set to Descending",
+          "options": [
+            "Ascending",
+            "Descending"
+          ]
+        },
+        {
+          "title": "Search From",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "search_from",
+          "value": 0,
+          "tooltip": "Specify the starting offset within the query result set from which you want alerts returned.",
+          "description": "Specify the starting offset within the query result set from which you want alerts returned. By default, it is set to 0."
+        },
+        {
+          "title": "Search To",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "search_to",
+          "value": 100,
+          "tooltip": "Specify the end offset within the result set after which you do not want alerts returned.",
+          "description": "Specify the end offset within the result set after which you do not want alerts returned. By default, it is set to 100."
+        }
+      ]
+    },
+    {
+      "operation": "insert_simple_indicators",
+      "title": "Insert Simple Indicators",
+      "description": "Uploads IOCs as JSON objects that you retrieved from external threat intelligence sources to Palo Alto Cortex XDR. Note that Cortex XDR does not scan historic data, but rather only new incoming data.",
+      "category": "investigation",
+      "annotation": "insert_simple_indicators",
+      "output_schema": {
+        "reply": ""
+      },
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Indicator",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "indicator",
+          "value": "",
+          "tooltip": "Specify the string that identifies the indicator you want to insert into Palo Alto Cortex XDR.",
+          "description": "Specify the string that identifies the indicator you want to insert into Palo Alto Cortex XDR."
+        },
+        {
+          "title": "Type",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "name": "type",
+          "value": "",
+          "tooltip": "Select the type of the indicator you want to insert into Palo Alto Cortex XDR.",
+          "description": "Select the type of the indicator you want to insert into Palo Alto Cortex XDR. You can choose from HASH, IP, DOMAIN_NAME, or FILENAME.",
+          "options": [
+            "HASH",
+            "IP",
+            "DOMAIN_NAME",
+            "FILENAME"
+          ]
+        },
+        {
+          "title": "Severity",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "name": "severity",
+          "value": "",
+          "tooltip": "Select the severity of the indicator you want to insert into Palo Alto Cortex XDR.",
+          "description": "Select the severity of the indicator you want to insert into Palo Alto Cortex XDR. You can choose from INFO, LOW, MEDIUM, HIGH, or CRITICAL.",
+          "options": [
+            "Info",
+            "Low",
+            "Medium",
+            "High",
+            "Critical",
+            "Unknown"
+          ]
+        },
+        {
+          "title": "Expiration Date",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "datetime",
+          "name": "expiration_date",
+          "value": "",
+          "tooltip": "Select the expiration date and time for the indicator.",
+          "description": "(Optional) Specify the expiration timestamp in Unix epoch milliseconds. If no expiration is set, use Never."
+        },
+        {
+          "title": "Comment",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "comment",
+          "value": "",
+          "tooltip": "A descriptive comment for the indicator.",
+          "description": "(Optional) Specify a descriptive comment for the indicator."
+        },
+        {
+          "title": "Reputation",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "name": "reputation",
+          "value": "",
+          "tooltip": "Select the reputation of the indicator.",
+          "description": "(Optional) Specify the reputation of the indicator. You can choose from GOOD, BAD, SUSPICIOUS, UNKNOWN, or NO_REPUTATION.",
+          "options": [
+            "Good",
+            "Bad",
+            "Suspicious",
+            "Unknown",
+            "No Reputation"
+          ]
+        },
+        {
+          "title": "Reliability",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "name": "reliability",
+          "tooltip": "Select the reliability of the indicator.",
+          "description": "(Optional) Specify the reliability of the indicator. You can choose from A to F, where A is the most reliable and F is the least.",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ]
+        },
+        {
+          "title": "Vendors",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "json",
+          "name": "vendors",
+          "value": [],
+          "tooltip": "Specify a JSON array of vendor objects, each containing the vendor's name, reliability, and reputation.",
+          "description": "(Optional) Specify a JSON array of vendor objects, each containing the vendor's name, reliability, and reputation. For example, [\n            {\n          \"vendor_name\": \"V1\",\n          \"reliability\": \"A\",\n          \"reputation\": \"GOOD\"\n        }\n          ]"
+        },
+        {
+          "title": "Validate",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "checkbox",
+          "name": "validate",
+          "value": true,
+          "tooltip": "Specify whether to validate the request and return errors if the indicator insertion fails.",
+          "description": "Specify whether to validate the API call to check for any errors during the indicator insertion process."
         }
       ]
     }
