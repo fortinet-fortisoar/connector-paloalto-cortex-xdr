@@ -131,3 +131,10 @@ REPUTATION_MAPPING = {
     "Unknown": "UNKNOWN",
     "No Reputation": "NO_REPUTATION"
 }
+
+INDICATOR_TYPE_MAPPING = {
+    "Hash": "HASH",
+    "IP": "IP",
+    "Domain Name": "DOMAIN_NAME",
+    "Filename": "FILENAME"
+}

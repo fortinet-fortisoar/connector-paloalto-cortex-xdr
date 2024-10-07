@@ -779,7 +779,7 @@ def insert_simple_indicators(config, params):
         obj = CortexXdr(config)
         endpoint = '/indicators/insert_jsons'
         result = build_payload(params)
-        payload = {
+        payload_data = {
             "request_data": []
         }
         if result.get('expiration_date'):
@@ -788,8 +788,10 @@ def insert_simple_indicators(config, params):
             result['severity'] = severity_mapping.get(result.get('severity'))
         if result.get('reputation'):
             result['reputation'] = REPUTATION_MAPPING.get(result.get('reputation'))
-        payload['request_data'].append(result)
-        response = obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload))
+        if result.get('type'):
+            result['type'] = INDICATOR_TYPE_MAPPING.get(result.get('type'))
+        payload_data['request_data'].append(result)
+        response = obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload_data))
         return response
     except Exception as Err:
         logger.error(f'Exception occurred: {Err}')

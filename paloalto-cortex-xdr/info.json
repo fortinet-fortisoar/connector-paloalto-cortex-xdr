@@ -3052,7 +3052,6 @@
           "visible": true,
           "type": "text",
           "name": "alert_source",
-          "placeholder": "alert_id1, alert_id2",
           "tooltip": "Specify the alert sources that detected the alert in CSV format to filter the alerts.",
           "description": "Specify the alert sources that detected the alert in CSV format to filter the alerts."
         },
@@ -3063,8 +3062,8 @@
           "visible": true,
           "type": "datetime",
           "name": "creation_time_gte",
-          "tooltip": "Specify the creation time of the alerts in Unix timestamp format.",
-          "description": "Specify the creation time of the alerts in Unix timestamp format."
+          "tooltip": "Specify the datetime to retrieve alerts created after specified time.",
+          "description": "Specify the datetime to retrieve alerts created after specified time."
         },
         {
           "title": "Created Before",
@@ -3073,8 +3072,8 @@
           "visible": true,
           "type": "datetime",
           "name": "creation_time_lte",
-          "tooltip": "Specify the creation time of the alerts in Unix timestamp format.",
-          "description": "Specify the creation time of the alerts in Unix timestamp format."
+          "tooltip": "Specify the datetime to retrieve alerts created before specified time.",
+          "description": "Specify the datetime to retrieve alerts created before specified time."
         },
         {
           "title": "Sort Field",
@@ -3085,7 +3084,7 @@
           "name": "sort_field",
           "value": "Creation Time",
           "tooltip": "Select the field by which to sort the alerts.",
-          "description": "Select the field by which to sort the alerts. You can sort by Creation Time or Severity. By default, it is set to Creation Time",
+          "description": "Select the field by which to sort the alerts. You can choose from Creation Time or Severity. By default, it is set to Creation Time",
           "options": [
             "Creation Time",
             "Severity"
@@ -3100,7 +3099,7 @@
           "name": "sort_order",
           "tooltip": "Select the sort order for the alerts.",
           "value": "Descending",
-          "description": "Select the sort order for the alerts. You can sort in ascending or descending order. By default, it is set to Descending",
+          "description": "Select the sort order for the alerts. You can choose from Ascending or Descending. By default, it is set to Descending",
           "options": [
             "Ascending",
             "Descending"
@@ -3137,7 +3136,15 @@
       "category": "investigation",
       "annotation": "insert_simple_indicators",
       "output_schema": {
-        "reply": ""
+        "reply": {
+          "success": "",
+          "validation_errors": [
+            {
+              "indicator": "",
+              "error": ""
+            }
+          ]
+        }
       },
       "enabled": true,
       "parameters": [
@@ -3161,12 +3168,12 @@
           "name": "type",
           "value": "",
           "tooltip": "Select the type of the indicator you want to insert into Palo Alto Cortex XDR.",
-          "description": "Select the type of the indicator you want to insert into Palo Alto Cortex XDR. You can choose from HASH, IP, DOMAIN_NAME, or FILENAME.",
+          "description": "Select the type of the indicator you want to insert into Palo Alto Cortex XDR. You can choose from Hash, IP, Domain Name, or Filename.",
           "options": [
-            "HASH",
+            "Hash",
             "IP",
-            "DOMAIN_NAME",
-            "FILENAME"
+            "Domain Name",
+            "Filename"
           ]
         },
         {
@@ -3178,7 +3185,7 @@
           "name": "severity",
           "value": "",
           "tooltip": "Select the severity of the indicator you want to insert into Palo Alto Cortex XDR.",
-          "description": "Select the severity of the indicator you want to insert into Palo Alto Cortex XDR. You can choose from INFO, LOW, MEDIUM, HIGH, or CRITICAL.",
+          "description": "Select the severity of the indicator you want to insert into Palo Alto Cortex XDR. You can choose from Info, Low, Medium, High, or Critical.",
           "options": [
             "Info",
             "Low",
@@ -3195,9 +3202,20 @@
           "visible": true,
           "type": "datetime",
           "name": "expiration_date",
-          "value": "",
           "tooltip": "Select the expiration date and time for the indicator.",
           "description": "(Optional) Specify the expiration timestamp in Unix epoch milliseconds. If no expiration is set, use Never."
+        },
+        {
+          "title": "Class",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "class",
+          "value": "",
+          "placeholder": "Malware",
+          "tooltip": "Specify the class of the indicator.",
+          "description": "(Optional) Specify the class of the indicator. For example, Malware"
         },
         {
           "title": "Comment",
@@ -3219,7 +3237,7 @@
           "name": "reputation",
           "value": "",
           "tooltip": "Select the reputation of the indicator.",
-          "description": "(Optional) Specify the reputation of the indicator. You can choose from GOOD, BAD, SUSPICIOUS, UNKNOWN, or NO_REPUTATION.",
+          "description": "(Optional) Specify the reputation of the indicator. You can choose from Good, Bad, Suspicious, Unknown, or No Reputation.",
           "options": [
             "Good",
             "Bad",
