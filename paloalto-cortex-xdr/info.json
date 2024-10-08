@@ -11,6 +11,7 @@
   "ingestion_modes": [
     "scheduled"
   ],
+  "ingestion_supported": true,
   "help_online": "",
   "configuration": {
     "fields": [
