@@ -70,6 +70,19 @@ status_mapping = {
     "Error": "error"
 }
 
+ALERT_STATUS_MAPPING = {
+    "New": "new",
+    "Under Investigation": "under_investigation",
+    "Resolved Auto": "resolved_auto",
+    "Resolved Duplicate": "resolved_duplicate",
+    "Resolved False Positive": "resolved_false_positive",
+    "Resolved Known Issue": "resolved_known_issue",
+    "Resolved Security Testing": "resolved_security_testing",
+    "Resolved Threat Handled": "resolved_threat_handled",
+    "Resolved True Positive": "resolved_true_positive",
+    "Resolved Other": "resolved_other",
+}
+
 
 platform_mapping = {
     "Windows": "windows",
@@ -109,4 +122,19 @@ category_mapping = {
 payload = {
     "request_data": {
     }
+}
+
+REPUTATION_MAPPING = {
+    "Good": "GOOD",
+    "Bad": "BAD",
+    "Suspicious": "SUSPICIOUS",
+    "Unknown": "UNKNOWN",
+    "No Reputation": "NO_REPUTATION"
+}
+
+INDICATOR_TYPE_MAPPING = {
+    "Hash": "HASH",
+    "IP": "IP",
+    "Domain Name": "DOMAIN_NAME",
+    "Filename": "FILENAME"
 }

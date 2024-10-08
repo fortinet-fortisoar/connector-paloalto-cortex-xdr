@@ -5,7 +5,7 @@ Copyright (c) 2024 Fortinet Inc
 Copyright end
 """
 
-import json
+from json import dumps
 import requests
 import time, json
 import datetime
@@ -20,7 +20,6 @@ from django.conf import settings
 from connectors.cyops_utilities.builtins import upload_file_to_cyops
 from connectors.core.connector import get_logger, ConnectorError
 from .constants import *
-
 
 logger = get_logger('paloalto-coretx-xdr')
 
@@ -47,17 +46,25 @@ class CortexXdr():
             url = endpoint
         logger.info('Request URL {}'.format(url))
         if self.authentication_type == 'Standard Key':
-           headers = {"x-xdr-auth-id": str(self.api_key_id), "Authorization": self.api_key, "Content-Type": "application/json"}
+            headers = {"x-xdr-auth-id": str(self.api_key_id), "Authorization": self.api_key,
+                       "Content-Type": "application/json"}
         else:
             nonce = "".join([secrets.choice(string.ascii_letters + string.digits) for _ in range(64)])
             timestamp = int(datetime.now(timezone.utc).timestamp()) * 1000
             auth_key = "%s%s%s" % (self.api_key, nonce, timestamp)
             auth_key = auth_key.encode("utf-8")
             api_key_hash = hashlib.sha256(auth_key).hexdigest()
-            headers = {"x-xdr-timestamp": str(timestamp), "x-xdr-nonce": nonce, "x-xdr-auth-id": str(self.api_key_id), "Authorization": api_key_hash}
+            headers = {"x-xdr-timestamp": str(timestamp), "x-xdr-nonce": nonce, "x-xdr-auth-id": str(self.api_key_id),
+                       "Authorization": api_key_hash}
         try:
-            response = requests.request(method=method, url=url, params=params, data=data, json=json,
-                                        headers=headers,
+            # CURL UTILS CODE
+            try:
+                from connectors.debug_utils.curl_script import make_curl
+                json_data = dumps(json) if json else data
+                make_curl(method, url, headers=headers, params=params, data=json_data, verify_ssl=self.verify_ssl)
+            except Exception as err:
+                logger.debug(f"Error in curl utils: {str(err)}")
+            response = requests.request(method=method, url=url, params=params, data=data, json=json, headers=headers,
                                         verify=self.verify_ssl)
             if response.ok:
                 if response.headers.get('Content-Disposition'):
@@ -99,7 +106,7 @@ def build_payload(params):
 
 
 def handle_list_parameter(key, value, result):
-    if not isinstance(value, list):
+    if not isinstance(value, (list, tuple)):
         alerts = [x.strip() for x in value.split(',')]
         result['{key}'.format(key=key)] = alerts
 
@@ -197,7 +204,7 @@ def update_incident(config, params):
     try:
         obj = CortexXdr(config)
         if not (params.get('assigned_user_mail') or params.get('assigned_user_pretty_name') or params.get(
-                'manual_severity') or params.get('status') or params.get('resolve_comment')):
+            'manual_severity') or params.get('status') or params.get('resolve_comment')):
             raise ConnectorError(
                 'At least one of the [Assigned User Mail, Assigned User Pretty Name, Severity, Status, Resolve Comment] is required.')
         endpoint = '/incidents/update_incident/'
@@ -397,7 +404,7 @@ def get_device_violations(config, params):
     try:
         obj = CortexXdr(config)
         if not (params.get('endpoint_id_list') or params.get('vendor') or params.get(
-                'vendor_id') or params.get('product') or params.get('product_id') or params.get('serial') or params.get(
+            'vendor_id') or params.get('product') or params.get('product_id') or params.get('serial') or params.get(
             'hostname') or params.get('username') or params.get('type') or params.get('ip_list') or params.get(
             'violation_id_list') or params.get('timestamp')):
             raise ConnectorError(
@@ -631,6 +638,7 @@ def retrieve_file(config, params):
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
 
+
 def retrieve_file_details(config, params):
     try:
         obj = CortexXdr(config)
@@ -647,8 +655,6 @@ def retrieve_file_details(config, params):
         raise ConnectorError(Err)
 
 
-
-
 def xql_query(config, params):
     try:
         obj = CortexXdr(config)
@@ -659,7 +665,7 @@ def xql_query(config, params):
         else:
             tenants = []
         strat = params.get('from')
-        end =  params.get('to')
+        end = params.get('to')
         if strat and end:
             start_time = int(datetime.fromtimestamp(time.mktime(
                 time.strptime(strat, "%Y-%m-%dT%H:%M:%S.%fZ")
@@ -688,7 +694,6 @@ def xql_query(config, params):
         logger.error('Exception occurred: {}'.format(Err))
 
 
-
 def get_query_result_by_query_id(config, params):
     try:
         obj = CortexXdr(config)
@@ -704,6 +709,93 @@ def get_query_result_by_query_id(config, params):
         return obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload))
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
+
+
+def update_alerts(config, params):
+    try:
+        obj = CortexXdr(config)
+        endpoint = '/alerts/update_alerts'
+        update_data = {
+            "severity": (params.get('severity') or '').lower(),
+            "status": ALERT_STATUS_MAPPING.get(params.get('status')),
+            "comment": params.get('comment')
+        }
+        update_data = build_payload(update_data)
+        if not update_data:
+            raise ConnectorError('At least one of the following parameter is required: Status, Severity, or Comment.')
+
+        payload = {
+            "request_data": {
+                "alert_id_list": params.get('alert_ids'),
+                "update_data": update_data
+            }
+        }
+        handle_list_parameter("alert_id_list", params.get('alert_ids'), payload["request_data"])
+        return obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload))
+    except Exception as Err:
+        logger.error('Exception occurred: {}'.format(Err))
+        raise ConnectorError(Err)
+
+
+def get_alerts(config, params):
+    try:
+        obj = CortexXdr(config)
+        endpoint = '/alerts/get_alerts/'
+        filters = []
+        query_payload = {
+            'filters': filters,
+            'search_from': params.get('search_from'),
+            'search_to': params.get('search_to'),
+            'sort': {
+                'field': 'severity' if params.get('sort_field') == 'severity' else 'creation_time',
+                'keyword': 'asc' if params.get('sort_order') == 'Ascending' else 'desc'
+            }
+        }
+        for field in ['alert_id_list', 'alert_source', 'severity', 'creation_time_gte', 'creation_time_lte']:
+            value = params.get(field)
+            if value:
+                if 'creation_time' in field:
+                    operator = 'gte' if 'gte' in field else 'lte'
+                    field = 'creation_time'
+                    value = to_utimestamp(value)
+                else:
+                    operator = 'in'
+                    value = [i.strip() for i in value.split(',')] if isinstance(value, str) else value
+                filter_obj = {
+                    'field': field,
+                    'operator': operator,
+                    'value': value
+                }
+                filters.append(filter_obj)
+        query_payload = build_payload(query_payload)
+        return obj.make_api_call(method='POST', endpoint=endpoint, json={'request_data': query_payload})
+    except Exception as Err:
+        logger.error('Exception occurred: {}'.format(Err))
+        raise ConnectorError(Err)
+
+
+def insert_simple_indicators(config, params):
+    try:
+        obj = CortexXdr(config)
+        endpoint = '/indicators/insert_jsons'
+        result = build_payload(params)
+        payload_data = {
+            "request_data": []
+        }
+        if result.get('expiration_date'):
+            result['expiration_date'] = to_utimestamp(result.get('expiration_date'))
+        if result.get('severity'):
+            result['severity'] = severity_mapping.get(result.get('severity'))
+        if result.get('reputation'):
+            result['reputation'] = REPUTATION_MAPPING.get(result.get('reputation'))
+        if result.get('type'):
+            result['type'] = INDICATOR_TYPE_MAPPING.get(result.get('type'))
+        payload_data['request_data'].append(result)
+        response = obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload_data))
+        return response
+    except Exception as Err:
+        logger.error(f'Exception occurred: {Err}')
+        raise ConnectorError(Err)
 
 
 operations = {
@@ -735,6 +827,8 @@ operations = {
     'retrieve_file': retrieve_file,
     'retrieve_file_details': retrieve_file_details,
     'xql_query': xql_query,
-    'get_query_result_by_query_id':get_query_result_by_query_id
-
+    'get_query_result_by_query_id': get_query_result_by_query_id,
+    'get_alerts': get_alerts,
+    'update_alerts': update_alerts,
+    'insert_simple_indicators': insert_simple_indicators
 }
