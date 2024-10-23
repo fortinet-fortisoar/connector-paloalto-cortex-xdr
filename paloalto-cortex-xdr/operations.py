@@ -782,8 +782,13 @@ def insert_simple_indicators(config, params):
         payload_data = {
             "request_data": []
         }
-        if result.get('expiration_date'):
+        expiry = result.pop('expiry', None)
+        if expiry == 'Custom':
             result['expiration_date'] = to_utimestamp(result.get('expiration_date'))
+        elif expiry == 'Never':
+            result['expiration_date'] = 'Never'
+        else:
+            result['expiration_date'] = None
         if result.get('severity'):
             result['severity'] = severity_mapping.get(result.get('severity'))
         if result.get('reputation'):

@@ -1,5 +1,5 @@
 #### What's Improved
-- Added the following new actions:
-  - Get Alerts
-  - Update Alerts
-  - Insert Simple Indicators
+- Added the following new operations:  
+  - Get Alerts 
+  - Update Alerts 
+  - Insert Simple Indicators 
