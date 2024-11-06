@@ -2944,7 +2944,7 @@
     {
       "operation": "update_alerts",
       "title": "Update Alerts",
-      "description": "Updates one or more alerts based on the specified input parameters.",
+      "description": "Updates one or more alerts based on the severity, status, and other input parameters that you have specified.",
       "category": "investigation",
       "annotation": "update_alerts",
       "enabled": true,
@@ -2957,8 +2957,8 @@
           "type": "text",
           "name": "alert_ids",
           "placeholder": "alert_id1, alert_id2",
-          "tooltip": "Specify the alert IDs to be updated, in CSV format.",
-          "description": "Specify the alert IDs to be updated in CSV format."
+          "tooltip": "Specify alert IDs, as comma-separated values, to update on Palo Alto Cortex XDR.",
+          "description": "Specify alert IDs, as comma-separated values, to update on Palo Alto Cortex XDR."
         },
         {
           "title": "Severity",
@@ -2967,8 +2967,8 @@
           "visible": true,
           "type": "select",
           "name": "severity",
-          "tooltip": "Select the severity level for the alerts to be updated.",
-          "description": "Select the severity level for the alerts to be updated. You can select from Critical, High, Medium, Low, and Informational.",
+          "tooltip": "Select the severity level for the alerts being updated on Palo Alto Cortex XDR.",
+          "description": "(Optional) Select the severity level for the alerts being updated on Palo Alto Cortex XDR. You can select from following options: Critical, High, Medium, Low, and Informational.",
           "options": [
             "Critical",
             "High",
@@ -2985,7 +2985,7 @@
           "type": "select",
           "name": "status",
           "tooltip": "Select the new status for the alerts to be updated.",
-          "description": "Select the new status for the alerts to be updated. You can select from New, Resolved Threat Handled, Under Investigation, Resolved Security Testing, Resolved Auto, Resolved Known Issue, Resolved Duplicate, Resolved Other, Resolved False Positive, and Resolved True Positive.",
+          "description": "(Optional) Select the new status for the alerts to be updated. You can select from the following options: New, Resolved Threat Handled, Under Investigation, Resolved Security Testing, Resolved Auto, Resolved Known Issue, Resolved Duplicate, Resolved Other, Resolved False Positive, and Resolved True Positive.",
           "options": [
             "New",
             "Under Investigation",
@@ -3006,15 +3006,15 @@
           "visible": true,
           "type": "text",
           "name": "comment",
-          "tooltip": "Specify a descriptive comment explaining the changes being made.",
-          "description": "Specify a descriptive comment explaining the changes."
+          "tooltip": "Specify a descriptive comment explaining the changes.",
+          "description": "(Optional) Specify a descriptive comment explaining the changes."
         }
       ]
     },
     {
       "operation": "get_alerts",
       "title": "Get Alerts",
-      "description": "Retrieves a list of alerts based on the specified input parameters.",
+      "description": "Retrieves a list of alerts based on the severity, alert sources, and other input parameters that you have specified.",
       "category": "investigation",
       "annotation": "get_alerts",
       "enabled": true,
@@ -3027,8 +3027,8 @@
           "type": "text",
           "name": "alert_id_list",
           "placeholder": "alert_id1, alert_id2",
-          "tooltip": "Specify the alert IDs to retrieve, in CSV format.",
-          "description": "Specify the alert IDs to retrieve in CSV format."
+          "tooltip": "Specify alert IDs, as comma-separated values, to filter retrieved alerts from Palo Alto Cortex XDR.",
+          "description": "(Optional) Specify alert IDs, as comma-separated values, to filter retrieved alerts from Palo Alto Cortex XDR."
         },
         {
           "title": "Severity",
@@ -3037,8 +3037,8 @@
           "visible": true,
           "type": "multiselect",
           "name": "severity",
-          "tooltip": "Select the severity level for filtering the alerts.",
-          "description": "Select the severity level for filtering the alerts. You can select from Critical, High, Medium, and Low.",
+          "tooltip": "Select the severity level to filter retrieved alerts from Palo Alto Cortex XDR.",
+          "description": "(Optional) Select the severity level to filter retrieved alerts from Palo Alto Cortex XDR. You can select from the following options: Critical, High, Medium, Low, Informational",
           "options": [
             "Critical",
             "High",
@@ -3053,8 +3053,8 @@
           "visible": true,
           "type": "text",
           "name": "alert_source",
-          "tooltip": "Specify the alert sources that detected the alert in CSV format to filter the alerts.",
-          "description": "Specify the alert sources that detected the alert in CSV format to filter the alerts."
+          "tooltip": "Specify alert sources that detected the alert, as comma-separated values, to filter retrieved alerts from Palo Alto Cortex XDR.",
+          "description": "(Optional) Specify alert sources that detected the alert, as comma-separated values, to filter retrieved alerts from Palo Alto Cortex XDR."
         },
         {
           "title": "Created After",
@@ -3063,8 +3063,8 @@
           "visible": true,
           "type": "datetime",
           "name": "creation_time_gte",
-          "tooltip": "Specify the datetime to retrieve alerts created after specified time.",
-          "description": "Specify the datetime to retrieve alerts created after specified time."
+          "tooltip": "Specify the start date and time of the period within which to retrieve alerts.",
+          "description": "(Optional) Specify the start date and time of the period within which to retrieve alerts."
         },
         {
           "title": "Created Before",
@@ -3073,8 +3073,8 @@
           "visible": true,
           "type": "datetime",
           "name": "creation_time_lte",
-          "tooltip": "Specify the datetime to retrieve alerts created before specified time.",
-          "description": "Specify the datetime to retrieve alerts created before specified time."
+          "tooltip": "Specify the end date and time of the period within which to retrieve alerts.",
+          "description": "(Optional) Specify the end date and time of the period within which to retrieve alerts."
         },
         {
           "title": "Sort Field",
@@ -3085,7 +3085,7 @@
           "name": "sort_field",
           "value": "Creation Time",
           "tooltip": "Select the field by which to sort the alerts.",
-          "description": "Select the field by which to sort the alerts. You can choose from Creation Time or Severity. By default, it is set to Creation Time",
+          "description": "(Optional) Select the field by which to sort the alerts. You can choose from the following options: Creation Time (Default), Severity ",
           "options": [
             "Creation Time",
             "Severity"
@@ -3100,7 +3100,7 @@
           "name": "sort_order",
           "tooltip": "Select the sort order for the alerts.",
           "value": "Descending",
-          "description": "Select the sort order for the alerts. You can choose from Ascending or Descending. By default, it is set to Descending",
+          "description": "(Optional) Select the sort order for the alerts. You can choose from the following options: Ascending, Descending (Default)",
           "options": [
             "Ascending",
             "Descending"
@@ -3114,8 +3114,8 @@
           "type": "integer",
           "name": "search_from",
           "value": 0,
-          "tooltip": "Specify the starting offset within the query result set from which you want alerts returned.",
-          "description": "Specify the starting offset within the query result set from which you want alerts returned. By default, it is set to 0."
+          "tooltip": "Specify the count of results to skip within the query result of the alerts being returned.",
+          "description": "(Optional) Specify the count of results to skip within the query result of the alerts being returned. By default, it is set to 0."
         },
         {
           "title": "Search To",
@@ -3125,8 +3125,8 @@
           "type": "integer",
           "name": "search_to",
           "value": 100,
-          "tooltip": "Specify the end offset within the result set after which you do not want alerts returned.",
-          "description": "Specify the end offset within the result set after which you do not want alerts returned. By default, it is set to 100."
+          "tooltip": "Specify the count of results after which you do not want the alerts returned.",
+          "description": "(Optional) Specify the count of results after which you do not want the alerts returned. By default, it is set to 100."
         }
       ]
     },
@@ -3204,7 +3204,7 @@
           "type": "select",
           "name": "expiry",
           "tooltip": "Select the expiry of for the indicator. You can specify Never, Default or Custom date.",
-          "description": "Select the expiry of for the indicator. You can choose from Never: Indicator will not expire., Default: It will use the default value. or Custom: Specify custom date.",
+          "description": "(Optional) Select if the indicator being created should have an expiration date. You can choose from following options: Never: Indicator never expires. Default: Indicator expires after a default period. Custom: Select an expiration date and time, in the Expiration Date field, for the indicator.",
           "value": "Default",
           "options": [
             "Never",
@@ -3220,8 +3220,8 @@
                 "visible": true,
                 "type": "datetime",
                 "name": "expiration_date",
-                "tooltip": "Select the expiration date and time for the indicator.",
-                "description": "Select the expiration date and time for the indicator."
+                "tooltip": "Select an expiration date and time for the indicator.",
+                "description": "Select an expiration date and time for the indicator."
               }
             ]
           }
@@ -3235,7 +3235,7 @@
           "name": "class",
           "value": "",
           "placeholder": "Malware",
-          "tooltip": "pecify the class of the indicator.",
+          "tooltip": "Specify the class of the indicator.",
           "description": "(Optional) Specify the class of the indicator. For example: Malware"
         },
         {
