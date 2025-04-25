@@ -157,14 +157,17 @@ def build_query_payload(params):
                 if '_time' in k or '_seen' in k or 'timestamp' in k:
                     v = to_utimestamp(v)
                 elif 'incident_id_list' in k or 'endpoint_id_list' in k:
-                    v = [str(x) for x in v]
+                    if not isinstance(v, list):
+                        v = [x.strip() for x in v.split(',')]
+                    elif isinstance(v, list):
+                        v = [str(x) for x in v]
                 elif 'status' in k:
                     v = status_mapping.get(v)
                 filters_list.append({'field': terms[2], 'operator': terms[1], 'value': v})
             if isinstance(v, int) and 'cursor' in k:
                 _payload['request_data'].update({k.split('.')[1]: v})
-            if v and 'sort' in k:
-                _payload['request_data']['sort'].update({k.split('.')[1]: v})
+           #if v and 'sort' in k:
+           #    _payload['request_data']['sort'].update({k.split('.')[1]: v})
 
     if len(filters_list) > 0:
         _payload['request_data'].update({'filters': filters_list})
@@ -215,6 +218,8 @@ def update_incident(config, params):
                 "update_data": {}
             }
         }
+        logger.error("Result:{}".format(result))
+        result.pop('incident_id')
         if result:
             if result.get('manual_severity'):
                 result['manual_severity'] = severity_mapping.get(result.get('manual_severity'))
@@ -283,11 +288,13 @@ def isolate_endpoints(config, params):
         }
         if result.get('isolate_endpoint') == 'Isolate One Endpoint':
             payload.get('request_data').update({"endpoint_id": result.get('endpoint_id')})
-            return obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
+            logger.error("payload:{}".format(payload))
+            return obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload))
         elif result.get('isolate_endpoint') == 'Isolate More Than One Endpoint':
             if result.get('endpoint_id_list'):
                 handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
                 query_payload = build_query_payload(params)
+                logger.error("query_payload:{}".format(query_payload))
                 return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
         if result.get('incident_id'):
             payload.get('request_data').update({"incident_id": result.get('incident_id')})
@@ -349,7 +356,11 @@ def scan_endpoints(config, params):
     try:
         obj = CortexXdr(config)
         endpoint = '/endpoints/scan/'
+        result = build_payload(params)
+        if result.get('endpoint_id_list'):
+           handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'),result)
         query_payload = build_query_payload(params)
+        logger.error("query_payload:{}".format(query_payload))
         if params.get('incident_id'):
             query_payload.get('request_data').update({"incident_id": params.get('incident_id')})
         return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
@@ -403,16 +414,20 @@ def get_policy(config, params):
 def get_device_violations(config, params):
     try:
         obj = CortexXdr(config)
+        '''
         if not (params.get('endpoint_id_list') or params.get('vendor') or params.get(
             'vendor_id') or params.get('product') or params.get('product_id') or params.get('serial') or params.get(
             'hostname') or params.get('username') or params.get('type') or params.get('ip_list') or params.get(
             'violation_id_list') or params.get('timestamp')):
             raise ConnectorError(
                 'At least one of the [Endpoint ID List, Vendor, Vendor ID, Product, Product ID, Serial, Hostname, Username, Type, IP List, Violation ID List, timestamp] is required.')
+        '''
         endpoint = '/device_control/get_violations/'
 
         query_payload = build_query_payload(params)
+        logger.error("query_payload:{}".format(query_payload))
         return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
+
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -525,6 +540,7 @@ def blacklist_files(config, params):
             payload.get('request_data').update({"comment": params.get('comment')})
         if params.get('incident_id'):
             payload.get('request_data').update({"incident_id": params.get('incident_id')})
+        logger.error("payload:{}".format(payload))
         response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
         return response
     except Exception as Err:
@@ -546,7 +562,10 @@ def whitelist_files(config, params):
         if params.get('comment'):
             payload.get('request_data').update({"comment": params.get('comment')})
         if params.get('incident_id'):
+            incident_id = params.get("incident_id")
+            logger.error("Type of incident ID:{}".format(type(incident_id)))
             payload.get('request_data').update({"incident_id": params.get('incident_id')})
+        logger.error("payload:{}".format(payload))
         response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
         return response
     except Exception as Err:
@@ -561,6 +580,7 @@ def quarantine_files(config, params):
         query_payload = build_query_payload(params)
         query_payload.get('request_data').update({"file_path": params.get('file_path')})
         query_payload.get('request_data').update({"file_hash": params.get('file_hash')})
+        logger.error("query_payload:{}".format(query_payload))
         return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
@@ -580,6 +600,7 @@ def get_quarantine_status(config, params):
         files_dict = {"endpoint_id": params.get('endpoint_id'), "file_hash": params.get('file_hash'),
                       "file_path": params.get('file_path')}
         payload.get('request_data').get('files').append(files_dict)
+        logger.error("payload:{}".format(payload))
         response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
         return response
     except Exception as Err:
@@ -600,6 +621,7 @@ def restore_file(config, params):
             payload.get('request_data').update({"endpoint_id": params.get('endpoint_id')})
         if params.get('incident_id'):
             payload.get('request_data').update({"incident_id": params.get('incident_id')})
+        logger.error("payload:{}".format(payload))
         response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
         return response
     except Exception as Err:
@@ -614,6 +636,7 @@ def retrieve_file(config, params):
         query_payload = build_query_payload(params)
         files = {"files": {platform_mapping.get(params.get('files')): [params.get('file_path')]}}
         query_payload['request_data'].update(files)
+        logger.error("query_payload:{}".format(query_payload))
         action_id_response = obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(query_payload))
         params_dict = {"group_action_id": action_id_response.get('reply').get('action_id')}
         import time
@@ -796,7 +819,7 @@ def insert_simple_indicators(config, params):
         if result.get('type'):
             result['type'] = INDICATOR_TYPE_MAPPING.get(result.get('type'))
         payload_data['request_data'].append(result)
-        response = obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload_data))
+        response = obj.make_api_call(method='POST', endpoint=endpoint, json=payload_data)
         return response
     except Exception as Err:
         logger.error(f'Exception occurred: {Err}')
