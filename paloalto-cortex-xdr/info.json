@@ -712,8 +712,8 @@
           "visible": true,
           "type": "text",
           "name": "isolate_endpoint",
-          "tooltip": "Specify the CSV list of endpoint IDs which you want to to isolate one endpoint or more than one endpoint using Palo Alto Cortex XDR.",
-          "description": "Specify the CSV list of endpoint IDs which you want to to isolate one endpoint or more than one endpoint using Palo Alto Cortex XDR.",
+          "tooltip": "Specify the CSV list of endpoint IDs which you want to isolate one endpoint or more than one endpoint using Palo Alto Cortex XDR.",
+          "description": "Specify the CSV list of endpoint IDs which you want to isolate one endpoint or more than one endpoint using Palo Alto Cortex XDR.",
           "placeholder": "4ce98b4d8d2b45a9a1d82dc71f0d1304 or 4ce98b4d8d2b45a9a1d82dc71f0d1304,5be98b4d9d2b45a9a1d82dc71f0d15098"
         },
         {
