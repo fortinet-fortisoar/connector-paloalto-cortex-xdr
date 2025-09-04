@@ -7,6 +7,7 @@
   "icon_small_name": "PaloAlto_Cortex_XDR_small.png",
   "icon_large_name": "PaloAlto_Cortex_XDR_large.png",
   "category": "Endpoint Security",
+  "cs_approved": false,
   "cs_compatible": true,
   "ingestion_modes": [
     "scheduled"
