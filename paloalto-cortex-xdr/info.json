@@ -1,18 +1,19 @@
 {
   "name": "paloalto-cortex-xdr",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "label": "Palo Alto Cortex XDR",
   "description": "Cortex XDR applies machine learning at cloud scale to rich network, endpoint, and cloud data, so you can quickly find and stop targeted attacks, insider abuse, and compromised endpoints.",
   "publisher": "Fortinet",
   "icon_small_name": "PaloAlto_Cortex_XDR_small.png",
   "icon_large_name": "PaloAlto_Cortex_XDR_large.png",
   "category": "Endpoint Security",
+  "cs_approved": false,
   "cs_compatible": true,
   "ingestion_modes": [
     "scheduled"
   ],
   "ingestion_supported": true,
-  "help_online": "https://docs.fortinet.com/document/fortisoar/1.3.0/palo-alto-cortex-xdr/978/palo-alto-cortex-xdr-v1-3-0",
+  "help_online": "",
   "configuration": {
     "fields": [
       {
@@ -705,47 +706,15 @@
       "enabled": true,
       "parameters": [
         {
-          "title": "Isolate Endpoint",
-          "required": false,
+          "title": "Endpoint IDs",
+          "required": true,
           "editable": true,
           "visible": true,
-          "type": "select",
-          "options": [
-            "Isolate One Endpoint",
-            "Isolate More Than One Endpoint"
-          ],
-          "onchange": {
-            "Isolate One Endpoint": [
-              {
-                "title": "Endpoint ID",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id",
-                "value": "",
-                "tooltip": "String that identifies the endpoint to isolate.",
-                "description": "If you select Isolate One Endpoint, then in the Endpoint ID field specify the ID of the endpoint you want to isolate on Palo Alto Cortex XDR."
-              }
-            ],
-            "Isolate More Than One Endpoint": [
-              {
-                "title": "Endpoint ID List",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id_list",
-                "value": "",
-                "tooltip": "List of endpoint IDs.",
-                "description": "If you select Isolate More Than One Endpoint, then in the Endpoint ID List field specify a list of endpoint IDs you want to isolate on Palo Alto Cortex XDR."
-              }
-            ]
-          },
+          "type": "text",
           "name": "isolate_endpoint",
-          "value": "",
-          "tooltip": "Isolate one endpoint or more than one endpoint.",
-          "description": "Select whether you want to isolate one endpoint or multiple endpoints. If you select Isolate One Endpoint, then in the Endpoint ID field specify the ID of the endpoint you want to isolate on Palo Alto Cortex XDR. If you select Isolate More Than One Endpoint, then in the Endpoint ID List field specify a list of endpoint IDs you want to isolate on Palo Alto Cortex XDR."
+          "tooltip": "Specify the CSV list of endpoint IDs which you want to isolate one endpoint or more than one endpoint using Palo Alto Cortex XDR.",
+          "description": "Specify the CSV list of endpoint IDs which you want to isolate one endpoint or more than one endpoint using Palo Alto Cortex XDR.",
+          "placeholder": "4ce98b4d8d2b45a9a1d82dc71f0d1304 or 4ce98b4d8d2b45a9a1d82dc71f0d1304,5be98b4d9d2b45a9a1d82dc71f0d15098"
         },
         {
           "title": "Incident ID",
@@ -754,7 +723,6 @@
           "visible": true,
           "type": "text",
           "name": "incident_id",
-          "value": "",
           "tooltip": "Incident ID.",
           "description": "(Optional) Specify the ID of the incident to include the Isolate Endpoints action in the Cortex XDR Incident ViewTimeline tab."
         }
@@ -774,47 +742,15 @@
       "enabled": true,
       "parameters": [
         {
-          "title": "Unisolate Endpoint",
+          "title": "Endpoint IDs",
           "required": false,
           "editable": true,
           "visible": true,
-          "type": "select",
-          "options": [
-            "Unisolate One Endpoint",
-            "Unisolate More Than One Endpoint"
-          ],
-          "onchange": {
-            "Unisolate One Endpoint": [
-              {
-                "title": "Endpoint ID",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id",
-                "value": "",
-                "tooltip": "String that identifies the endpoint to unisolate.",
-                "description": "If you select Unisolate One Endpoint, then in the Endpoint ID field specify the ID of the endpoint you want to unisolate on Palo Alto Cortex XDR."
-              }
-            ],
-            "Unisolate More Than One Endpoint": [
-              {
-                "title": "Endpoint ID List",
-                "required": false,
-                "editable": true,
-                "visible": true,
-                "type": "text",
-                "name": "endpoint_id_list",
-                "value": "",
-                "tooltip": "List of endpoint IDs.",
-                "description": "If you select Unisolate More Than One Endpoint, then in the Endpoint ID List field specify a list of endpoint IDs you want to unisolate on Palo Alto Cortex XDR."
-              }
-            ]
-          },
-          "name": "unisolate_endpoint",
-          "value": "",
-          "tooltip": "Unisolate one endpoint or more than one endpoint.",
-          "description": "Select whether you want to unisolate one endpoint or multiple endpoints. If you select Unisolate One Endpoint, then in the Endpoint ID field specify the ID of the endpoint you want to unisolate on Palo Alto Cortex XDR. If you select Unisolate More Than One Endpoint, then in the Endpoint ID List field specify a list of endpoint IDs you want to unisolate on Palo Alto Cortex XDR."
+          "type": "text",
+          "name": "endpoint_ids",
+          "tooltip": "Specify the CSV list of endpoint IDs which you want to to unisolate one endpoint or more than one endpoint using Palo Alto Cortex XDR.",
+          "description": "Specify the CSV list of endpoint IDs which you want to to unisolate one endpoint or more than one endpoint using Palo Alto Cortex XDR.",
+          "placeholder": "4ce98b4d8d2b45a9a1d82dc71f0d1304 or 4ce98b4d8d2b45a9a1d82dc71f0d1304,5be98b4d9d2b45a9a1d82dc71f0d15098"
         },
         {
           "title": "Incident ID",
@@ -823,8 +759,6 @@
           "visible": true,
           "type": "text",
           "name": "incident_id",
-          "value": "",
-          "tooltip": "Incident ID.",
           "description": "(Optional) Specify the ID of the incident to include the Unisolate Endpoints action in the Cortex XDR Incident ViewTimeline tab."
         }
       ]
@@ -3207,24 +3141,13 @@
           "description": "(Optional) Select if the indicator being created should have an expiration date. You can choose from following options: Never: Indicator never expires. Default: Indicator expires after a default period. Custom: Select an expiration date and time, in the Expiration Date field, for the indicator.",
           "value": "Default",
           "options": [
+            "7 Days",
+            "30 Days",
+            "90 Days",
+            "180 Days",
             "Never",
-            "Default",
-            "Custom"
-          ],
-          "onchange": {
-            "Custom": [
-              {
-                "title": "Expiration Date",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "datetime",
-                "name": "expiration_date",
-                "tooltip": "Select an expiration date and time for the indicator.",
-                "description": "Select an expiration date and time for the indicator."
-              }
-            ]
-          }
+            "Default"
+          ]
         },
         {
           "title": "Class",

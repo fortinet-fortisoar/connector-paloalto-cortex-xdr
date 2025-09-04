@@ -1,7 +1,7 @@
 """
 Copyright start
 MIT License
-Copyright (c) 2024 Fortinet Inc
+Copyright (c) 2025 Fortinet Inc
 Copyright end
 """
 
@@ -45,6 +45,15 @@ severity_mapping = {
     "Critical": "critical",
     "Informational": "informational",
     "Unknown": "unknown"
+}
+
+expiration_days_map = {
+    "7 Days": 7,
+    "30 Days": 30,
+    "90 Days": 90,
+    "180 Days": 180,
+    "Never": "Never",
+    "Default": None
 }
 
 status_mapping = {

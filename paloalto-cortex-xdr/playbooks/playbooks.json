@@ -40,7 +40,7 @@
                   "unisolate_endpoint": "",
                   "incident_id": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "unisolate_endpoints",
                 "operationTitle": "Unisolate Endpoints"
@@ -111,7 +111,7 @@
                   "incident_id": "",
                   "alerts_limit": 1000
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_incident_details",
                 "operationTitle": "Get Incident Details"
@@ -182,7 +182,7 @@
                   "isolate_endpoint": "",
                   "incident_id": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "isolate_endpoints",
                 "operationTitle": "Isolate Endpoints"
@@ -250,7 +250,7 @@
                 "name": "Palo Alto Cortex XDR",
                 "config": "''",
                 "params": [],
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_distribution_version",
                 "operationTitle": "Get Distribution Version"
@@ -331,7 +331,7 @@
                   "sort.field": "creation_time",
                   "sort.keyword": "desc"
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "fetch_incidents",
                 "operationTitle": "Fetch Incidents"
@@ -407,7 +407,7 @@
                   "comment": "",
                   "resolve_comment": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "update_incident",
                 "operationTitle": "Update Incident"
@@ -477,7 +477,7 @@
                 "params": {
                   "alerts": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "insert_cef_alerts",
                 "operationTitle": "Insert CEF Alerts"
@@ -557,7 +557,7 @@
                   "alert_description": "",
                   "action_status": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "insert_parsed_alerts",
                 "operationTitle": "Insert Parsed Alerts"
@@ -625,7 +625,7 @@
                 "name": "Palo Alto Cortex XDR",
                 "config": "''",
                 "params": [],
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_all_endpoints",
                 "operationTitle": "Get All Endpoints"
@@ -713,7 +713,7 @@
                   "sort.field": "first_seen",
                   "sort.keyword": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_endpoints",
                 "operationTitle": "Get Endpoints"
@@ -797,7 +797,7 @@
                   "filter.lte.last_seen": "",
                   "incident_id": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "scan_endpoints",
                 "operationTitle": "Scan Endpoints"
@@ -881,7 +881,7 @@
                   "filter.lte.last_seen": "",
                   "incident_id": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "cancel_scan_endpoints",
                 "operationTitle": "Cancel Scan Endpoints"
@@ -951,7 +951,7 @@
                 "params": {
                   "endpoint_id_list": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "delete_endpoints",
                 "operationTitle": "Delete Endpoints"
@@ -1021,7 +1021,7 @@
                 "params": {
                   "endpoint_id": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_policy",
                 "operationTitle": "Get Policy"
@@ -1107,7 +1107,7 @@
                   "sort.field": "",
                   "sort.keyword": "desc"
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_device_violations",
                 "operationTitle": "Get Device Violations"
@@ -1179,7 +1179,7 @@
                   "package_type": "",
                   "description": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "create_distributions",
                 "operationTitle": "Create Distributions"
@@ -1249,7 +1249,7 @@
                 "params": {
                   "distribution_id": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_distribution_status",
                 "operationTitle": "Get Distribution Status"
@@ -1320,7 +1320,7 @@
                   "distribution_id": "",
                   "package_type": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_distribution_url",
                 "operationTitle": "Get Distribution URL"
@@ -1399,7 +1399,7 @@
                   "sort.field": "type",
                   "sort.keyword": "desc"
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_audit_management_log",
                 "operationTitle": "Get Audit Management Logs"
@@ -1482,7 +1482,7 @@
                   "sort.field": "type",
                   "sort.keyword": "desc"
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_audit_agent_report",
                 "operationTitle": "Get Audit Agent Report"
@@ -1554,7 +1554,7 @@
                   "comment": "",
                   "incident_id": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "blacklist_files",
                 "operationTitle": "Blacklist Files"
@@ -1626,7 +1626,7 @@
                   "comment": "",
                   "incident_id": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "whitelist_files",
                 "operationTitle": "Whitelist Files"
@@ -1698,7 +1698,7 @@
                   "file_path": "",
                   "file_hash": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "quarantine_files",
                 "operationTitle": "Quarantine Files"
@@ -1770,7 +1770,7 @@
                   "file_hash": "",
                   "file_path": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_quarantine_status",
                 "operationTitle": "Get Quarantine Status"
@@ -1842,7 +1842,7 @@
                   "endpoint_id": "",
                   "incident_id": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "restore_file",
                 "operationTitle": "Restore File"
@@ -1925,7 +1925,7 @@
                   "filter.lte.first_seen": "",
                   "filter.lte.last_seen": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "retrieve_file",
                 "operationTitle": "Retrieve File"
@@ -1995,7 +1995,7 @@
                 "params": {
                   "group_action_id": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "retrieve_file_details",
                 "operationTitle": "Retrieve File Details"
@@ -2068,7 +2068,7 @@
                   "from": "",
                   "to": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "xql_query",
                 "operationTitle": "Execute XQL Query"
@@ -2140,7 +2140,7 @@
                   "pending_flag": "true",
                   "limit": 100
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_query_result_by_query_id",
                 "operationTitle": "Get Query Results By Query ID"
@@ -2213,7 +2213,7 @@
                   "status": "",
                   "comment": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "update_alerts",
                 "operationTitle": "Update Alerts"
@@ -2291,7 +2291,7 @@
                   "search_from": "",
                   "search_to": 100
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_alerts",
                 "operationTitle": "Get Alerts"
@@ -2369,7 +2369,7 @@
                   "vendors": "",
                   "validate": true
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "insert_simple_indicators",
                 "operationTitle": "Insert Simple Indicators"
@@ -2534,7 +2534,7 @@
                   "incident_id": "{{vars.input.params.sourcedata.incident_id}}",
                   "alerts_limit": 10
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "get_incident_details",
                 "operationTitle": "Get Incident Details",
@@ -2682,7 +2682,7 @@
                   "filter.gte.modification_time": "",
                   "filter.lte.modification_time": ""
                 },
-                "version": "1.3.0",
+                "version": "1.4.0",
                 "connector": "paloalto-cortex-xdr",
                 "operation": "fetch_incidents",
                 "operationTitle": "Fetch Incidents",
@@ -2991,7 +2991,7 @@
           ]
         }
       ],
-      "name": "Sample - Palo Alto Cortex XDR - 1.3.0",
+      "name": "Sample - Palo Alto Cortex XDR - 1.4.0",
       "description": "Cortex XDR applies machine learning at cloud scale to rich network, endpoint, and cloud data, so you can quickly find and stop targeted attacks, insider abuse, and compromised endpoints.",
       "visible": true,
       "recordTags": [
