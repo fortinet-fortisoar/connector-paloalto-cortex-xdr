@@ -5,20 +5,22 @@ Copyright (c) 2025 Fortinet Inc
 Copyright end
 """
 
-from json import dumps
-import requests
-import time, json
-import datetime
 import arrow
 import copy
-import os
-import string
-import secrets
-from datetime import datetime, timezone
+import datetime
 import hashlib
-from django.conf import settings
-from connectors.cyops_utilities.builtins import upload_file_to_cyops
+import json
+import os
+import requests
+import secrets
+import string
+import time
 from connectors.core.connector import get_logger, ConnectorError
+from connectors.cyops_utilities.builtins import upload_file_to_cyops
+from datetime import datetime, timezone, timedelta
+from django.conf import settings
+from json import dumps
+
 from .constants import *
 
 logger = get_logger('paloalto-coretx-xdr')
@@ -36,7 +38,7 @@ class CortexXdr():
         self.authentication_type = config.get('authentication_type')
         self.verify_ssl = config.get('verify_ssl')
 
-    def make_api_call(self, method='GET', endpoint=None, params=None, data=None,
+    def     make_api_call(self, method='GET', endpoint=None, params=None, data=None,
                       json=None, flag=False):
         if endpoint:
             url = '{0}{1}'.format(self.server_url, endpoint)
@@ -75,8 +77,8 @@ class CortexXdr():
                 if response.status_code == 204:
                     return {"Status": "Success", "Message": "Executed successfully"}
                 return result
-            elif messages_codes[response.status_code]:
-                logger.error('{}'.format(messages_codes[response.status_code]))
+            elif messages_codes.get(response.status_code):
+                logger.error('{}: {}'.format(response.status_code, response.text))
                 raise ConnectorError('{}'.format(messages_codes[response.status_code]))
             else:
                 logger.error(
@@ -103,6 +105,18 @@ class CortexXdr():
 def build_payload(params):
     result = {k: v for k, v in params.items() if v is not None and v != ''}
     return result
+
+
+def get_expiration_timestamp(days=None):
+    if days == "Never":
+        return "Never"
+    elif days is None:
+        return None
+    elif isinstance(days, int):
+        expiration_date = datetime.utcnow() + timedelta(days=days)
+        return int(expiration_date.timestamp() * 1000)
+    else:
+        raise ValueError("Invalid input: Expiry days must be an integer, 'Never', or None")
 
 
 def handle_list_parameter(key, value, result):
@@ -157,7 +171,10 @@ def build_query_payload(params):
                 if '_time' in k or '_seen' in k or 'timestamp' in k:
                     v = to_utimestamp(v)
                 elif 'incident_id_list' in k or 'endpoint_id_list' in k:
-                    v = [str(x) for x in v]
+                    if not isinstance(v, list):
+                        v = [x.strip() for x in v.split(',')]
+                    elif isinstance(v, list):
+                        v = [str(x.strip) for x in v]
                 elif 'status' in k:
                     v = status_mapping.get(v)
                 filters_list.append({'field': terms[2], 'operator': terms[1], 'value': v})
@@ -215,6 +232,7 @@ def update_incident(config, params):
                 "update_data": {}
             }
         }
+        result.pop('incident_id','')
         if result:
             if result.get('manual_severity'):
                 result['manual_severity'] = severity_mapping.get(result.get('manual_severity'))
@@ -272,26 +290,35 @@ def insert_parsed_alerts(config, params):
         raise ConnectorError(Err)
 
 
+def build_isolation_payload(params):
+    payload = {
+        "request_data": {}
+    }
+    filters = []
+    incident_id = params.get('incident_id')
+    if incident_id:
+        payload.get('request_data', {}).update({'incident_id': incident_id})
+    list_endpoints = params.get('isolate_endpoint', '')
+    if isinstance(list_endpoints, str):
+        list_endpoints = list_endpoints.split(',')
+    if isinstance(list_endpoints, list):
+        list_endpoints = [endpoint.strip() for endpoint in list_endpoints]
+    if isinstance(list_endpoints, list) and len(list_endpoints) == 1:
+        list_endpoints = "".join(list_endpoints)
+        payload.get('request_data', {}).update({'endpoint_id': list_endpoints})
+    else:
+        if list_endpoints and isinstance(list_endpoints, list):
+            filters.append({"field": "endpoint_id_list", "operator": "in", "value": list_endpoints})
+    if len(filters) > 0:
+        payload.get('request_data', {}).update({'filters': filters})
+    return payload
+
+
 def isolate_endpoints(config, params):
     try:
-        obj = CortexXdr(config)
-        endpoint = '/endpoints/isolate/'
-        result = build_payload(params)
-
-        payload = {
-            "request_data": {}
-        }
-        if result.get('isolate_endpoint') == 'Isolate One Endpoint':
-            payload.get('request_data').update({"endpoint_id": result.get('endpoint_id')})
-            return obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        elif result.get('isolate_endpoint') == 'Isolate More Than One Endpoint':
-            if result.get('endpoint_id_list'):
-                handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
-                query_payload = build_query_payload(params)
-                return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
-        if result.get('incident_id'):
-            payload.get('request_data').update({"incident_id": result.get('incident_id')})
-            return obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
+        xdr_client = CortexXdr(config)
+        payload = build_isolation_payload(params)
+        return xdr_client.make_api_call(method='POST', endpoint='/endpoints/isolate/', json=payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -299,25 +326,9 @@ def isolate_endpoints(config, params):
 
 def unisolate_endpoints(config, params):
     try:
-        obj = CortexXdr(config)
-        endpoint = '/endpoints/unisolate/'
-        result = build_payload(params)
-
-        payload = {
-            "request_data": {
-            }
-        }
-        if result.get('unisolate_endpoint') == 'Unisolate One Endpoint':
-            payload.get('request_data').update({"endpoint_id": result.get('endpoint_id')})
-            return obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
-        elif result.get('unisolate_endpoint') == 'Unisolate More Than One Endpoint':
-            if result.get('endpoint_id_list'):
-                handle_list_parameter('endpoint_id_list', params.get('endpoint_id_list'), result)
-                query_payload = build_query_payload(params)
-                return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
-        if result.get('incident_id'):
-            payload.get('request_data').update({"incident_id": result.get('incident_id')})
-            return obj.make_api_call(method='POST', endpoint=endpoint, json=payload)
+        xdr_client = CortexXdr(config)
+        payload = build_isolation_payload(params)
+        return xdr_client.make_api_call(method='POST', endpoint='/endpoints/unisolate/', json=payload)
     except Exception as Err:
         logger.error('Exception occurred: {}'.format(Err))
         raise ConnectorError(Err)
@@ -403,14 +414,7 @@ def get_policy(config, params):
 def get_device_violations(config, params):
     try:
         obj = CortexXdr(config)
-        if not (params.get('endpoint_id_list') or params.get('vendor') or params.get(
-            'vendor_id') or params.get('product') or params.get('product_id') or params.get('serial') or params.get(
-            'hostname') or params.get('username') or params.get('type') or params.get('ip_list') or params.get(
-            'violation_id_list') or params.get('timestamp')):
-            raise ConnectorError(
-                'At least one of the [Endpoint ID List, Vendor, Vendor ID, Product, Product ID, Serial, Hostname, Username, Type, IP List, Violation ID List, timestamp] is required.')
         endpoint = '/device_control/get_violations/'
-
         query_payload = build_query_payload(params)
         return obj.make_api_call(method='POST', endpoint=endpoint, json=query_payload)
     except Exception as Err:
@@ -715,18 +719,28 @@ def update_alerts(config, params):
     try:
         obj = CortexXdr(config)
         endpoint = '/alerts/update_alerts'
+        status_input = params.get("status")
+        status_value = ALERT_STATUS_MAPPING.get(status_input) if status_input else None
         update_data = {
             "severity": (params.get('severity') or '').lower(),
-            "status": ALERT_STATUS_MAPPING.get(params.get('status')),
+            "status": status_value,
             "comment": params.get('comment')
         }
         update_data = build_payload(update_data)
         if not update_data:
             raise ConnectorError('At least one of the following parameter is required: Status, Severity, or Comment.')
-
+        alert_ids = params.get("alert_ids")
+        if isinstance(alert_ids, int):
+            alert_ids = [str(alert_ids)]
+        elif isinstance(alert_ids, str):
+            alert_ids = [x.strip() for x in alert_ids.split(',')]
+        elif isinstance(alert_ids, list):
+            alert_ids = [str(x) for x in alert_ids]
+        else:
+            raise ConnectorError("Invalid alert_ids format")
         payload = {
             "request_data": {
-                "alert_id_list": params.get('alert_ids'),
+                "alert_id_list": alert_ids,
                 "update_data": update_data
             }
         }
@@ -776,28 +790,24 @@ def get_alerts(config, params):
 
 def insert_simple_indicators(config, params):
     try:
-        obj = CortexXdr(config)
+        xdr_client = CortexXdr(config)
         endpoint = '/indicators/insert_jsons'
         result = build_payload(params)
         payload_data = {
-            "request_data": []
+            "request_data": [],
+            "validate": result.pop('validate', False)
         }
-        expiry = result.pop('expiry', None)
-        if expiry == 'Custom':
-            result['expiration_date'] = to_utimestamp(result.get('expiration_date'))
-        elif expiry == 'Never':
-            result['expiration_date'] = 'Never'
-        else:
-            result['expiration_date'] = None
+        expiry = result.pop('expiry', 'Default')
+        result['expiration_date'] = get_expiration_timestamp(expiration_days_map.get(expiry, None))
         if result.get('severity'):
-            result['severity'] = severity_mapping.get(result.get('severity'))
+            result['severity'] = 'unknown' if result.get('severity') == 'Unknown' else severity_mapping.get(
+                result.get('severity'), '').upper()
         if result.get('reputation'):
             result['reputation'] = REPUTATION_MAPPING.get(result.get('reputation'))
         if result.get('type'):
             result['type'] = INDICATOR_TYPE_MAPPING.get(result.get('type'))
         payload_data['request_data'].append(result)
-        response = obj.make_api_call(method='POST', endpoint=endpoint, data=json.dumps(payload_data))
-        return response
+        return xdr_client.make_api_call(method='POST', endpoint=endpoint, json=payload_data)
     except Exception as Err:
         logger.error(f'Exception occurred: {Err}')
         raise ConnectorError(Err)

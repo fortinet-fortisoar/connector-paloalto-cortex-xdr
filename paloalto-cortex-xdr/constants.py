@@ -47,6 +47,15 @@ severity_mapping = {
     "Unknown": "unknown"
 }
 
+expiration_days_map = {
+    "7 Days": 7,
+    "30 Days": 30,
+    "90 Days": 90,
+    "180 Days": 180,
+    "Never": "Never",
+    "Default": None
+}
+
 status_mapping = {
     "New": "new",
     "Under Investigation": "under_investigation",
