@@ -38,7 +38,7 @@ class CortexXdr():
         self.authentication_type = config.get('authentication_type')
         self.verify_ssl = config.get('verify_ssl')
 
-    def     make_api_call(self, method='GET', endpoint=None, params=None, data=None,
+    def make_api_call(self, method='GET', endpoint=None, params=None, data=None,
                       json=None, flag=False):
         if endpoint:
             url = '{0}{1}'.format(self.server_url, endpoint)
