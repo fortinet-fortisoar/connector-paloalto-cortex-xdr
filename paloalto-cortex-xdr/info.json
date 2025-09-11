@@ -13,7 +13,7 @@
     "scheduled"
   ],
   "ingestion_supported": true,
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.4.0/palo-alto-cortex-xdr/978/palo-alto-cortex-xdr-v1-4-0",
   "configuration": {
     "fields": [
       {
@@ -124,7 +124,7 @@
           "name": "filter.in.incident_id_list",
           "value": "",
           "placeholder": "[\"9834\",\"1234\"]",
-          "tooltip": "List of incident IDs. Each item in the list must be an incident ID.",
+          "tooltip": "Specify the list of incident IDs that you want to retrieve from Palo Alto Cortex XDR. Each item in the list must be an incident ID. For example, [\"1234\",\"1235\"]",
           "description": "Specify the list of incident IDs that you want to retrieve from Palo Alto Cortex XDR. Each item in the list must be an incident ID. For example, [\"1234\",\"1235\"]"
         },
         {
@@ -135,7 +135,7 @@
           "type": "datetime",
           "name": "filter.gte.creation_time",
           "value": "",
-          "tooltip": " Incidents created after this time",
+          "tooltip": "Select the DateTime using which you want to filter the incidents retrieved by this operation to include only those incidents that were created at the time specified or the time later than the time specified.",
           "description": "Select the DateTime using which you want to filter the incidents retrieved by this operation to include only those incidents that were created at the time specified or the time later than the time specified."
         },
         {
@@ -146,7 +146,7 @@
           "type": "datetime",
           "name": "filter.lte.creation_time",
           "value": "",
-          "tooltip": " Incidents created before this time",
+          "tooltip": "Select the DateTime using which you want to filter the incidents retrieved by this operation to include only those incidents that were created at the time specified or the time earlier than the time specified.",
           "description": "Select the DateTime using which you want to filter the incidents retrieved by this operation to include only those incidents that were created at the time specified or the time earlier than the time specified."
         },
         {
@@ -157,7 +157,7 @@
           "type": "datetime",
           "name": "filter.gte.modification_time",
           "value": "",
-          "tooltip": " Incidents modified after this time",
+          "tooltip": "Select the DateTime using which you want to filter the incidents retrieved by this operation to include only those incidents that were modified at the time specified or the time later than the time specified.",
           "description": "Select the DateTime using which you want to filter the incidents retrieved by this operation to include only those incidents that were modified at the time specified or the time later than the time specified."
         },
         {
@@ -168,7 +168,7 @@
           "type": "datetime",
           "name": "filter.lte.modification_time",
           "value": "",
-          "tooltip": " Incidents modified before this time",
+          "tooltip": "Select the DateTime using which you want to filter the incidents retrieved by this operation to include only those incidents that were modified at the time specified or the time earlier than the time specified.",
           "description": "Select the DateTime using which you want to filter the incidents retrieved by this operation to include only those incidents that were modified at the time specified or the time earlier than the time specified."
         },
         {
@@ -180,7 +180,7 @@
           "name": "filter.in.alert_sources",
           "value": "",
           "placeholder": "[\"XDR Agent\"]",
-          "tooltip": "List of sources which detected the alert. Even if you have one source it has to be a list of one element",
+          "tooltip": "Specify the sources which detected the alert and whose associated incidents you want to retrieve from Palo Alto Cortex XDR. For example, [\"XDR Agent\"].",
           "description": "Specify the sources which detected the alert and whose associated incidents you want to retrieve from Palo Alto Cortex XDR. For example, [\"XDR Agent\"]."
         },
         {
@@ -203,7 +203,7 @@
           ],
           "name": "filter.eq.status",
           "value": "",
-          "tooltip": "List of sources which detected the alert. Even if you have one source it has to be a list of one element",
+          "tooltip": "Select the status using which you want to filter the incidents retrieved by this operation. You can choose from options such as New, Resolved Known Issue, Resolved Auto, etc.",
           "description": "Select the status using which you want to filter the incidents retrieved by this operation. You can choose from options such as New, Resolved Known Issue, Resolved Auto, etc."
         },
         {
@@ -215,7 +215,7 @@
           "name": "filter.contains.description",
           "value": "",
           "placeholder": "wevtutil.exe",
-          "tooltip": "Search by keyword in the description of the incident",
+          "tooltip": "Specify the description of the incident you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the description of the incident you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -226,7 +226,7 @@
           "type": "integer",
           "name": "cursor.search_from",
           "value": 0,
-          "tooltip": "Integer representing the starting offset within the query result set from which you want incidents returned.",
+          "tooltip": "Specify the integer representing the starting offset within the query result set from which you want this operation to return incidents from Palo Alto Cortex XDR.",
           "description": "Specify the integer representing the starting offset within the query result set from which you want this operation to return incidents from Palo Alto Cortex XDR."
         },
         {
@@ -237,7 +237,7 @@
           "type": "integer",
           "name": "cursor.search_to",
           "value": 100,
-          "tooltip": "Integer representing the end offset within the result set after which you do not want incidents returned.",
+          "tooltip": "Specify the integer representing the end offset within the result set after which you do not want this operation to return incidents from Palo Alto Cortex XDR.",
           "description": "Specify the integer representing the end offset within the result set after which you do not want this operation to return incidents from Palo Alto Cortex XDR."
         },
         {
@@ -252,7 +252,7 @@
           ],
           "name": "sort.field",
           "value": "creation_time",
-          "tooltip": "The field by which you want to sort the incidents.",
+          "tooltip": "Select the field by which you want to sort the incidents retrieved by this operation. You can choose between creation_time or modification_time.",
           "description": "Select the field by which you want to sort the incidents retrieved by this operation. You can choose between creation_time or modification_time."
         },
         {
@@ -267,7 +267,7 @@
           ],
           "name": "sort.keyword",
           "value": "desc",
-          "tooltip": "The order by which you want to sort the incidents.",
+          "tooltip": "Select this option to order the incidents retrieved by this operation. You can choose between asc (ascending) or desc (Descending).",
           "description": "Select this option to order the incidents retrieved by this operation. You can choose between asc (ascending) or desc (Descending)."
         }
       ]
@@ -375,7 +375,7 @@
           "type": "text",
           "name": "incident_id",
           "value": "",
-          "tooltip": "The ID of the incident for which you want to retrieve extra data.",
+          "tooltip": "Specify the ID of the incident whose details (including related alerts and key artifacts) you want to retrieve from Palo Alto Cortex XDR.",
           "placeholder": "141",
           "description": "Specify the ID of the incident whose details (including related alerts and key artifacts) you want to retrieve from Palo Alto Cortex XDR."
         },
@@ -387,7 +387,7 @@
           "type": "integer",
           "name": "alerts_limit",
           "value": 1000,
-          "tooltip": "Maximum number of related alerts in the incident that you want to retrieve. Default: 1000",
+          "tooltip": "Specify the maximum number of alerts related to the specified incident you want to retrieve from Palo Alto Cortex XDR. By default, this is set to '1000'.",
           "description": "(Optional) Specify the maximum number of alerts related to the specified incident you want to retrieve from Palo Alto Cortex XDR. By default, this is set to '1000'."
         }
       ]
@@ -412,7 +412,7 @@
           "type": "text",
           "name": "incident_id",
           "value": "",
-          "tooltip": "The ID of the incident.",
+          "tooltip": "Specify the ID of the incident whose details you want to update in Palo Alto Cortex XDR.",
           "description": "Specify the ID of the incident whose details you want to update in Palo Alto Cortex XDR."
         },
         {
@@ -423,7 +423,7 @@
           "type": "text",
           "name": "assigned_user_mail",
           "value": "",
-          "tooltip": "Updated email address of the incident assignee.",
+          "tooltip": "Specify the email address of the assignee to whom you want to assign the specified incident in Palo Alto Cortex XDR.",
           "description": "(Optional) Specify the email address of the assignee to whom you want to assign the specified incident in Palo Alto Cortex XDR."
         },
         {
@@ -434,7 +434,7 @@
           "type": "text",
           "name": "assigned_user_pretty_name",
           "value": "",
-          "tooltip": "Updated full name of the incident assignee.",
+          "tooltip": "Specify the full name of the assignee to whom you want to assign the specified incident in Palo Alto Cortex XDR.",
           "description": "(Optional) Specify the full name of the assignee to whom you want to assign the specified incident in Palo Alto Cortex XDR."
         },
         {
@@ -452,7 +452,7 @@
           ],
           "name": "manual_severity",
           "value": "",
-          "tooltip": "The severity of the incident.",
+          "tooltip": "Select the severity level that you want to assign to the specified incident in Palo Alto Cortex XDR. You can choose from the following options: High, Medium, Low, Critical, or Informational.",
           "description": "(Optional) Select the severity level that you want to assign to the specified incident in Palo Alto Cortex XDR. You can choose from the following options: High, Medium, Low, Critical, or Informational."
         },
         {
@@ -473,7 +473,7 @@
           ],
           "name": "status",
           "value": "",
-          "tooltip": "The status of the incident.",
+          "tooltip": "Select the status level that you want to assign to the specified incident in Palo Alto Cortex XDR. You can choose from the following options: New, Under Investigation, Resolved Threat Handled, Resolved Know Issue, Resolved Duplicate, Resolved False Positive, or Resolved Other.",
           "description": "(Optional) Select the status level that you want to assign to the specified incident in Palo Alto Cortex XDR. You can choose from the following options: New, Under Investigation, Resolved Threat Handled, Resolved Know Issue, Resolved Duplicate, Resolved False Positive, or Resolved Other."
         },
         {
@@ -493,7 +493,7 @@
                 "type": "text",
                 "name": "comment_action",
                 "value": "",
-                "tooltip": "Comment action i.e. add.",
+                "tooltip": "Specify the action that should be performed for the comments, i.e., enter 'add' to add the comment to the specified incident.",
                 "description": "Specify the action that should be performed for the comments, i.e., enter 'add' to add the comment to the specified incident."
               },
               {
@@ -504,13 +504,13 @@
                 "type": "text",
                 "name": "value",
                 "value": "",
-                "tooltip": "Value for comment explaining the incident change.",
+                "tooltip": "Add the comment that explains the updates made to the specified incident.",
                 "description": "Add the comment that explains the updates made to the specified incident."
               }
             ]
           },
           "value": "",
-          "tooltip": "Comment explaining the incident change.",
+          "tooltip": "Select this option if you want to include a comment that explains the updates made to the specified incident. If you select this option, then you must specify the following parameters: Comment Action: Specify the action that should be performed for the comments, i.e., enter 'add' to add the comment to the specified incident. Value: Add the comment that explains the updates made to the specified incident.",
           "description": "(Optional) Select this option if you want to include a comment that explains the updates made to the specified incident. If you select this option, then you must specify the following parameters: Comment Action: Specify the action that should be performed for the comments, i.e., enter 'add' to add the comment to the specified incident. Value: Add the comment that explains the updates made to the specified incident."
         },
         {
@@ -521,7 +521,7 @@
           "type": "textarea",
           "name": "resolve_comment",
           "value": "",
-          "tooltip": "Descriptive comment explaining the incident change.",
+          "tooltip": "Add a descriptive comment that explains the updates made to the specified incident.",
           "description": "(Optional) Add a descriptive comment that explains the updates made to the specified incident."
         }
       ]
@@ -545,7 +545,7 @@
           "type": "text",
           "name": "alerts",
           "value": "",
-          "tooltip": "Comma-separated list of alerts in CEF format.",
+          "tooltip": "Specify a comma-separated list of alerts in the CEF format that you want to add (upload) to Palo Alto Cortex XDR.",
           "description": "Specify a comma-separated list of alerts in the CEF format that you want to add (upload) to Palo Alto Cortex XDR."
         }
       ]
@@ -569,7 +569,7 @@
           "type": "text",
           "name": "alert_name",
           "value": "",
-          "tooltip": "String defining the alert name.",
+          "tooltip": "Specify the string defining the name of the alert that you want to upload to Palo Alto Cortex XDR.",
           "description": "Specify the string defining the name of the alert that you want to upload to Palo Alto Cortex XDR."
         },
         {
@@ -581,8 +581,8 @@
           "name": "product",
           "value": "",
           "placeholder": "VPN & Firewall-1",
-          "tooltip": "String value that defines the product. For example, VPN & Firewall-1.",
-          "description": "Specify the string value that defines the product related to the alert that you want to upload to Palo Alto Cortex XDR. For example, VPN & Firewall-1"
+          "tooltip": "Specify the string value that defines the product related to the alert that you want to upload to Palo Alto Cortex XDR. For example, VPN & Firewall-1.",
+          "description": "Specify the string value that defines the product related to the alert that you want to upload to Palo Alto Cortex XDR. For example, VPN & Firewall-1."
         },
         {
           "title": "Vendor",
@@ -592,8 +592,8 @@
           "type": "text",
           "name": "vendor",
           "value": "",
-          "tooltip": "String value that defines the vendor. For example, Check Point.",
-          "description": "Specify the string value that defines the vendor related to the alert that you want to upload to Palo Alto Cortex XDR. For example, Check Point"
+          "tooltip": "Specify the string value that defines the vendor related to the alert that you want to upload to Palo Alto Cortex XDR. For example, Check Point.",
+          "description": "Specify the string value that defines the vendor related to the alert that you want to upload to Palo Alto Cortex XDR. For example, Check Point."
         },
         {
           "title": "Local Port",
@@ -603,7 +603,7 @@
           "type": "integer",
           "name": "local_port",
           "value": "",
-          "tooltip": "Integer value for the source port.",
+          "tooltip": "Specify the integer value for the source port related to the alert that you want to upload to Palo Alto Cortex XDR.",
           "description": "Specify the integer value for the source port related to the alert that you want to upload to Palo Alto Cortex XDR."
         },
         {
@@ -614,7 +614,7 @@
           "type": "text",
           "name": "remote_ip",
           "value": "",
-          "tooltip": "String value of the destination IP address.",
+          "tooltip": "Specify the string value of the destination IP address related to the alert that you want to upload to Palo Alto Cortex XDR.",
           "description": "Specify the string value of the destination IP address related to the alert that you want to upload to Palo Alto Cortex XDR."
         },
         {
@@ -625,7 +625,7 @@
           "type": "integer",
           "name": "remote_port",
           "value": "",
-          "tooltip": "Integer value for the destination port.",
+          "tooltip": "Specify the integer value for the destination port related to the alert that you want to upload to Palo Alto Cortex XDR.",
           "description": "Specify the integer value for the destination port related to the alert that you want to upload to Palo Alto Cortex XDR."
         },
         {
@@ -636,7 +636,7 @@
           "type": "text",
           "name": "local_ip",
           "value": "",
-          "tooltip": "String value for the source IP address.",
+          "tooltip": "Specify the string value for the source IP address related to the alert that you want to upload to Palo Alto Cortex XDR.",
           "description": "(Optional) Specify the string value for the source IP address related to the alert that you want to upload to Palo Alto Cortex XDR."
         },
         {
@@ -647,7 +647,7 @@
           "type": "datetime",
           "name": "event_timestamp",
           "value": "",
-          "tooltip": "Time the alert occurred.",
+          "tooltip": "Select the occurrence DateTime of the alert that you want to upload to Palo Alto Cortex XDR.",
           "description": "(Optional) Select the occurrence DateTime of the alert that you want to upload to Palo Alto Cortex XDR."
         },
         {
@@ -665,7 +665,7 @@
           ],
           "name": "severity",
           "value": "",
-          "tooltip": "The severity of the alert.",
+          "tooltip": "Select the severity of the alert that you want to upload to Palo Alto Cortex XDR. You can choose from the following options: Informational, High, Medium, Low, or Unknown.",
           "description": "(Optional) Select the severity of the alert that you want to upload to Palo Alto Cortex XDR. You can choose from the following options: Informational, High, Medium, Low, or Unknown."
         },
         {
@@ -676,7 +676,7 @@
           "type": "text",
           "name": "alert_description",
           "value": "",
-          "tooltip": "String defining the alert description.",
+          "tooltip": "Specify the string value that contains the description of the alert that you want to upload to Palo Alto Cortex XDR.",
           "description": "(Optional) Specify the string value that contains the description of the alert that you want to upload to Palo Alto Cortex XDR."
         },
         {
@@ -687,7 +687,7 @@
           "type": "text",
           "name": "action_status",
           "value": "",
-          "tooltip": "String defining the alert action status. e.g. Reported",
+          "tooltip": "Specify the string value that defines the action status of the alert that you want to upload to Palo Alto Cortex XDR.",
           "description": "(Optional) Specify the string value that defines the action status of the alert that you want to upload to Palo Alto Cortex XDR."
         }
       ]
@@ -723,7 +723,7 @@
           "visible": true,
           "type": "text",
           "name": "incident_id",
-          "tooltip": "Incident ID.",
+          "tooltip": "Specify the ID of the incident to include the Isolate Endpoints action in the Cortex XDR Incident ViewTimeline tab.",
           "description": "(Optional) Specify the ID of the incident to include the Isolate Endpoints action in the Cortex XDR Incident ViewTimeline tab."
         }
       ]
@@ -828,7 +828,7 @@
           "type": "text",
           "name": "filter.in.endpoint_id_list",
           "value": "",
-          "tooltip": "List of endpoint IDs.",
+          "tooltip": "Specify the list of endpoint IDs that you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the list of endpoint IDs that you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -839,7 +839,7 @@
           "type": "text",
           "name": "filter.in.dist_name",
           "value": "",
-          "tooltip": "Distribution / Installation Package name.",
+          "tooltip": "Specify the name of the distribution list or installation package name containing the endpoints to be retrieved from Palo Alto Cortex XDR.",
           "description": "Specify the name of the distribution list or installation package name containing the endpoints to be retrieved from Palo Alto Cortex XDR."
         },
         {
@@ -850,7 +850,7 @@
           "type": "text",
           "name": "filter.in.group_name",
           "value": "",
-          "tooltip": "Group name the agent belongs to.",
+          "tooltip": "Specify the name of the group containing the endpoints to be retrieved from Palo Alto Cortex XDR.",
           "description": "Specify the name of the group containing the endpoints to be retrieved from Palo Alto Cortex XDR."
         },
         {
@@ -861,7 +861,7 @@
           "type": "text",
           "name": "filter.in.alias",
           "value": "",
-          "tooltip": "Endpoint alias name.",
+          "tooltip": "Specify the alias of the endpoints to be retrieved from Palo Alto Cortex XDR.",
           "description": "Specify the alias of the endpoints to be retrieved from Palo Alto Cortex XDR."
         },
         {
@@ -872,7 +872,7 @@
           "type": "text",
           "name": "filter.in.hostname",
           "value": "",
-          "tooltip": "Name of host.",
+          "tooltip": "Specify the name of the host of the endpoints to be retrieved from Palo Alto Cortex XDR.",
           "description": "Specify the name of the host of the endpoints to be retrieved from Palo Alto Cortex XDR."
         },
         {
@@ -883,7 +883,7 @@
           "type": "text",
           "name": "filter.in.username",
           "value": "",
-          "tooltip": "Name of the user.",
+          "tooltip": "Specify the name of the user associated with the endpoints to be retrieved from Palo Alto Cortex XDR.",
           "description": "Specify the name of the user associated with the endpoints to be retrieved from Palo Alto Cortex XDR."
         },
         {
@@ -900,7 +900,7 @@
           ],
           "name": "filter.in.endpoint_status",
           "value": "",
-          "tooltip": "Type of operating system. e.g. Connected, Disconnected, Lost, or Uninstalled.",
+          "tooltip": "Select the status of the endpoints to be retrieved from Palo Alto Cortex XDR. You can choose between Connected, Disconnected, Lost, or Uninstalled.",
           "description": "Select the status of the endpoints to be retrieved from Palo Alto Cortex XDR. You can choose between Connected, Disconnected, Lost, or Uninstalled."
         },
         {
@@ -911,7 +911,7 @@
           "type": "text",
           "name": "filter.in.ip_list",
           "value": "",
-          "tooltip": "List of ip addresses.",
+          "tooltip": "Specify the list of IP addresses containing the endpoints to be retrieved from Palo Alto Cortex XDR.",
           "description": "Specify the list of IP addresses containing the endpoints to be retrieved from Palo Alto Cortex XDR."
         },
         {
@@ -928,7 +928,7 @@
           ],
           "name": "filter.in.platform",
           "value": "",
-          "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
+          "tooltip": "Select the type of operating system that contains the endpoints to be retrieved from Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android.",
           "description": "Select the type of operating system that contains the endpoints to be retrieved from Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android."
         },
         {
@@ -943,7 +943,7 @@
           ],
           "name": "filter.in.isolate",
           "value": "",
-          "tooltip": "If an endpoint has been isolated.",
+          "tooltip": "Select the isolation status of the endpoints to be retrieved from Palo Alto Cortex XDR. Select Isolated to retrieve endpoints that are isolated and Unisolated to retrieve endpoints that are unisolated.",
           "description": "Select the isolation status of the endpoints to be retrieved from Palo Alto Cortex XDR. Select Isolated to retrieve endpoints that are isolated and Unisolated to retrieve endpoints that are unisolated."
         },
         {
@@ -964,7 +964,7 @@
           ],
           "name": "filter.in.scan_status",
           "value": "",
-          "tooltip": "If an endpoint has been isolated.",
+          "tooltip": "Select the scan status of endpoints to be retrieved from Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Success, or Error.",
           "description": "Select the scan status of endpoints to be retrieved from Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Success, or Error."
         },
         {
@@ -975,7 +975,7 @@
           "type": "datetime",
           "name": "filter.gte.first_seen",
           "value": "",
-          "tooltip": "When the agent was first seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time later than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time later than the time specified."
         },
         {
@@ -986,7 +986,7 @@
           "type": "datetime",
           "name": "filter.lte.first_seen",
           "value": "",
-          "tooltip": "When the agent was first seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time earlier than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time earlier than the time specified."
         },
         {
@@ -997,7 +997,7 @@
           "type": "datetime",
           "name": "filter.gte.last_seen",
           "value": "",
-          "tooltip": "When the agent was last seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time later than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time later than the time specified."
         },
         {
@@ -1008,7 +1008,7 @@
           "type": "datetime",
           "name": "filter.lte.last_seen",
           "value": "",
-          "tooltip": "When the agent was last seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time earlier than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time earlier than the time specified."
         },
         {
@@ -1019,7 +1019,7 @@
           "type": "integer",
           "name": "cursor.search_from",
           "value": 0,
-          "tooltip": "Integer representing the starting offset within the query result set from which you want endpoints returned.",
+          "tooltip": "Specify the integer representing the starting offset within the query result set from which you want this operation to return endpoints from Palo Alto Cortex XDR.",
           "description": "Specify the integer representing the starting offset within the query result set from which you want this operation to return endpoints from Palo Alto Cortex XDR."
         },
         {
@@ -1030,7 +1030,7 @@
           "type": "integer",
           "name": "cursor.search_to",
           "value": 100,
-          "tooltip": "Integer representing the end offset within the result set after which you do not want endpoints returned.",
+          "tooltip": "Specify the integer representing the end offset within the result set after which you do not want this operation to return endpoints from Palo Alto Cortex XDR.",
           "description": "Specify the integer representing the end offset within the result set after which you do not want this operation to return endpoints from Palo Alto Cortex XDR."
         },
         {
@@ -1045,7 +1045,7 @@
           ],
           "name": "sort.field",
           "value": "first_seen",
-          "tooltip": "The field by which you want to sort the endpoints.",
+          "tooltip": "Select the field by which you want to sort the endpoints retrieved by this operation. You can choose between first_seen or last_seen.",
           "description": "Select the field by which you want to sort the endpoints retrieved by this operation. You can choose between first_seen or last_seen."
         },
         {
@@ -1060,7 +1060,7 @@
           ],
           "name": "sort.keyword",
           "value": "",
-          "tooltip": "The order by which you want to sort the endpoints.",
+          "tooltip": "Select this option to order the endpoints retrieved by this operation. You can choose between asc (ascending) or desc (Descending).",
           "description": "Select this option to order the endpoints retrieved by this operation. You can choose between asc (ascending) or desc (Descending)."
         }
       ]
@@ -1086,7 +1086,7 @@
           "type": "text",
           "name": "filter.in.endpoint_id_list",
           "value": "",
-          "tooltip": "List of endpoint IDs.",
+          "tooltip": "Specify the list of endpoint IDs that you want to scan on Palo Alto Cortex XDR.",
           "description": "Specify the list of endpoint IDs that you want to scan on Palo Alto Cortex XDR."
         },
         {
@@ -1097,7 +1097,7 @@
           "type": "text",
           "name": "filter.in.dist_name",
           "value": "",
-          "tooltip": "Name of the distribution list.",
+          "tooltip": "Specify the name of the distribution list containing the endpoints that you want to scan on Palo Alto Cortex XDR.",
           "description": "Specify the name of the distribution list containing the endpoints that you want to scan on Palo Alto Cortex XDR."
         },
         {
@@ -1108,7 +1108,7 @@
           "type": "text",
           "name": "filter.in.group_name",
           "value": "",
-          "tooltip": "Name of endpoint group.",
+          "tooltip": "Specify the name of the group containing the endpoints that you want to scan on Palo Alto Cortex XDR.",
           "description": "Specify the name of the group containing the endpoints that you want to scan on Palo Alto Cortex XDR."
         },
         {
@@ -1119,7 +1119,7 @@
           "type": "text",
           "name": "filter.in.alias",
           "value": "",
-          "tooltip": "Endpoint alias name.",
+          "tooltip": "Specify the alias of the endpoints to be scanned on Palo Alto Cortex XDR.",
           "description": "Specify the alias of the endpoints to be scanned on Palo Alto Cortex XDR."
         },
         {
@@ -1130,7 +1130,7 @@
           "type": "text",
           "name": "filter.in.hostname",
           "value": "",
-          "tooltip": "Name of host.",
+          "tooltip": "Specify the name of the host of the endpoints to be scanned on Palo Alto Cortex XDR.",
           "description": "Specify the name of the host of the endpoints to be scanned on Palo Alto Cortex XDR."
         },
         {
@@ -1141,7 +1141,7 @@
           "type": "text",
           "name": "filter.in.username",
           "value": "",
-          "tooltip": "Name of the user.",
+          "tooltip": "Specify the name of the user associated with the endpoints to be scanned on Palo Alto Cortex XDR.",
           "description": "Specify the name of the user associated with the endpoints to be scanned on Palo Alto Cortex XDR."
         },
         {
@@ -1152,7 +1152,7 @@
           "type": "text",
           "name": "filter.in.ip_list",
           "value": "",
-          "tooltip": "List of ip addresses.",
+          "tooltip": "Specify the list of IP addresses containing the endpoints to be scanned on Palo Alto Cortex XDR.",
           "description": "Specify the list of IP addresses containing the endpoints to be scanned on Palo Alto Cortex XDR."
         },
         {
@@ -1169,7 +1169,7 @@
           ],
           "name": "filter.in.platform",
           "value": "",
-          "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
+          "tooltip": "Select the type of operating system that contains the endpoints to be scanned on Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android.",
           "description": "Select the type of operating system that contains the endpoints to be scanned on Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android."
         },
         {
@@ -1184,7 +1184,7 @@
           ],
           "name": "filter.in.isolate",
           "value": "",
-          "tooltip": "If an endpoint has been isolated.",
+          "tooltip": "Select the isolation status of the endpoints to be scanned on Palo Alto Cortex XDR. Select Isolated to retrieve endpoints that are isolated and Unisolated to retrieve endpoints that are unisolated.",
           "description": "Select the isolation status of the endpoints to be scanned on Palo Alto Cortex XDR. Select Isolated to retrieve endpoints that are isolated and Unisolated to retrieve endpoints that are unisolated."
         },
         {
@@ -1205,7 +1205,7 @@
           ],
           "name": "filter.in.scan_status",
           "value": "",
-          "tooltip": "If an endpoint has been isolated.",
+          "tooltip": "Select the scan status of endpoints to be scanned on Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Success, or Error.",
           "description": "Select the scan status of endpoints to be scanned on Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Success, or Error."
         },
         {
@@ -1216,7 +1216,7 @@
           "type": "datetime",
           "name": "filter.gte.first_seen",
           "value": "",
-          "tooltip": "When an endpoint was first seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time later than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time later than the time specified."
         },
         {
@@ -1227,7 +1227,7 @@
           "type": "datetime",
           "name": "filter.lte.first_seen",
           "value": "",
-          "tooltip": "When an endpoint was first seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time earlier than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time earlier than the time specified."
         },
         {
@@ -1238,7 +1238,7 @@
           "type": "datetime",
           "name": "filter.gte.last_seen",
           "value": "",
-          "tooltip": "When an endpoint was last seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time later than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time later than the time specified."
         },
         {
@@ -1249,7 +1249,7 @@
           "type": "datetime",
           "name": "filter.lte.last_seen",
           "value": "",
-          "tooltip": "When an endpoint was last seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time earlier than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time earlier than the time specified."
         },
         {
@@ -1260,7 +1260,7 @@
           "type": "text",
           "name": "incident_id",
           "value": "",
-          "tooltip": "Incident ID.",
+          "tooltip": "Specify the ID of the incident to include the Scan Endpoints action in the Cortex XDR Incident ViewTimeline tab.",
           "description": "Specify the ID of the incident to include the Scan Endpoints action in the Cortex XDR Incident ViewTimeline tab."
         }
       ]
@@ -1284,7 +1284,7 @@
           "type": "text",
           "name": "filter.in.endpoint_id_list",
           "value": "",
-          "tooltip": "List of endpoint IDs.",
+          "tooltip": "Specify the list of endpoint IDs whose scan you want to cancel on Palo Alto Cortex XDR.",
           "description": "Specify the list of endpoint IDs whose scan you want to cancel on Palo Alto Cortex XDR."
         },
         {
@@ -1295,7 +1295,7 @@
           "type": "text",
           "name": "filter.in.dist_name",
           "value": "",
-          "tooltip": "Name of the distribution list.",
+          "tooltip": "Specify the name of the distribution list containing the endpoints whose scan you want to cancel on Palo Alto Cortex XDR.",
           "description": "Specify the name of the distribution list containing the endpoints whose scan you want to cancel on Palo Alto Cortex XDR."
         },
         {
@@ -1306,7 +1306,7 @@
           "type": "text",
           "name": "filter.in.group_name",
           "value": "",
-          "tooltip": "Name of endpoint group.",
+          "tooltip": "Specify the name of the group containing the endpoints whose scan you want to cancel on Palo Alto Cortex XDR.",
           "description": "Specify the name of the group containing the endpoints whose scan you want to cancel on Palo Alto Cortex XDR."
         },
         {
@@ -1317,7 +1317,7 @@
           "type": "text",
           "name": "filter.in.alias",
           "value": "",
-          "tooltip": "Endpoint alias name.",
+          "tooltip": "Specify the alias of the endpoints whose scan you want to cancel on Palo Alto Cortex XDR.",
           "description": "Specify the alias of the endpoints whose scan you want to cancel on Palo Alto Cortex XDR."
         },
         {
@@ -1328,7 +1328,7 @@
           "type": "text",
           "name": "filter.in.hostname",
           "value": "",
-          "tooltip": "Name of host.",
+          "tooltip": "Specify the name of the host of the endpoints whose scan you want to cancel on Palo Alto Cortex XDR.",
           "description": "Specify the name of the host of the endpoints whose scan you want to cancel on Palo Alto Cortex XDR."
         },
         {
@@ -1339,7 +1339,7 @@
           "type": "text",
           "name": "filter.in.username",
           "value": "",
-          "tooltip": "Name of the user.",
+          "tooltip": "Specify the name of the user associated with the endpoints whose scan you want to cancel on Palo Alto Cortex XDR.",
           "description": "Specify the name of the user associated with the endpoints whose scan you want to cancel on Palo Alto Cortex XDR."
         },
         {
@@ -1350,7 +1350,7 @@
           "type": "text",
           "name": "filter.in.ip_list",
           "value": "",
-          "tooltip": "List of ip addresses.",
+          "tooltip": "Specify the list of IP addresses containing the endpoints whose scan you want to cancel on Palo Alto Cortex XDR.",
           "description": "Specify the list of IP addresses containing the endpoints whose scan you want to cancel on Palo Alto Cortex XDR."
         },
         {
@@ -1367,8 +1367,8 @@
           ],
           "name": "filter.in.platform",
           "value": "",
-          "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
-          "description": "Select the type of operating system that contains the endpoints whose scan you want to cancel on Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android."
+          "tooltip": "Select the type of operating system that contains the endpoints whose scan you want to cancel on Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android.",
+          "description": " Select the type of operating system that contains the endpoints whose scan you want to cancel on Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android."
         },
         {
           "title": "Isolate",
@@ -1382,7 +1382,7 @@
           ],
           "name": "filter.in.isolate",
           "value": "",
-          "tooltip": "If an endpoint has been isolated.",
+          "tooltip": "Select the isolation status of the endpoints whose scan you want to cancel on Palo Alto Cortex XDR. Select Isolated to retrieve endpoints that are isolated and Unisolated to retrieve endpoints that are unisolated.",
           "description": "Select the isolation status of the endpoints whose scan you want to cancel on Palo Alto Cortex XDR. Select Isolated to retrieve endpoints that are isolated and Unisolated to retrieve endpoints that are unisolated."
         },
         {
@@ -1403,7 +1403,7 @@
           ],
           "name": "filter.in.scan_status",
           "value": "",
-          "tooltip": "If an endpoint has been isolated.",
+          "tooltip": "Select the scan status of endpoints whose scan you want to cancel on Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Success, or Error.",
           "description": "Select the scan status of endpoints whose scan you want to cancel on Palo Alto Cortex XDR. You can choose between None, Pending, In Progress, Cancelled, Aborted, Pending Cancellation, Success, or Error."
         },
         {
@@ -1414,7 +1414,7 @@
           "type": "datetime",
           "name": "filter.gte.first_seen",
           "value": "",
-          "tooltip": "When an endpoint was first seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time later than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time later than the time specified."
         },
         {
@@ -1425,7 +1425,7 @@
           "type": "datetime",
           "name": "filter.lte.first_seen",
           "value": "",
-          "tooltip": "When an endpoint was first seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time earlier than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were first seen at the time specified or the time earlier than the time specified."
         },
         {
@@ -1436,7 +1436,7 @@
           "type": "datetime",
           "name": "filter.gte.last_seen",
           "value": "",
-          "tooltip": "When an endpoint was last seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time later than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time later than the time specified."
         },
         {
@@ -1447,7 +1447,7 @@
           "type": "datetime",
           "name": "filter.lte.last_seen",
           "value": "",
-          "tooltip": "When an endpoint was last seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time earlier than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints retrieved by this operation to include only those endpoints that were last seen at the time specified or the time earlier than the time specified."
         },
         {
@@ -1458,7 +1458,7 @@
           "type": "text",
           "name": "incident_id",
           "value": "",
-          "tooltip": "Incident ID.",
+          "tooltip": "Specify the ID of the incident to include the Cancel Scan Endpoints action in the Cortex XDR Incident ViewTimeline tab.",
           "description": "Specify the ID of the incident to include the Cancel Scan Endpoints action in the Cortex XDR Incident ViewTimeline tab."
         }
       ]
@@ -1482,7 +1482,7 @@
           "type": "text",
           "name": "endpoint_id_list",
           "value": "",
-          "tooltip": "List of endpoint IDs.",
+          "tooltip": "Specify a list of endpoint IDs that you want to delete from the Palo Alto Cortex XDR app.",
           "description": "Specify a list of endpoint IDs that you want to delete from the Palo Alto Cortex XDR app."
         }
       ]
@@ -1551,7 +1551,7 @@
           "type": "text",
           "name": "filter.in.endpoint_id_list",
           "value": "",
-          "tooltip": "List of endpoint IDs.",
+          "tooltip": "Specify the list of endpoint IDs based on which you want to retrieve violations from Palo Alto Cortex XDR.",
           "description": "Specify the list of endpoint IDs based on which you want to retrieve violations from Palo Alto Cortex XDR."
         },
         {
@@ -1562,7 +1562,7 @@
           "type": "text",
           "name": "filter.in.vendor",
           "value": "",
-          "tooltip": "String value that defines the vendor. e.g. Check Point",
+          "tooltip": "Specify the string value that defines the vendor whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, Check Point",
           "description": "Specify the string value that defines the vendor whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, Check Point"
         },
         {
@@ -1573,7 +1573,7 @@
           "type": "text",
           "name": "filter.in.vendor_id",
           "value": "",
-          "tooltip": "Vendor ID. e.g. 0x0999",
+          "tooltip": "Specify the string value that defines the vendor ID whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, 0x0999",
           "description": "Specify the string value that defines the vendor ID whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, 0x0999"
         },
         {
@@ -1584,7 +1584,7 @@
           "type": "text",
           "name": "filter.in.product",
           "value": "",
-          "tooltip": "String value that defines the product. e.g. VPN & Firewall-1",
+          "tooltip": "Specify the string value that defines the product whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, VPN & Firewall-1",
           "description": "Specify the string value that defines the product whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, VPN & Firewall-1"
         },
         {
@@ -1595,7 +1595,7 @@
           "type": "text",
           "name": "filter.in.product_id",
           "value": "",
-          "tooltip": "String value that defines the product ID. e.g. 0x10036",
+          "tooltip": "Specify the string value that defines the product ID whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, 0x10036",
           "description": "Specify the string value that defines the product ID whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, 0x10036"
         },
         {
@@ -1606,7 +1606,7 @@
           "type": "text",
           "name": "filter.in.serial",
           "value": "",
-          "tooltip": "String value that defines the serial number. e.g. 8888889",
+          "tooltip": "Specify the string value that defines the serial number whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, 8888889",
           "description": "Specify the string value that defines the serial number whose associated violations are to be retrieved from Palo Alto Cortex XDR. For example, 8888889"
         },
         {
@@ -1617,7 +1617,7 @@
           "type": "text",
           "name": "filter.in.hostname",
           "value": "",
-          "tooltip": "Name of host.",
+          "tooltip": "Specify the name of the host whose associated violations are to be retrieved from Palo Alto Cortex XDR.",
           "description": "Specify the name of the host whose associated violations are to be retrieved from Palo Alto Cortex XDR."
         },
         {
@@ -1628,7 +1628,7 @@
           "type": "text",
           "name": "filter.in.username",
           "value": "",
-          "tooltip": "Name of user.",
+          "tooltip": "Specify the name of the user whose associated violations are to be retrieved from Palo Alto Cortex XDR.",
           "description": "Specify the name of the user whose associated violations are to be retrieved from Palo Alto Cortex XDR."
         },
         {
@@ -1645,7 +1645,7 @@
           ],
           "name": "filter.in.type",
           "value": "",
-          "tooltip": "Type of violation. e.g. cd-rom, disk drive, floppy disk or portable device",
+          "tooltip": "Select the type of violations that are to be retrieved from Palo Alto Cortex XDR. You can choose between CD ROM, Disk Drive, Floppy Disk, or Portable Device.",
           "description": "Select the type of violations that are to be retrieved from Palo Alto Cortex XDR. You can choose between CD ROM, Disk Drive, Floppy Disk, or Portable Device."
         },
         {
@@ -1656,7 +1656,7 @@
           "type": "text",
           "name": "filter.in.ip_list",
           "value": "",
-          "tooltip": "List of ip addresses.",
+          "tooltip": "Specify the list of IP addresses whose associated violations are to be retrieved from Palo Alto Cortex XDR.",
           "description": "Specify the list of IP addresses whose associated violations are to be retrieved from Palo Alto Cortex XDR."
         },
         {
@@ -1667,7 +1667,7 @@
           "type": "integer",
           "name": "filter.in.violation_id_list",
           "value": "",
-          "tooltip": "List of violation IDs.",
+          "tooltip": "Specify the list of violation IDs that you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the list of violation IDs that you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -1678,8 +1678,8 @@
           "type": "datetime",
           "name": "filter.gte.timestamp",
           "value": "",
-          "tooltip": "Timestamp of the violation.",
-          "description": "Timestamp of the violation."
+          "tooltip": "Select the DateTime till when you want to retrieve violations from Palo Alto Cortex XDR. This operator will retrieve all violations whose timestamp matches the time specified or the time later than the time specified on Palo Alto Cortex XDR.",
+          "description": "Select the DateTime till when you want to retrieve violations from Palo Alto Cortex XDR. This operator will retrieve all violations whose timestamp matches the time specified or the time later than the time specified on Palo Alto Cortex XDR."
         },
         {
           "title": "Timestamp Before",
@@ -1689,8 +1689,8 @@
           "type": "datetime",
           "name": "filter.lte.timestamp",
           "value": "",
-          "tooltip": "Timestamp of the violation.",
-          "description": "Timestamp of the violation."
+          "tooltip": "Select the DateTime till when you want to retrieve violations from Palo Alto Cortex XDR. This operator will retrieve all violations whose timestamp matches the time specified or the time earlier than the time specified on Palo Alto Cortex XDR.",
+          "description": "Select the DateTime till when you want to retrieve violations from Palo Alto Cortex XDR. This operator will retrieve all violations whose timestamp matches the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
         },
         {
           "title": "Search From",
@@ -1700,8 +1700,8 @@
           "type": "integer",
           "name": "cursor.search_from",
           "value": 0,
-          "tooltip": "Integer representing the starting offset within the query result set from which you want violations returned.",
-          "description": "Specify the integer representing the starting offset within the query result set from which you want this operation to return incidents from Palo Alto Cortex XDR."
+          "tooltip": "Specify the integer representing the starting offset within the query result set from which you want this operation to return incidents from Palo Alto Cortex XDR.",
+          "description": " Specify the integer representing the starting offset within the query result set from which you want this operation to return incidents from Palo Alto Cortex XDR."
         },
         {
           "title": "Search To",
@@ -1711,7 +1711,7 @@
           "type": "integer",
           "name": "cursor.search_to",
           "value": 0,
-          "tooltip": "Integer representing the end offset within the result set after which you do not want incidents returned.",
+          "tooltip": "Specify the integer representing the end offset within the result set after which you do not want this operation to return incidents from Palo Alto Cortex XDR.",
           "description": "Specify the integer representing the end offset within the result set after which you do not want this operation to return incidents from Palo Alto Cortex XDR."
         },
         {
@@ -1736,7 +1736,7 @@
           ],
           "name": "sort.field",
           "value": "",
-          "tooltip": "The field by which you want to sort the violations.",
+          "tooltip": "Select the field by which you want to sort the endpoints retrieved by this operation. You can from options such as serial, product, username, etc.",
           "description": "Select the field by which you want to sort the endpoints retrieved by this operation. You can from options such as serial, product, username, etc."
         },
         {
@@ -1751,7 +1751,7 @@
           ],
           "name": "sort.keyword",
           "value": "desc",
-          "tooltip": "The order by which you want to sort the violations.",
+          "tooltip": "Select this option to order the endpoints retrieved by this operation. You can choose between asc (ascending) or desc (Descending).",
           "description": "Select this option to order the endpoints retrieved by this operation. You can choose between asc (ascending) or desc (Descending)."
         }
       ]
@@ -1793,7 +1793,7 @@
           "type": "text",
           "name": "name",
           "value": "",
-          "tooltip": "A string representing the name of the installation package.",
+          "tooltip": "Specify the string representing the name of the installation package that you want to create on Palo Alto Cortex XDR.",
           "description": "Specify the string representing the name of the installation package that you want to create on Palo Alto Cortex XDR."
         },
         {
@@ -1830,8 +1830,8 @@
                       "type": "text",
                       "name": "agent_version",
                       "value": "",
-                      "tooltip": "The version of agent. e.g. 5.0.7.16157",
-                      "description": "The version of agent. e.g. 5.0.7.16157"
+                      "tooltip": "Agent Version field, enter the version of the agent. For example, 5.0.7.16157",
+                      "description": "Agent Version field, enter the version of the agent. For example, 5.0.7.16157"
                     }
                   ],
                   "Linux": [
@@ -1843,8 +1843,8 @@
                       "type": "text",
                       "name": "agent_version",
                       "value": "",
-                      "tooltip": "The version of agent. e.g. 5.0.7.16157",
-                      "description": "The version of agent. e.g. 5.0.7.16157"
+                      "tooltip": "Agent Version field, enter the version of the agent. For example, 5.0.7.16157",
+                      "description": "Agent Version field, enter the version of the agent. For example, 5.0.7.16157"
                     }
                   ],
                   "Macos": [
@@ -1856,15 +1856,15 @@
                       "type": "text",
                       "name": "agent_version",
                       "value": "",
-                      "tooltip": "The version of agent. e.g. 5.0.7.16157",
-                      "description": "The version of agent. e.g. 5.0.7.16157"
+                      "tooltip": "Agent Version field, enter the version of the agent. For example, 5.0.7.16157",
+                      "description": "Agent Version field, enter the version of the agent. For example, 5.0.7.16157"
                     }
                   ]
                 },
                 "name": "platform",
                 "value": "",
-                "tooltip": "The platform on which the installation need to be done.",
-                "description": "If you choose the 'Standalone' operator, then from the Platform drop-down list, select the platform on which you want to create the installation package. You can choose the following: Windows, Linux, Macos, or Android. Also if you choose 'Windows', 'Macos', or 'Linux', then in the Agent Version field, enter the version of the agent. For example, 5.0.7.16157."
+                "tooltip": "Select the platform on which you want to create the installation package. You can choose the following: Windows, Linux, Macos, or Android.",
+                "description": "Select the platform on which you want to create the installation package. You can choose the following: Windows, Linux, Macos, or Android."
               }
             ],
             "Upgrade": [
@@ -1876,14 +1876,14 @@
                 "type": "text",
                 "name": "upgrade",
                 "value": "",
-                "tooltip": "Upgrade of an agent from ESM. The values can be given are windows_version, linux_version, macos_version",
+                "tooltip": "If you choose the 'Upgrade' operator, then in the Upgrade field, specify the version of an agent that you want to upgrade from ESM. You can specify the following values: windows_version, linux_version, or macos_version.",
                 "description": "If you choose the 'Upgrade' operator, then in the Upgrade field, specify the version of an agent that you want to upgrade from ESM. You can specify the following values: windows_version, linux_version, or macos_version."
               }
             ]
           },
           "name": "package_type",
           "value": "",
-          "tooltip": "A string representing the type of package to create.",
+          "tooltip": "Select the type of installation package that you want to create on Palo Alto Cortex XDR. You can choose from the following types: Standalone or Upgrade. If you choose the 'Standalone' operator, then from the Platform drop-down list, select the platform on which you want to create the installation package. You can choose the following: Windows, Linux, Macos, or Android. Also if you choose 'Windows', 'Macos', or 'Linux', then in the Agent Version field, enter the version of the agent. For example, 5.0.7.16157 . If you choose the 'Upgrade' operator, then in the Upgrade field, specify the version of an agent that you want to upgrade from ESM. You can specify the following values: windows_version, linux_version, or macos_version.",
           "description": "Select the type of installation package that you want to create on Palo Alto Cortex XDR. You can choose from the following types: Standalone or Upgrade. If you choose the 'Standalone' operator, then from the Platform drop-down list, select the platform on which you want to create the installation package. You can choose the following: Windows, Linux, Macos, or Android. Also if you choose 'Windows', 'Macos', or 'Linux', then in the Agent Version field, enter the version of the agent. For example, 5.0.7.16157 . If you choose the 'Upgrade' operator, then in the Upgrade field, specify the version of an agent that you want to upgrade from ESM. You can specify the following values: windows_version, linux_version, or macos_version."
         },
         {
@@ -1894,7 +1894,7 @@
           "type": "text",
           "name": "description",
           "value": "",
-          "tooltip": "String representing information about the package.",
+          "tooltip": "Specify the string containing descriptive information about the installation package.",
           "description": "Specify the string containing descriptive information about the installation package."
         }
       ]
@@ -1920,7 +1920,7 @@
           "type": "text",
           "name": "distribution_id",
           "value": "",
-          "tooltip": "A string representing the installation package ID.",
+          "tooltip": "Specify the string representing the ID of the installation package whose status you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the string representing the ID of the installation package whose status you want to retrieve from Palo Alto Cortex XDR."
         }
       ]
@@ -1946,7 +1946,7 @@
           "type": "text",
           "name": "distribution_id",
           "value": "",
-          "tooltip": "A string representing the installation package ID.",
+          "tooltip": "Specify the string representing the ID of the installation package whose distribution URL you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the string representing the ID of the installation package whose distribution URL you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -1965,7 +1965,7 @@
           ],
           "name": "package_type",
           "value": "",
-          "tooltip": "A string representing the type of installation package.",
+          "tooltip": "Select the type of installation package whose distribution URL you want to retrieve from Palo Alto Cortex XDR. You can choose from the following options: sh-For Linux, rpm-For Linux, deb-For Linux, pkg-For Mac, x86-For Windows, or x64-For Windows.",
           "description": "Select the type of installation package whose distribution URL you want to retrieve from Palo Alto Cortex XDR. You can choose from the following options: sh-For Linux, rpm-For Linux, deb-For Linux, pkg-For Mac, x86-For Windows, or x64-For Windows."
         }
       ]
@@ -2009,7 +2009,7 @@
           "type": "text",
           "name": "filter.in.email",
           "value": "",
-          "tooltip": "User's email address.",
+          "tooltip": "Specify the email address of the user whose audit management logs you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the email address of the user whose audit management logs you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2020,7 +2020,7 @@
           "type": "text",
           "name": "filter.in.type",
           "value": "",
-          "tooltip": "Type of audit log.",
+          "tooltip": "Specify the type of audit management logs you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the type of audit management logs you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2031,7 +2031,7 @@
           "type": "text",
           "name": "filter.in.sub_type",
           "value": "",
-          "tooltip": "Subtype of audit log.",
+          "tooltip": "Specify the sub-type of the audit management logs you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the sub-type of the audit management logs you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2042,7 +2042,7 @@
           "type": "text",
           "name": "filter.in.result",
           "value": "",
-          "tooltip": "Result type. e.g. SUCCESS",
+          "tooltip": "Specify the result of the audit log using which you want to filter the audit log management logs retrieved from Palo Alto Cortex XDR. For example, SUCCESS.",
           "description": "Specify the result of the audit log using which you want to filter the audit log management logs retrieved from Palo Alto Cortex XDR. For example, SUCCESS."
         },
         {
@@ -2053,7 +2053,7 @@
           "type": "datetime",
           "name": "filter.gte.timestamp",
           "value": "",
-          "tooltip": "Log timestamp.",
+          "tooltip": "Select the DateTime of the log till when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit management logs whose timestamp matches the time specified or the time later than the time specified on Palo Alto Cortex XDR.",
           "description": "Select the DateTime of the log till when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit management logs whose timestamp matches the time specified or the time later than the time specified on Palo Alto Cortex XDR."
         },
         {
@@ -2064,7 +2064,7 @@
           "type": "datetime",
           "name": "filter.lte.timestamp",
           "value": "",
-          "tooltip": "Log timestamp.",
+          "tooltip": "Select the DateTime of the log from when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit management logs whose timestamp matches the time specified or the time earlier than the time specified on Palo Alto Cortex XDR.",
           "description": "Select the DateTime of the log from when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit management logs whose timestamp matches the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
         },
         {
@@ -2075,7 +2075,7 @@
           "type": "integer",
           "name": "cursor.search_from",
           "value": 0,
-          "tooltip": "An integer representing the starting offset within the query result set from which you want management logs returned.",
+          "tooltip": "Specify an integer representing the starting offset within the query result set from which you want management logs returned.",
           "description": "Specify an integer representing the starting offset within the query result set from which you want management logs returned."
         },
         {
@@ -2086,7 +2086,7 @@
           "type": "integer",
           "name": "cursor.search_to",
           "value": 100,
-          "tooltip": "An integer representing the end offset within the result set after which you do not want management logs returned.",
+          "tooltip": "Specify an integer representing the end offset within the result set after which you do not want management logs returned.",
           "description": "Specify an integer representing the end offset within the result set after which you do not want management logs returned."
         },
         {
@@ -2102,7 +2102,7 @@
           ],
           "name": "sort.field",
           "value": "type",
-          "tooltip": "The field by which you want to sort the management logs.",
+          "tooltip": "Select the field by which you want to sort the audit management logs retrieved by this operation. You can choose between type, sub-type, or result.",
           "description": "Select the field by which you want to sort the audit management logs retrieved by this operation. You can choose between type, sub-type, or result."
         },
         {
@@ -2117,7 +2117,7 @@
           ],
           "name": "sort.keyword",
           "value": "desc",
-          "tooltip": "The order by which you want to sort the management logs.",
+          "tooltip": "Select this option to order the audit management logs retrieved by this operation. You can choose between asc (ascending) or desc (Descending).",
           "description": "Select this option to order the audit management logs retrieved by this operation. You can choose between asc (ascending) or desc (Descending)."
         }
       ]
@@ -2159,7 +2159,7 @@
           "type": "text",
           "name": "filter.in.endpoint_id",
           "value": "",
-          "tooltip": "Represents the endpoint ID.",
+          "tooltip": "Specify the string representing the ID of the endpoint whose associated audit agent reports you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the string representing the ID of the endpoint whose associated audit agent reports you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2170,7 +2170,7 @@
           "type": "text",
           "name": "filter.in.endpoint_name",
           "value": "",
-          "tooltip": "Represents the endpoint name.",
+          "tooltip": "Specify the string representing the name of the endpoint whose associated audit agent reports you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the string representing the name of the endpoint whose associated audit agent reports you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2181,7 +2181,7 @@
           "type": "text",
           "name": "filter.in.type",
           "value": "",
-          "tooltip": "Type of report. e.g. Agent Status",
+          "tooltip": "Specify the type of audit agent reports you want to retrieve from Palo Alto Cortex XDR. For example, Agent Status.",
           "description": "Specify the type of audit agent reports you want to retrieve from Palo Alto Cortex XDR. For example, Agent Status."
         },
         {
@@ -2192,7 +2192,7 @@
           "type": "text",
           "name": "filter.in.sub_type",
           "value": "",
-          "tooltip": "Subtype of report. e.g. Fully Protected",
+          "tooltip": "Specify the sub-type of the audit agent reports you want to retrieve from Palo Alto Cortex XDR. For example, Fully Protected.",
           "description": "Specify the sub-type of the audit agent reports you want to retrieve from Palo Alto Cortex XDR. For example, Fully Protected."
         },
         {
@@ -2203,7 +2203,7 @@
           "type": "text",
           "name": "filter.in.result",
           "value": "",
-          "tooltip": "Result type. e.g. SUCCESS",
+          "tooltip": "Specify the result of the agent report using which you want to filter the audit agent reports retrieved from Palo Alto Cortex XDR. For example, SUCCESS.",
           "description": "Specify the result of the agent report using which you want to filter the audit agent reports retrieved from Palo Alto Cortex XDR. For example, SUCCESS."
         },
         {
@@ -2214,7 +2214,7 @@
           "type": "text",
           "name": "filter.in.domain",
           "value": "",
-          "tooltip": "Domain of the agent. e.g. WORKGROUP",
+          "tooltip": "Specify the domain of the agent whose audit agent reports you want to retrieve from Palo Alto Cortex XDR. For example, WORKGROUP.",
           "description": "Specify the domain of the agent whose audit agent reports you want to retrieve from Palo Alto Cortex XDR. For example, WORKGROUP."
         },
         {
@@ -2225,7 +2225,7 @@
           "type": "text",
           "name": "filter.in.xdr_version",
           "value": "",
-          "tooltip": "XDR version.",
+          "tooltip": "Specify the XDR version for which you want to retrieve audit agent reports from Palo Alto Cortex XDR.",
           "description": "Specify the XDR version for which you want to retrieve audit agent reports from Palo Alto Cortex XDR."
         },
         {
@@ -2241,7 +2241,7 @@
           ],
           "name": "filter.in.category",
           "value": "",
-          "tooltip": "Type of event category.",
+          "tooltip": "Select the type of event category of the audit agent reports you want to retrieve from Palo Alto Cortex XDR. You can choose from the following options: Status, Audit, or Monitoring.",
           "description": "Select the type of event category of the audit agent reports you want to retrieve from Palo Alto Cortex XDR. You can choose from the following options: Status, Audit, or Monitoring."
         },
         {
@@ -2252,7 +2252,7 @@
           "type": "datetime",
           "name": "filter.gte.timestamp",
           "value": "",
-          "tooltip": "Report timestamp.",
+          "tooltip": "Datetime of the report till when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit agent reports whose timestamp matches the time specified or the time later than the time specified on Palo Alto Cortex XDR.",
           "description": "Datetime of the report till when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit agent reports whose timestamp matches the time specified or the time later than the time specified on Palo Alto Cortex XDR."
         },
         {
@@ -2263,7 +2263,7 @@
           "type": "datetime",
           "name": "filter.lte.timestamp",
           "value": "",
-          "tooltip": "Report timestamp.",
+          "tooltip": "Datetime of the report from when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit agent reports whose timestamp matches the time specified or the time earlier than the time specified on Palo Alto Cortex XDR.",
           "description": "Datetime of the report from when you want to retrieve audit management logs from Palo Alto Cortex XDR. This operator will retrieve all audit agent reports whose timestamp matches the time specified or the time earlier than the time specified on Palo Alto Cortex XDR."
         },
         {
@@ -2274,7 +2274,7 @@
           "type": "integer",
           "name": "cursor.search_from",
           "value": 0,
-          "tooltip": "An integer representing the starting offset within the query result set from which you want agent reports returned.",
+          "tooltip": "Specify an integer representing the starting offset within the query result set from which you want this operation to return incidents from Palo Alto Cortex XDR.",
           "description": "Specify an integer representing the starting offset within the query result set from which you want this operation to return incidents from Palo Alto Cortex XDR."
         },
         {
@@ -2285,7 +2285,7 @@
           "type": "integer",
           "name": "cursor.search_to",
           "value": 100,
-          "tooltip": "An integer representing the end offset within the result set after which you do not want agent reports returned.",
+          "tooltip": "Specify an integer representing the end offset within the result set after which you do not want this operation to return incidents from Palo Alto Cortex XDR.",
           "description": "Specify an integer representing the end offset within the result set after which you do not want this operation to return incidents from Palo Alto Cortex XDR."
         },
         {
@@ -2303,7 +2303,7 @@
           ],
           "name": "sort.field",
           "value": "type",
-          "tooltip": "The field by which you want to sort the agent reports.",
+          "tooltip": "Select the field by which you want to sort the audit management logs retrieved by this operation. You can choose between type, category, trapsversion, timestamp, or domain.",
           "description": "Select the field by which you want to sort the audit management logs retrieved by this operation. You can choose between type, category, trapsversion, timestamp, or domain."
         },
         {
@@ -2318,7 +2318,7 @@
           ],
           "name": "sort.keyword",
           "value": "desc",
-          "tooltip": "The order by which you want to sort the agent reports.",
+          "tooltip": "Select this option to order the audit management logs retrieved by this operation. You can choose between asc (ascending) or desc (Descending).",
           "description": "Select this option to order the audit management logs retrieved by this operation. You can choose between asc (ascending) or desc (Descending)."
         }
       ]
@@ -2342,8 +2342,8 @@
           "type": "text",
           "name": "hash_list",
           "value": "",
-          "tooltip": "String that represents a list of hashed files you want to blacklist. Hash must be a valid SH256.",
-          "description": "Specify a string that represents a list of file hash values you want to blacklist on Palo Alto Cortex XDR. Note: Hash must be a valid SHA256 value. "
+          "tooltip": "Specify a string that represents a list of file hash values you want to blacklist on Palo Alto Cortex XDR. Note: Hash must be a valid SHA256 value.",
+          "description": "Specify a string that represents a list of file hash values you want to blacklist on Palo Alto Cortex XDR. Note: Hash must be a valid SHA256 value."
         },
         {
           "title": "Comment",
@@ -2353,7 +2353,7 @@
           "type": "text",
           "name": "comment",
           "value": "",
-          "tooltip": "String that represents additional information regarding the action.",
+          "tooltip": "Specify a string containing descriptive information about this action.",
           "description": "(Optional) Specify a string containing descriptive information about this action."
         },
         {
@@ -2364,7 +2364,7 @@
           "type": "integer",
           "name": "incident_id",
           "value": "",
-          "tooltip": "The incident ID related to the hash.",
+          "tooltip": "Specify the ID of the incident related to the specified file hash to include the Blacklist Files action in the Cortex XDR Incident ViewTimeline tab.",
           "description": "(Optional) Specify the ID of the incident related to the specified file hash to include the Blacklist Files action in the Cortex XDR Incident ViewTimeline tab."
         }
       ]
@@ -2388,7 +2388,7 @@
           "type": "text",
           "name": "hash_list",
           "value": "",
-          "tooltip": "String that represents a list of hashed files you want to whitelist. Hash must be a valid SH256.",
+          "tooltip": "Specify a string that represents a list of file hash values you want to whitelist on Palo Alto Cortex XDR. Note: The hash must be a valid SHA256 value.",
           "description": "Specify a string that represents a list of file hash values you want to whitelist on Palo Alto Cortex XDR. Note: The hash must be a valid SHA256 value."
         },
         {
@@ -2399,7 +2399,7 @@
           "type": "text",
           "name": "comment",
           "value": "",
-          "tooltip": "String that represents additional information regarding the action.",
+          "tooltip": "Specify a string containing descriptive information about this action.",
           "description": "(Optional) Specify a string containing descriptive information about this action."
         },
         {
@@ -2410,7 +2410,7 @@
           "type": "integer",
           "name": "incident_id",
           "value": "",
-          "tooltip": "The incident ID related to the hash.",
+          "tooltip": "Specify the ID of the incident related to the specified file hash to include the Blacklist Files action in the Cortex XDR Incident ViewTimeline tab.",
           "description": "(Optional) Specify the ID of the incident related to the specified file hash to include the Blacklist Files action in the Cortex XDR Incident ViewTimeline tab."
         }
       ]
@@ -2436,7 +2436,7 @@
           "type": "text",
           "name": "filter.in.endpoint_id_list",
           "value": "",
-          "tooltip": "List of endpoint IDs.",
+          "tooltip": "Specify a list of endpoint IDs representing the endpoints on which you want to quarantine files on Palo Alto Cortex XDR.",
           "description": "Specify a list of endpoint IDs representing the endpoints on which you want to quarantine files on Palo Alto Cortex XDR."
         },
         {
@@ -2447,7 +2447,7 @@
           "type": "text",
           "name": "file_path",
           "value": "",
-          "tooltip": "String that represents the path of the file you want to quarantine.",
+          "tooltip": "Specify the string representing the path of the file you want to quarantine on the specified endpoints on Palo Alto Cortex XDR.",
           "description": "Specify the string representing the path of the file you want to quarantine on the specified endpoints on Palo Alto Cortex XDR."
         },
         {
@@ -2458,7 +2458,7 @@
           "type": "text",
           "name": "file_hash",
           "value": "",
-          "tooltip": "String that represents the file's hash. Hash must be a valid SHA256.",
+          "tooltip": "Specify the string representing the hash value of the file you want to quarantine on the specified endpoints on Palo Alto Cortex XDR. Note: The hash must be a valid SHA256 value.",
           "description": "Specify the string representing the hash value of the file you want to quarantine on the specified endpoints on Palo Alto Cortex XDR. Note: The hash must be a valid SHA256 value."
         }
       ]
@@ -2489,7 +2489,7 @@
           "type": "text",
           "name": "endpoint_id",
           "value": "",
-          "tooltip": "String the represents the endpoint ID.",
+          "tooltip": "Specify the string representing the endpoint ID whose associated files' quarantine status you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the string representing the endpoint ID whose associated files' quarantine status you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2500,7 +2500,7 @@
           "type": "text",
           "name": "file_hash",
           "value": "",
-          "tooltip": "String that represents the file hash. Must be a valid SHA256.",
+          "tooltip": "Specify the string representing the hash value of the file whose quarantine status you want to retrieve from Palo Alto Cortex XDR. Note: The hash must be a valid SHA256 value.",
           "description": "Specify the string representing the hash value of the file whose quarantine status you want to retrieve from Palo Alto Cortex XDR. Note: The hash must be a valid SHA256 value."
         },
         {
@@ -2511,7 +2511,7 @@
           "type": "text",
           "name": "file_path",
           "value": "",
-          "tooltip": "String that represents the file path.",
+          "tooltip": "Specify the string representing the path of the file whose quarantine status you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the string representing the path of the file whose quarantine status you want to retrieve from Palo Alto Cortex XDR."
         }
       ]
@@ -2536,7 +2536,7 @@
           "type": "text",
           "name": "file_hash",
           "value": "",
-          "tooltip": "String that represents the file in hash. Hash must be a valid SHA256.",
+          "tooltip": "Specify the string representing the hash value of the quarantined file that you want to restore on the specified endpoint on Palo Alto Cortex XDR. Note: The hash must be a valid SHA256 value.",
           "description": "Specify the string representing the hash value of the quarantined file that you want to restore on the specified endpoint on Palo Alto Cortex XDR. Note: The hash must be a valid SHA256 value."
         },
         {
@@ -2547,7 +2547,7 @@
           "type": "text",
           "name": "endpoint_id",
           "value": "",
-          "tooltip": "String that represents the endpoint ID.",
+          "tooltip": "Specify the string representing the endpoint ID on which you want to restore the specified quarantined file.",
           "description": "Specify the string representing the endpoint ID on which you want to restore the specified quarantined file."
         },
         {
@@ -2558,7 +2558,7 @@
           "type": "integer",
           "name": "incident_id",
           "value": "",
-          "tooltip": "String representing the incident ID.",
+          "tooltip": "Specify the ID of the incident related to the specified file hash to include the Restore Files action in the Cortex XDR Incident ViewTimeline tab.",
           "description": "(Optional) Specify the ID of the incident related to the specified file hash to include the Restore Files action in the Cortex XDR Incident ViewTimeline tab."
         }
       ]
@@ -2585,7 +2585,7 @@
           "type": "text",
           "name": "filter.in.endpoint_id_list",
           "value": "",
-          "tooltip": "List of endpoint IDs.",
+          "tooltip": "Specify the list of endpoint IDs whose associated files you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the list of endpoint IDs whose associated files you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2612,8 +2612,8 @@
           "type": "text",
           "name": "file_path",
           "value": "",
-          "tooltip": "The file path from which you want to retrieve the file.",
-          "description": "Specify the string representing the path of the file used to retrieve files from Palo Alto Cortex XDR."
+          "tooltip": "Specify the string representing the path of the file you want to quarantine on the specified endpoints on Palo Alto Cortex XDR.",
+          "description": "Specify the string representing the path of the file you want to quarantine on the specified endpoints on Palo Alto Cortex XDR."
         },
         {
           "title": "Distribution Name",
@@ -2623,7 +2623,7 @@
           "type": "text",
           "name": "filter.in.dist_name",
           "value": "",
-          "tooltip": "Name of the distribution list.",
+          "tooltip": "Specify the string representing the name of the distribution list containing the files you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the string representing the name of the distribution list containing the files you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2634,7 +2634,7 @@
           "type": "text",
           "name": "filter.in.group_name",
           "value": "",
-          "tooltip": "Name of endpoint group.",
+          "tooltip": "Specify the string representing the name of the endpoint group containing the files you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the string representing the name of the endpoint group containing the files you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2645,7 +2645,7 @@
           "type": "text",
           "name": "filter.in.alias",
           "value": "",
-          "tooltip": "Endpoint alias name.",
+          "tooltip": "Specify the string representing the alias of the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the string representing the alias of the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2656,7 +2656,7 @@
           "type": "text",
           "name": "filter.in.hostname",
           "value": "",
-          "tooltip": "Name of host.",
+          "tooltip": "Specify the string representing the name of the host of the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the string representing the name of the host of the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2667,7 +2667,7 @@
           "type": "text",
           "name": "filter.in.ip_list",
           "value": "",
-          "tooltip": "List of ip addresses.",
+          "tooltip": "Specify the string representing the list of IP addresses containing the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the string representing the list of IP addresses containing the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2684,7 +2684,7 @@
           ],
           "name": "filter.in.platform",
           "value": "",
-          "tooltip": "Type of operating system. e.g. windows, linux, macos, android",
+          "tooltip": "Select the type of operating system that contains the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android.",
           "description": "Select the type of operating system that contains the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR. You can choose between Windows, Linux, Macos, or Android."
         },
         {
@@ -2699,7 +2699,7 @@
           ],
           "name": "filter.in.isolate",
           "value": "",
-          "tooltip": "If an endpoint has been isolated.",
+          "tooltip": "Select the isolation status of the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR. Select Isolated to retrieve endpoints that are isolated and Unisolated to retrieve endpoints that are unisolated.",
           "description": "Select the isolation status of the endpoints whose associated files you want to retrieve from Palo Alto Cortex XDR. Select Isolated to retrieve endpoints that are isolated and Unisolated to retrieve endpoints that are unisolated."
         },
         {
@@ -2710,7 +2710,7 @@
           "type": "datetime",
           "name": "filter.gte.first_seen",
           "value": "",
-          "tooltip": "When an endpoint was first seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints, whose associated files you want to be retrieved by this operation to include only those endpoints that were first seen at the time specified or the time later than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints, whose associated files you want to be retrieved by this operation to include only those endpoints that were first seen at the time specified or the time later than the time specified."
         },
         {
@@ -2721,7 +2721,7 @@
           "type": "datetime",
           "name": "filter.gte.last_seen",
           "value": "",
-          "tooltip": "When an endpoint was last seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints, whose associated files you want to be retrieved by this operation to include only those endpoints that were last seen at the time specified or the time later than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints, whose associated files you want to be retrieved by this operation to include only those endpoints that were last seen at the time specified or the time later than the time specified."
         },
         {
@@ -2732,7 +2732,7 @@
           "type": "datetime",
           "name": "filter.lte.first_seen",
           "value": "",
-          "tooltip": "When an endpoint was first seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints, whose associated files you want to be retrieved by this operation to include only those endpoints that were first seen at the time specified or the time earlier than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints, whose associated files you want to be retrieved by this operation to include only those endpoints that were first seen at the time specified or the time earlier than the time specified."
         },
         {
@@ -2743,7 +2743,7 @@
           "type": "datetime",
           "name": "filter.lte.last_seen",
           "value": "",
-          "tooltip": "When an endpoint was last seen.",
+          "tooltip": "Select the DateTime using which you want to filter the endpoints, whose associated files you want to be retrieved by this operation to include only those endpoints that were last seen at the time specified or the time earlier than the time specified.",
           "description": "Select the DateTime using which you want to filter the endpoints, whose associated files you want to be retrieved by this operation to include only those endpoints that were last seen at the time specified or the time earlier than the time specified."
         }
       ]
@@ -2769,7 +2769,7 @@
           "type": "text",
           "name": "group_action_id",
           "value": "",
-          "tooltip": "Action ID retrieved from the action Retrieve File.",
+          "tooltip": "Specify the ID of the action ID whose associated file details you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the ID of the action ID whose associated file details you want to retrieve from Palo Alto Cortex XDR."
         }
       ]
@@ -2791,7 +2791,7 @@
           "name": "query",
           "placeholder": "For Eg: dataset=xdr_data | fields event_id, event_type, event_sub_type | limit 3",
           "value": "",
-          "tooltip": "Specify the XQl query.",
+          "tooltip": "Specify the XQl query you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the XQl query you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2803,7 +2803,7 @@
           "name": "tenants",
           "value": "",
           "placeholder": "For Eg: 431509831,401387390",
-          "tooltip": "Specify the tenants.",
+          "tooltip": "Specify the tenants to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the tenants to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2845,7 +2845,7 @@
           "name": "query_id",
           "placeholder": "For Eg: 061880b4867446_4356_inv",
           "value": "",
-          "tooltip": "Specify the XQl query.",
+          "tooltip": "Specify the XQl query you want to retrieve from Palo Alto Cortex XDR.",
           "description": "Specify the XQl query you want to retrieve from Palo Alto Cortex XDR."
         },
         {
@@ -2856,7 +2856,7 @@
           "type": "select",
           "name": "pending_flag",
           "value": "true",
-          "tooltip": "Default True",
+          "tooltip": "Indicates whether the API call should operate in synchronous/blocking mode, or in asynchronous/non-blocking mode",
           "description": "Indicates whether the API call should operate in synchronous/blocking mode, or in asynchronous/non-blocking mode",
           "options": [
             "true",
@@ -2901,7 +2901,7 @@
           "visible": true,
           "type": "select",
           "name": "severity",
-          "tooltip": "Select the severity level for the alerts being updated on Palo Alto Cortex XDR.",
+          "tooltip": "Select the severity level for the alerts being updated on Palo Alto Cortex XDR. You can select from following options: Critical, High, Medium, Low, and Informational.",
           "description": "(Optional) Select the severity level for the alerts being updated on Palo Alto Cortex XDR. You can select from following options: Critical, High, Medium, Low, and Informational.",
           "options": [
             "Critical",
@@ -2918,7 +2918,7 @@
           "visible": true,
           "type": "select",
           "name": "status",
-          "tooltip": "Select the new status for the alerts to be updated.",
+          "tooltip": "Select the new status for the alerts to be updated. You can select from the following options: New, Resolved Threat Handled, Under Investigation, Resolved Security Testing, Resolved Auto, Resolved Known Issue, Resolved Duplicate, Resolved Other, Resolved False Positive, and Resolved True Positive.",
           "description": "(Optional) Select the new status for the alerts to be updated. You can select from the following options: New, Resolved Threat Handled, Under Investigation, Resolved Security Testing, Resolved Auto, Resolved Known Issue, Resolved Duplicate, Resolved Other, Resolved False Positive, and Resolved True Positive.",
           "options": [
             "New",
@@ -3018,7 +3018,7 @@
           "type": "select",
           "name": "sort_field",
           "value": "Creation Time",
-          "tooltip": "Select the field by which to sort the alerts.",
+          "tooltip": "Select the field by which to sort the alerts. You can choose from the following options: Creation Time (Default), Severity",
           "description": "(Optional) Select the field by which to sort the alerts. You can choose from the following options: Creation Time (Default), Severity ",
           "options": [
             "Creation Time",
@@ -3032,7 +3032,7 @@
           "visible": true,
           "type": "select",
           "name": "sort_order",
-          "tooltip": "Select the sort order for the alerts.",
+          "tooltip": "Select the sort order for the alerts. You can choose from the following options: Ascending, Descending (Default)",
           "value": "Descending",
           "description": "(Optional) Select the sort order for the alerts. You can choose from the following options: Ascending, Descending (Default)",
           "options": [
@@ -3048,7 +3048,7 @@
           "type": "integer",
           "name": "search_from",
           "value": 0,
-          "tooltip": "Specify the count of results to skip within the query result of the alerts being returned.",
+          "tooltip": "Specify the count of results to skip within the query result of the alerts being returned. By default, it is set to 0.",
           "description": "(Optional) Specify the count of results to skip within the query result of the alerts being returned. By default, it is set to 0."
         },
         {
@@ -3059,7 +3059,7 @@
           "type": "integer",
           "name": "search_to",
           "value": 100,
-          "tooltip": "Specify the count of results after which you do not want the alerts returned.",
+          "tooltip": "Specify the count of results after which you do not want the alerts returned. By default, it is set to 100.",
           "description": "(Optional) Specify the count of results after which you do not want the alerts returned. By default, it is set to 100."
         }
       ]
@@ -3102,8 +3102,8 @@
           "type": "select",
           "name": "type",
           "value": "",
-          "tooltip": "Select the type of the indicator to insert in Palo Alto Cortex XDR.",
-          "description": "Select the type of the indicator to insert in Palo Alto Cortex XDR. You can choose from the following options: Hash, IP, Domain Name, Filename ",
+          "tooltip": "Select the type of the indicator to insert in Palo Alto Cortex XDR. You can choose from the following options: Hash, IP, Domain Name, Filename",
+          "description": "Select the type of the indicator to insert in Palo Alto Cortex XDR. You can choose from the following options: Hash, IP, Domain Name, Filename",
           "options": [
             "Hash",
             "IP",
@@ -3119,7 +3119,7 @@
           "type": "select",
           "name": "severity",
           "value": "",
-          "tooltip": "Select the severity of the indicator you want to insert into Palo Alto Cortex XDR.",
+          "tooltip": "Select the severity of the indicator you want to insert into Palo Alto Cortex XDR. You can select from the following options: Critical, High, Medium, Low, Informational",
           "description": "Select the severity of the indicator you want to insert into Palo Alto Cortex XDR. You can select from the following options: Critical, High, Medium, Low, Informational",
           "options": [
             "Info",
@@ -3137,7 +3137,7 @@
           "visible": true,
           "type": "select",
           "name": "expiry",
-          "tooltip": "Select the expiry of for the indicator. You can specify Never, Default or Custom date.",
+          "tooltip": "Select if the indicator being created should have an expiration date. You can choose from following options: Never: Indicator never expires. Default: Indicator expires after a default period. Custom: Select an expiration date and time, in the Expiration Date field, for the indicator.",
           "description": "(Optional) Select if the indicator being created should have an expiration date. You can choose from following options: Never: Indicator never expires. Default: Indicator expires after a default period. Custom: Select an expiration date and time, in the Expiration Date field, for the indicator.",
           "value": "Default",
           "options": [
@@ -3158,7 +3158,7 @@
           "name": "class",
           "value": "",
           "placeholder": "Malware",
-          "tooltip": "Specify the class of the indicator.",
+          "tooltip": "Specify the class of the indicator. For example: Malware",
           "description": "(Optional) Specify the class of the indicator. For example: Malware"
         },
         {
@@ -3180,7 +3180,7 @@
           "type": "select",
           "name": "reputation",
           "value": "",
-          "tooltip": "Select the reputation of the indicator.",
+          "tooltip": "Specify the reputation of the indicator. You can select from the following options: Good, Bad, Suspicious, Unknown, No Reputation.",
           "description": "(Optional) Specify the reputation of the indicator. You can select from the following options: Good, Bad, Suspicious, Unknown, No Reputation.",
           "options": [
             "Good",
@@ -3197,7 +3197,7 @@
           "visible": true,
           "type": "select",
           "name": "reliability",
-          "tooltip": "Specify the reliability of the indicator.",
+          "tooltip": "Specify the reliability of the indicator. You can choose a grade from A through F, where A is the most reliable and F is the least.",
           "description": "(Optional) Specify the reliability of the indicator. You can choose a grade from A through F, where A is the most reliable and F is the least.",
           "options": [
             "A",
